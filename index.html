@@ -166,12 +166,15 @@
   }
   #lb.on { opacity: 1; pointer-events: all; }
 
-  #lb-scroll {
-    position: relative;
-    width: 92vw; height: 92vh;
-    overflow: scroll;
-    display: flex; align-items: center; justify-content: center;
-  }
+#lb-scroll {
+  position: relative;
+  width: 92vw; height: 92vh;
+  overflow: scroll;
+  display: flex;
+  align-items: flex-start;      /* ← center → flex-start */
+  justify-content: center;
+  padding: 40px 0;              /* ← 上下に余白を追加 */
+}
   #lb-scroll::-webkit-scrollbar { display: none; }
 
   #lb-img {
