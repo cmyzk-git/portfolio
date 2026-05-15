@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>井上誠耕園 | 大地を、食卓を、耕す。</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+
+/* 写真の切り替えを滑らかにする */
+#chef-portrait, #chef-dish {
+    transition: opacity 0.5s ease-in-out;
+}
+        
+    /* ヒーロー画像共通設定 */
+.hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: heroFade 15s infinite; /* 5秒×3枚 = 15秒 */
+}
+
+/* 各画像の開始タイミングをずらす */
+.hero-img:nth-child(1) { animation-delay: 0s; }
+.hero-img:nth-child(2) { animation-delay: 5s; }
+.hero-img:nth-child(3) { animation-delay: 10s; }
+
+@keyframes heroFade {
+    0% { opacity: 0; transform: scale(1.05); } /* 少し大きくしてズームアウト感を出す */
+    10% { opacity: 0.8; }                      /* フェードイン完了 */
+    33% { opacity: 0.8; }                      /* 表示維持 */
+    43% { opacity: 0; }                        /* フェードアウト完了 */
+    100% { opacity: 0; }
+}
+        :root {
+            --olive-deep: #3d441e;
+            --stone-bg: #f8f7f2;
+            --text-main: #2d2d2d;
+            --accent-gold: #b5a47e;
+        }
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: var(--stone-bg); 
+            color: var(--text-main);
+            line-height: 1.8;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, .serif { font-family: 'Noto Serif JP', serif; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 商品カードのスタイル */
+        .product-card {
+            background: white;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+        }
+        .product-card.selected {
+            border-color: var(--olive-deep);
+            background-color: #fffdfb;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+        
+        .selection-label {
+            opacity: 0;
+            transform: translateY(5px);
+            transition: all 0.3s ease;
+        }
+        .selected .selection-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cart-btn {
+            background-color: var(--olive-deep);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .cart-btn:hover {
+            background-color: #4d5726;
+        }
+
+        .notify-btn {
+            border: 1px solid var(--olive-deep);
+            color: var(--olive-deep);
+            transition: all 0.3s ease;
+        }
+        .notify-btn:hover {
+            background-color: var(--olive-deep);
+            color: white;
+        }
+
+        /* -----------------------------------------------------------
+           CHEF SECTION UPGRADE (Tab & Dual Image)
+        ----------------------------------------------------------- */
+        .chef-tab-btn {
+            position: relative;
+            padding-bottom: 12px;
+            transition: all 0.3s ease;
+            color: #999;
+        }
+        .chef-tab-btn.active {
+            color: var(--olive-deep);
+            font-weight: bold;
+        }
+        .chef-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--olive-deep);
+        }
+
+        .chef-content { 
+            display: none; 
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        .chef-content.active { 
+            display: block; 
+            animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; 
+        }
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .dual-image-container {
+            display: flex;
+            gap: 16px;
+        }
+        .image-box {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+            background: #eee;
+            aspect-ratio: 4/5;
+        }
+        .image-label {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(255,255,255,0.9);
+            padding: 4px 12px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            font-weight: bold;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--stone-bg); }
+        ::-webkit-scrollbar-thumb { background: #d1d1cc; border-radius: 10px; }
+            /* 通常時：フルカラー、オーバーレイ・文字は非表示 */
+.soldout-img {
+    filter: grayscale(0);
+    opacity: 1;
+    transition: filter 0.8s ease, opacity 0.8s ease;
+}
+.soldout-overlay {
+    background: rgba(0,0,0,0);
+    transition: background 0.8s ease;
+}
+.soldout-label {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+/* ホバー時：ゆっくりグレーアウト＋文字浮き出し */
+#card-hayazumi:hover .soldout-img {
+    filter: grayscale(1);
+    opacity: 0.6;
+}
+#card-hayazumi:hover .soldout-overlay {
+    background: rgba(0,0,0,0.05);
+}
+#card-hayazumi:hover .soldout-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ヘッダー -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold tracking-[0.2em] text-olive-900 serif">井上誠耕園</div>
+            <div class="hidden lg:flex space-x-10 text-[12px] tracking-widest font-medium text-stone-600">
+                <a href="#lineup" class="hover:text-olive-800 transition">商品一覧</a>
+                <a href="#chef" class="hover:text-olive-800 transition">料理人の視点</a>
+                <a href="#farm-log" class="hover:text-olive-800 transition">農園のいま</a>
+                <a href="bread.html" class="hover:text-olive-800 transition">生食パン</a>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="/shop/basket.aspx" class="relative group flex items-center gap-2">
+                    <span class="text-[10px] font-bold text-stone-500 hidden md:inline">バスケット</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-600"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-olive-800 text-[9px] text-white w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ヒーローエリア -->
+    <section class="relative h-[70vh] flex items-center justify-center bg-stone-200 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <img src="ph/hero01.png" class="hero-img w-full h-full object-cover opacity-0" alt="小豆島農園1">
+        <img src="ph/hero02.png" class="hero-img w-full h-full object-cover opacity-0" alt="小豆島農園2">
+        <img src="ph/hero03.png" class="hero-img w-full h-full object-cover opacity-0" alt="小豆島農園3">
+        <div class="absolute inset-0 bg-black/10"></div>
+    </div>
+    <div class="relative z-10 text-center px-6">
+        <span class="text-white text-[10px] tracking-[0.5em] mb-4 block uppercase font-bold reveal">Cultivating Sincerity</span>
+        <h1 class="text-white text-4xl md:text-6xl serif leading-tight tracking-[0.2em] drop-shadow-lg reveal">
+            誠実を、<br>食卓の真ん中に。
+        </h1>
+    </div>
+</section>
+
+<section class="py-24 bg-white overflow-hidden">
+    <div class="max-w-4xl mx-auto px-8">
+        <div class="flex flex-col items-center text-center">
+            <div class="w-px h-12 bg-olive-800/30 mb-8 reveal"></div>
+            
+            <h2 class="text-2xl md:text-3xl serif leading-relaxed tracking-[0.15em] mb-12 reveal">
+                いい土から、<br class="md:hidden">いい一日がはじまる。
+            </h2>
+            
+            <div class="space-y-8 text-stone-600 text-sm md:text-base leading-loose tracking-wider reveal">
+                <p>
+                    毎日、木に触れているからわかることがあります。<br>
+                    たっぷり陽を浴びた日も、冷たい雨に耐えた日も、<br>
+                    すべてが実のなかに、ゆっくりと蓄えられていく。
+                </p>
+                <p>
+                    私たちは、ただ、その手助けをしたいのです。<br>
+                    特別なことはできません。<br>
+                    ただ、自分たちの手でできることを、最後までやり遂げる。
+                </p>
+                <p>
+                    この一滴が、あなたの食卓に届いたとき、<br>
+                    ふっと小豆島の風を感じてもらえたら。<br>
+                    そんなささやかな景色を想像しながら、今日も土を耕しています。
+                </p>
+            </div>
+            
+            <div class="mt-12 text-[10px] tracking-[0.3em] text-stone-400 uppercase font-bold reveal">
+                Cultivating the Future
+            </div>
+        </div>
+    </div>
+</section>
+    
+    <!-- ラインナップ（商品選択 & バスケット導線） -->
+    <section id="lineup" class="py-20 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-2xl serif tracking-widest mb-4">季節と個性を選ぶ</h2>
+                <p class="text-[10px] text-stone-400 tracking-[0.3em] uppercase italic">Product Lineup</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 商品 1: 完熟 -->
+                <div id="card-kanjuku" class="product-card p-6 flex flex-col reveal selected" onclick="switchChef('kanjuku')">
+                    <div class="aspect-[4/5] overflow-hidden mb-6 bg-stone-100">
+                        <img src="ph/kanjuku.jpg" class="w-full h-full object-cover" alt="完熟オリーブオイル">
+                    </div>
+                    <div class="selection-label flex items-center gap-2 mb-3">
+                        <span class="w-1.5 h-1.5 bg-olive-800 rounded-full"></span>
+                        <span class="text-[9px] font-bold text-olive-800 tracking-widest">現在選択中</span>
+                    </div>
+                    <h3 class="serif text-xl mb-2">完熟オリーブオイル</h3>
+                    <p class="text-[11px] text-stone-500 mb-8 leading-relaxed">
+                        小豆島の太陽をたっぷり浴びて黒く熟した実。まろやかで甘みがあり、毎日のパンや温野菜に。
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-stone-100 flex justify-between items-center">
+                        <span class="text-base serif font-bold">¥3,240</span>
+                        <button onclick="addToCart(event, '完熟オリーブオイル')" class="cart-btn px-6 py-2.5 text-[10px] font-bold tracking-widest">バスケットへ</button>
+                    </div>
+                </div>
+
+                <!-- 商品 2: 早摘み（売り切れ / 温度感のある表現） -->
+                <div id="card-hayazumi" class="product-card p-6 flex flex-col reveal" onclick="switchChef('hayazumi')">
+                    <div class="aspect-[4/5] overflow-hidden mb-6">
+                    <img src="ph/extra.jpg" class="soldout-img w-full h-full object-cover" alt="早摘みオリーブオイル">
+                     <div class="soldout-overlay absolute inset-0 flex items-center justify-center">
+                     <span class="soldout-label bg-white/90 px-4 py-2 text-[10px] serif tracking-widest text-stone-600">次の収穫を待っています</span>
+                     </div>
+                    </div>
+                    <div class="selection-label flex items-center gap-2 mb-3">
+                        <span class="w-1.5 h-1.5 bg-olive-800 rounded-full"></span>
+                        <span class="text-[9px] font-bold text-olive-800 tracking-widest">現在選択中</span>
+                    </div>
+                    <h3 class="serif text-xl mb-2">早摘みオリーブオイル</h3>
+                    <p class="text-[11px] text-stone-500 mb-8 leading-relaxed">
+                        若々しい果実の刺激と香り。肉料理やパスタの仕上げに。本年度分はすべてお届けが完了しました。
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-stone-100 flex flex-col gap-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-base serif font-bold text-stone-300">¥1,923</span>
+                            <span class="text-[10px] text-stone-400 serif">収穫までお待ちください</span>
+                        </div>
+                        <button onclick="event.stopPropagation(); showToast('収穫後にメールでお知らせします（登録画面へ）')" class="notify-btn w-full py-2.5 text-[10px] font-bold tracking-widest">次の収穫をメールで受け取る</button>
+                    </div>
+                </div>
+
+                <!-- 商品 3: レモン -->
+                <div id="card-lemon" class="product-card p-6 flex flex-col reveal" onclick="switchChef('lemon')">
+                    <div class="aspect-[4/5] overflow-hidden mb-6 bg-stone-100">
+                        <img src="ph/lemon.jpg" class="w-full h-full object-cover" alt="レモンオリーブオイル">
+                    </div>
+                    <div class="selection-label flex items-center gap-2 mb-3">
+                        <span class="w-1.5 h-1.5 bg-olive-800 rounded-full"></span>
+                        <span class="text-[9px] font-bold text-olive-800 tracking-widest">現在選択中</span>
+                    </div>
+                    <h3 class="serif text-xl mb-2">レモンオリーブオイル</h3>
+                    <p class="text-[11px] text-stone-500 mb-8 leading-relaxed">
+                        オリーブの実と瀬戸内のレモンを一緒に搾りました。鼻に抜ける爽やかな香りは、魚料理やデザートに。
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-stone-100 flex justify-between items-center">
+                        <span class="text-base serif font-bold">¥2,008</span>
+                        <button onclick="addToCart(event, 'レモンオリーブオイル')" class="cart-btn px-6 py-2.5 text-[10px] font-bold tracking-widest">バスケットへ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 料理人の直感セッション（コンテンツ切り替え） -->
+    <section id="chef" class="py-24 px-8 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold tracking-[0.4em] text-olive-800 mb-6 uppercase italic">Inspiration Session</h2>
+                
+                <!-- ストーリー内での切り替えタブ -->
+                <div class="flex justify-center gap-8 md:gap-16 border-b border-stone-100 max-w-2xl mx-auto">
+                    <button onclick="switchChef('kanjuku')" id="tab-kanjuku" class="chef-tab-btn active text-[11px] tracking-widest font-bold uppercase">完熟のセッション</button>
+                    <button onclick="switchChef('hayazumi')" id="tab-hayazumi" class="chef-tab-btn text-[11px] tracking-widest font-bold uppercase">早摘みのセッション</button>
+                    <button onclick="switchChef('lemon')" id="tab-lemon" class="chef-tab-btn text-[11px] tracking-widest font-bold uppercase">レモンのセッション</button>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+                <div class="relative overflow-hidden min-h-[480px]">
+                    <!-- 各ストーリー内容 -->
+                    <div id="content-kanjuku" class="chef-content active">
+                        <span class="text-[10px] text-olive-800 font-bold tracking-[0.3em] mb-4 block">SESSION 01: BREAD & KANJUKU</span>
+                        <h3 class="text-3xl md:text-4xl serif leading-tight mb-8">「最初の一口」で決めた、<br>小麦を主役にする魔法。</h3>
+                        <p class="text-stone-500 leading-loose mb-10 font-light text-sm md:text-base">
+                            ベーカリーシェフはオイルを一口含むと、迷わずライ麦パンを手に取りました。「このオイルの甘みは、香ばしさを引き立てるためにある。複雑な味付けはいらない。ただ、焼きたてのパンにこのオイルを注ぐ。それが、私がこの一滴から得た答えです。」
+                        </p>
+                        <div class="p-8 bg-stone-50 italic text-stone-600 border-l-2 border-olive-800 text-sm leading-relaxed">
+                            「朝、トーストを焼く香りとこのオイル。それだけで、その日一日が誠実なものになる予感がします」
+                        </div>
+                    </div>
+
+                    <div id="content-hayazumi" class="chef-content">
+                        <span class="text-[10px] text-olive-800 font-bold tracking-[0.3em] mb-4 block">SESSION 02: MEAT & HAYAZUMI</span>
+                        <h3 class="text-3xl md:text-4xl serif leading-tight mb-8">喉を通る「刺激」から、<br>肉の野生を呼び覚ます。</h3>
+                        <p class="text-stone-500 leading-loose mb-10 font-light text-sm md:text-base">
+                            「この辛み、この青い香り。オイルを味わった瞬間、赤身肉のグリルしか浮かばなかった」とイタリアンシェフ。脂の甘みをこのオイルの刺激で切り、肉本来の旨みを浮き彫りにする。一発撮りのシズルが皿の上に踊ります。
+                        </p>
+                        <div class="p-8 bg-stone-50 italic text-stone-600 border-l-2 border-olive-800 text-sm leading-relaxed">
+                            「食材の脂を切る。香りを立てる。この早摘みを知ってしまうと、もう戻ることはできません」
+                        </div>
+                    </div>
+
+                    <div id="content-lemon" class="chef-content">
+                        <span class="text-[10px] text-olive-800 font-bold tracking-[0.3em] mb-4 block">SESSION 03: DESSERT & LEMON</span>
+                        <h3 class="text-3xl md:text-4xl serif leading-tight mb-8">鼻に抜ける「果実」が、<br>一皿をデザートへ変える。</h3>
+                        <p class="text-stone-500 leading-loose mb-10 font-light text-sm md:text-base">
+                            パティシエは、その香りに驚きの表情を見せました。「これはもう、果実そのもの。バニラアイスにひと振りするだけで、高級なデセールに変わる。最初の一滴で、完成形が見えました。」
+                        </p>
+                        <div class="p-8 bg-stone-50 italic text-stone-600 border-l-2 border-olive-800 text-sm leading-relaxed">
+                            「搾りたてのレモンよりも、このオイルの方が、果実の本質を伝えてくれることがあります」
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2枚の写真（シェフと料理） -->
+                <div class="reveal">
+                    <div class="dual-image-container mb-6">
+                        <!-- 左：シェフの写真 -->
+                        <div class="image-box shadow-xl rounded-sm">
+                            <img id="chef-portrait" src="ph/002.png" class="w-full h-full object-cover" alt="Chef">
+                            <span class="image-label">THE CHEF</span>
+                        </div>
+                        <!-- 右：料理の写真 -->
+                        <div class="image-box shadow-xl translate-y-8 rounded-sm">
+                            <img id="chef-dish" src="ph/002b.jpg" class="w-full h-full object-cover" alt="Dish">
+                            <span class="image-label">THE DISH</span>
+                        </div>
+                    </div>
+                    <div class="mt-12 text-center lg:text-left">
+                        <p class="text-[10px] text-stone-400 tracking-[0.4em] uppercase font-bold">Inspiration Gallery</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ <!-- 農園のライブログ（ジャーニー加速：農園のいま） -->
+    <section id="farm-log" class="py-12 bg-white">
+        <div class="max-w-4xl mx-auto px-8">
+            <div class="bg-stone-50 border border-stone-100 p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 reveal">
+                <div class="w-32 h-32 rounded-full overflow-hidden flex-shrink-0 border-4 border-white shadow-md">
+                    <img src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="園地">
+                </div>
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-olive-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-olive-800"></span>
+                        </span>
+                        <span class="text-[10px] font-bold tracking-widest text-olive-800">農園のいま（2026.02.10）</span>
+                    </div>
+                    <h3 class="serif text-lg mb-4">オリーブたちは、じっと春を待っています。</h3>
+                    <p class="text-[12px] text-stone-500 leading-relaxed mb-4">
+                        小豆島は少し肌寒い日が続いていますが、園地のオリーブたちは次の実りのために養分を蓄えています。この時期の静かな時間が、秋の豊かな油分を作ります。
+                    </p>
+                    <a href="#" class="text-[10px] font-bold text-olive-800 border-b border-olive-800 pb-0.5 tracking-widest hover:text-stone-400 hover:border-stone-400 transition">園主のブログをもっと読む</a>
+                </div>
+            </div>
+        </div>
+    </section>   
+<section class="py-28 bg-stone-50 overflow-hidden border-t border-stone-200/50">
+    <div class="max-w-3xl mx-auto px-8">
+        <div class="flex flex-col items-center">
+            
+            <div class="mb-14 text-center">
+                <h2 class="text-2xl md:text-3xl serif leading-relaxed tracking-[0.2em] mb-12 reveal">
+                    正解は、<br class="md:hidden">手が知っている。
+                </h2>
+                
+                <div class="space-y-9 text-stone-600 text-sm md:text-base leading-loose tracking-[0.05em] reveal text-left md:text-center">
+                    <p>
+                        機械で測れるのは、きっと数字だけだと思うのです。<br>
+                        その日の風の冷たさや、実がはちきれんとする瞬間の高鳴り。<br>
+                        私たちはそれを、自分の指先で、一つひとつ確かめてきました。
+                    </p>
+                    <p>
+                        特別な才能があるわけではありません。<br>
+                        ただ、自分に嘘をつくのが、少し下手なだけです。<br>
+                        「これでいい」という妥協で、今日を終えたくない。<br>
+                        自分が心から誇れないものは、誰の食卓にも出したくない。
+                    </p>
+                    <p>
+                        私たちの時間は、すべてこの一滴に込めてしまいました。<br>
+                        あなたの暮らしの、どこか隅っこに置いていただけたなら。<br>
+                        小豆島で土にまみれる私たちにとって、これ以上の幸せはありません。
+                    </p>
+                </div>
+            </div>
+            <div class="reveal mt-8 mb-12 text-center max-w-2xl">
+                <p class="text-stone-500 text-[14px] leading-relaxed italic border-t border-stone-200 pt-8">
+                    だからこそ、私たちはあなたのために、<br>
+                    誠実さを失わない一滴をお届けしたいのです。
+                </p>
+            </div>
+            <div class="reveal mt-4">
+                <a href="#lineup" class="group flex flex-col items-center gap-4">
+                    <div class="w-20 h-20 rounded-full border border-stone-300 flex items-center justify-center group-hover:border-olive-800 transition-all duration-700 bg-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="text-stone-400 group-hover:text-olive-800 transition-colors">
+                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                    </div>
+                    <span class="text-[11px] font-bold tracking-[0.4em] text-stone-400 group-hover:text-olive-800 transition-all">バスケットを確認する</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- フッター -->
+    <footer class="py-16 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <div class="serif text-stone-800 text-xl tracking-widest mb-2">井上誠耕園</div>
+                <p class="text-[10px] tracking-widest text-stone-400 uppercase">Shodoshima Olive Farm</p>
+            </div>
+            <div class="flex gap-8 text-[11px] tracking-widest font-bold text-stone-600">
+                <a href="#" class="hover:text-olive-800 transition">特定商取引法</a>
+                <a href="#" class="hover:text-olive-800 transition">個人情報保護方針</a>
+                <a href="#" class="hover:text-olive-800 transition">お問い合わせ</a>
+        <div class="text-center md:text-right">
+            <p class="text-[10px] tracking-widest font-bold text-stone-400 uppercase mb-2">
+                &copy; 2026 INOUE SEIKOEN.
+            </p>
+            <p class="text-[9px] tracking-widest text-stone-300 italic">
+                Designed & Developed by Ko Miyazaki
+            </p>
+        </div>
+    </div>
+</footer>
+
+    <!-- 通知トースト -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-stone-800 text-white text-[10px] tracking-widest px-8 py-4 rounded-full opacity-0 translate-y-4 transition-all duration-500 pointer-events-none z-[100]">
+        バスケットに追加しました
+    </div>
+
+    <script>
+        // 各オイルに対応するビジュアルデータ
+        const sessionData = {
+            'kanjuku': {
+                portrait: 'ph/001.png', // シェフ
+                dish: 'ph/pan.jpg', // ブレッド
+                label: 'Session: KANJUKU'
+            },
+            'hayazumi': {
+                portrait: 'ph/002.png', // シェフ
+                dish: 'ph/02.jpg', // ステーキ
+                label: 'Session: HAYAZUMI'
+            },
+            'lemon': {
+                portrait: 'ph/003.png', // シェフ
+                dish: 'ph/05.jpg', // デザート
+                label: 'Session: LEMON'
+            }
+        };
+
+        // コンテンツ切り替え機能
+        function switchChef(type) {
+            // 1. Lineupの選択状態更新
+            document.querySelectorAll('.product-card').forEach(el => el.classList.remove('selected'));
+            const card = document.getElementById('card-' + type);
+            if(card) card.classList.add('selected');
+
+            // 2. ストーリーセクション内のタブ更新
+            document.querySelectorAll('.chef-tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + type).classList.add('active');
+
+            // 3. テキストコンテンツのアニメーション切り替え
+            document.querySelectorAll('.chef-content').forEach(el => el.classList.remove('active'));
+            setTimeout(() => {
+                document.getElementById('content-' + type).classList.add('active');
+            }, 50);
+
+            // 4. 写真の差し替え
+            const data = sessionData[type];
+            document.getElementById('chef-portrait').src = data.portrait;
+            document.getElementById('chef-dish').src = data.dish;
+
+            // 5. Chefセクションへ移動（ラインナップからクリックされた場合を考慮）
+            const target = document.getElementById('chef');
+            const offset = 80;
+            const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
+        }
+
+        // バスケット追加処理
+        let cartCount = 0;
+        function addToCart(event, productName) {
+            event.stopPropagation();
+            const btn = event.currentTarget;
+            btn.disabled = true;
+            btn.textContent = '追加中...';
+
+            setTimeout(() => {
+                cartCount++;
+                document.getElementById('cart-count').textContent = cartCount;
+                btn.disabled = false;
+                btn.textContent = 'バスケットへ';
+                showToast(`${productName}をバスケットに入れました`);
+            }, 600);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        }
+
+       // 1. スクロールアニメーション（既存のコードがある場合、ここに残します）
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // 2. 編集後記（Postscript）の制御
+function openNote() {
+    const modal = document.getElementById('postscript-modal');
+    if (!modal) return;
+    
+    // モーダル表示
+    modal.classList.remove('pointer-events-none', 'opacity-0');
+    modal.classList.add('opacity-100');
+    
+    // 各テキストを順番にふわっと出す
+    document.querySelectorAll('.reveal-note').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(10px)';
+        el.style.transition = 'all 1.5s cubic-bezier(0.22, 1, 0.36, 1)';
+        setTimeout(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 300 + (i * 400));
+    });
+}
+
+function closeNote() {
+    const modal = document.getElementById('postscript-modal');
+    if (!modal) return;
+    
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.classList.remove('opacity-100');
+}
+
+// モーダル外側をクリックして閉じる
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('postscript-modal');
+    if (modal && e.target === modal) {
+        closeNote();
+    }
+});
+    </script> </body>
+</html>

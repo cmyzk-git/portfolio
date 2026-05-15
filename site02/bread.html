@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浸す朝が、始まる。— 緑果オリーブオイル × 菊太郎生食パン｜井上誠耕園</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --olive-deep:   #111A0A;
+  --olive-dark:   #1E2E12;
+  --olive-mid:    #3A5220;
+  --olive-fresh:  #5C7A35;
+  --olive-bright: #7DA442;
+  --olive-pale:   #C8D9A0;
+  --cream:        #F7F3E8;
+  --cream-warm:   #EDE6CF;
+  --gold:         #C4960A;
+  --gold-light:   #E8B84B;
+  --text-dark:    #1A1A14;
+  --text-mid:     #3C3C30;
+  --text-light:   #8A8A70;
+  --white:        #FEFEFE;
+  --font-serif:   'Shippori Mincho', serif;
+  --font-sans:    'Noto Sans JP', sans-serif;
+  --font-en:      'Cormorant Garamond', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--olive-deep);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
+.hero {
+  height: 100vh;
+  min-height: 640px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 40px 24px;
+}
+
+/* 写真スロット：Hero背景 */
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  background: url('ph/hero-photo.jpg') center/cover no-repeat;
+  transform: scale(1.08);
+  transition: transform 8s ease-out;
+}
+.hero-photo.loaded { transform: scale(1); }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 60%, rgba(0,0,0,.45) 0%, transparent 70%),
+    linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.6) 100%);
+}
+
+/* 緑のオイルが染み出すアニメーション */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 55%, rgba(92,122,53,.22) 0%, transparent 65%);
+  animation: glowpulse 6s ease-in-out infinite;
+}
+@keyframes glowpulse {
+  0%,100% { opacity: .6; transform: scale(1); }
+  50%      { opacity: 1;  transform: scale(1.08); }
+}
+
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,.018) 60px, rgba(255,255,255,.018) 61px);
+}
+
+.hero-bar-top {
+  position: absolute;
+  top: 52px; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(196,150,10,.5), transparent);
+  animation: barslide .8s ease-out .3s both;
+}
+.hero-bar-bottom {
+  position: absolute;
+  bottom: 72px; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(196,150,10,.5), transparent);
+  animation: barslide .8s ease-out .5s both;
+}
+@keyframes barslide {
+  from { opacity: 0; transform: scaleX(.3); }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-en);
+  font-size: clamp(9px, 1.1vw, 11px);
+  font-style: italic;
+  color: rgba(200,217,160,.5);
+  letter-spacing: .28em;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: fadeup .9s ease .2s forwards;
+}
+
+.hero-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4.5vw, 54px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.18;
+  letter-spacing: .07em;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeup 1.1s ease .45s forwards;
+}
+
+.hero-h1 .word-dip {
+  color: var(--olive-pale);
+  display: inline-block;
+  position: relative;
+}
+.hero-h1 .word-dip::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold), var(--olive-bright));
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: underlineIn .6s ease 1.4s forwards;
+}
+@keyframes underlineIn {
+  to { transform: scaleX(1); }
+}
+
+.hero-sub {
+  font-family: var(--font-serif);
+  font-size: clamp(12px, 1.6vw, 16px);
+  color: rgba(255,255,255,.4);
+  letter-spacing: .16em;
+  line-height: 2;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeup .9s ease .8s forwards;
+}
+
+.hero-sub .sub2 {
+  display: block;
+  font-size: .8em;
+  color: rgba(255,255,255,.22);
+  letter-spacing: .1em;
+  margin-top: 6px;
+}
+
+.hero-brands {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  opacity: 0;
+  animation: fadeup .8s ease 1s forwards;
+}
+.hero-brand {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(200,217,160,.55);
+  letter-spacing: .22em;
+}
+.hero-brand-sep {
+  width: 28px; height: 1px;
+  background: linear-gradient(to right, rgba(196,150,10,.3), rgba(196,150,10,.6), rgba(196,150,10,.3));
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: fadeup .7s ease 1.4s forwards;
+}
+.scroll-cue-label {
+  font-family: var(--font-en);
+  font-size: 8px;
+  color: rgba(255,255,255,.2);
+  letter-spacing: .25em;
+}
+.scroll-cue-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, rgba(196,150,10,.6), transparent);
+  animation: linedrop 2s ease-in-out 1.6s infinite;
+}
+@keyframes linedrop {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+
+/* ════════════════════════════
+   WAVE DIVIDER
+════════════════════════════ */
+.wave-divider {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin: -1px;
+}
+.wave-divider svg {
+  display: block;
+  width: 100%;
+}
+
+/* ════════════════════════════
+   COMMON SECTION
+════════════════════════════ */
+.sec-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 100px 32px;
+}
+.sec-inner.wide { max-width: 1060px; }
+
+.eyebrow {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-style: italic;
+  color: var(--olive-fresh);
+  letter-spacing: .26em;
+  display: block;
+  margin-bottom: 18px;
+}
+
+.sec-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3.5vw, 38px);
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: .04em;
+  margin-bottom: 32px;
+}
+
+.rule {
+  width: 44px; height: 1px;
+  background: var(--olive-fresh);
+  margin-bottom: 32px;
+}
+
+.bt {
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1.5vw, 16px);
+  font-weight: 300;
+  line-height: 2.15;
+  color: var(--text-mid);
+}
+.bt + .bt { margin-top: 22px; }
+
+/* ════════════════════════════
+   SECTION 2: 問いかけ（クリーム）
+════════════════════════════ */
+.sec-question { background: var(--cream); }
+.sec-question .sec-h2 { color: var(--olive-dark); }
+
+.exp-block {
+  margin-top: 48px;
+  padding: 44px 52px;
+  background: white;
+  border-left: 3px solid var(--olive-fresh);
+  position: relative;
+  overflow: hidden;
+}
+.exp-block::before {
+  content: '"';
+  font-family: var(--font-en);
+  font-size: 120px;
+  font-weight: 300;
+  color: rgba(92,122,53,.08);
+  position: absolute;
+  top: -20px; left: 16px;
+  line-height: 1;
+  pointer-events: none;
+}
+/* オイルが染み込む演出: 左から緑のラインが伸びる */
+.exp-block::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--olive-bright), var(--olive-mid), var(--olive-fresh));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.2s cubic-bezier(.22,1,.36,1);
+}
+.exp-block.visible::after { transform: scaleY(1); }
+
+.exp-text {
+  font-family: var(--font-serif);
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 2.3;
+  color: var(--text-dark);
+  letter-spacing: .04em;
+  position: relative;
+  z-index: 1;
+}
+.exp-text em {
+  font-style: normal;
+  color: var(--olive-mid);
+  font-weight: 600;
+}
+
+.yearning {
+  margin-top: 36px;
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 500;
+  color: var(--olive-mid);
+  line-height: 1.9;
+  border-left: 2px solid var(--olive-pale);
+  padding-left: 20px;
+}
+
+/* ════════════════════════════
+   SECTION 3: 文化（ダーク）
+════════════════════════════ */
+.sec-culture { background: var(--olive-dark); }
+.sec-culture .sec-h2 { color: var(--white); }
+.sec-culture .bt { color: rgba(255,255,255,.55); }
+
+.quote-box {
+  margin: 44px 0;
+  padding: 36px 44px;
+  border: 1px solid rgba(196,150,10,.28);
+  background: rgba(196,150,10,.05);
+  position: relative;
+  overflow: hidden;
+}
+.quote-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 44px;
+  width: 0; height: 3px;
+  background: var(--gold);
+  transition: width 1s ease .3s;
+}
+.quote-box.visible::before { width: 64px; }
+
+.quote-text {
+  font-family: var(--font-serif);
+  font-size: clamp(15px, 1.8vw, 19px);
+  color: rgba(255,255,255,.8);
+  line-height: 2.0;
+  letter-spacing: .05em;
+}
+
+/* ════════════════════════════
+   SECTION 4 & 5: 商品
+════════════════════════════ */
+.sec-product-a { background: var(--cream-warm); }
+.sec-product-b { background: var(--cream); }
+
+.product-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+.product-layout.flip { direction: rtl; }
+.product-layout.flip > * { direction: ltr; }
+
+/* 写真スロット */
+.photo-slot {
+  aspect-ratio: 4/5;
+  position: relative;
+  overflow: hidden;
+  background: var(--olive-mid);
+}
+.photo-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.06);
+  transition: transform 1.4s cubic-bezier(.22,1,.36,1);
+}
+.photo-slot.visible .photo-img { transform: scale(1); }
+
+/* プレースホルダー表示（写真なし時） */
+.photo-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.photo-placeholder-en {
+  font-family: var(--font-en);
+  font-size: clamp(32px, 5vw, 60px);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,.18);
+  line-height: 1.1;
+  text-align: center;
+}
+.photo-placeholder-jp {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  color: rgba(255,255,255,.35);
+  letter-spacing: .18em;
+}
+.photo-placeholder-note {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  font-family: var(--font-sans);
+  font-size: 9px;
+  color: rgba(255,255,255,.25);
+  letter-spacing: .1em;
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 4px 8px;
+}
+
+/* 写真にかかるオーバーレイ（常設） */
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(26,46,16,.3) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* スクロール連動: 写真が浮かび上がる */
+.photo-slot {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1);
+}
+.photo-slot.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-info { }
+.product-h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 2.5vw, 26px);
+  font-weight: 700;
+  color: var(--olive-dark);
+  line-height: 1.65;
+  letter-spacing: .04em;
+  margin-bottom: 24px;
+}
+.product-bt {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 300;
+  line-height: 2.05;
+  color: var(--text-mid);
+  margin-bottom: 18px;
+}
+.product-accent {
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 1.3vw, 14px);
+  font-weight: 500;
+  color: var(--olive-mid);
+  line-height: 1.9;
+  border-left: 2px solid var(--olive-fresh);
+  padding-left: 16px;
+  margin: 24px 0 32px;
+}
+.product-price {
+  font-family: var(--font-en);
+  font-size: clamp(24px, 3vw, 32px);
+  color: var(--olive-mid);
+  letter-spacing: .05em;
+  border-bottom: 1px solid var(--olive-pale);
+  padding-bottom: 8px;
+  display: inline-block;
+}
+.product-price-note {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  color: var(--text-light);
+  letter-spacing: .12em;
+  margin-top: 6px;
+}
+
+/* ════════════════════════════
+   SECTION 6: 食べ方（ディープダーク）
+════════════════════════════ */
+.sec-ritual { background: var(--olive-deep); }
+.sec-ritual .sec-h2 { color: var(--white); }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin: 60px 0 0;
+}
+
+.step {
+  padding: 52px 36px;
+  background: rgba(255,255,255,.025);
+  position: relative;
+  overflow: hidden;
+  /* スクロールアニメ */
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.step.visible { opacity: 1; transform: translateY(0); }
+.step:nth-child(2) { transition-delay: .15s; }
+.step:nth-child(3) { transition-delay: .3s; }
+
+/* ホバーで天端にゴールドラインが伸びる */
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(to right, var(--gold), var(--olive-bright));
+  transition: width .4s ease;
+}
+.step:hover::before { width: 100%; }
+
+/* オイルが染み込むような背景エフェクト */
+.step::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(92,122,53,.12) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity .5s ease, transform .5s ease;
+  transform: scale(.6);
+}
+.step:hover::after { opacity: 1; transform: scale(1); }
+
+.step-num {
+  font-family: var(--font-en);
+  font-size: 64px;
+  font-weight: 300;
+  color: rgba(200,217,160,.1);
+  line-height: 1;
+  display: block;
+  margin-bottom: 20px;
+}
+.step-tag {
+  font-family: var(--font-en);
+  font-size: 9px;
+  color: var(--olive-fresh);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 14px;
+}
+.step-h {
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.step-body {
+  font-family: var(--font-sans);
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 300;
+  color: rgba(255,255,255,.38);
+  line-height: 1.95;
+}
+
+.ritual-end {
+  text-align: center;
+  padding: 72px 0 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .9s ease .3s, transform .9s ease .3s;
+}
+.ritual-end.visible { opacity: 1; transform: translateY(0); }
+.ritual-end-text {
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 2.5vw, 28px);
+  color: rgba(255,255,255,.6);
+  letter-spacing: .08em;
+  line-height: 1.8;
+}
+
+/* ════════════════════════════
+   SECTION 7: 生産者
+════════════════════════════ */
+.sec-producer { background: var(--cream); }
+
+.producer-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 72px;
+  align-items: start;
+}
+
+/* 写真スロット（縦長） */
+.producer-photo {
+  aspect-ratio: 3/4;
+  position: relative;
+  overflow: hidden;
+  background: var(--olive-mid);
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.producer-photo.visible { opacity: 1; transform: translateX(0); }
+
+.producer-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,46,16,.85) 0%, transparent 45%);
+}
+.producer-photo-cap {
+  position: absolute;
+  bottom: 24px; left: 24px; right: 24px;
+}
+.producer-photo-en {
+  font-family: var(--font-en);
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,.22);
+  line-height: 1.1;
+  display: block;
+}
+.producer-photo-jp {
+  font-family: var(--font-serif);
+  font-size: 10px;
+  color: rgba(255,255,255,.35);
+  letter-spacing: .18em;
+  display: block;
+  margin-top: 8px;
+}
+.producer-photo-note {
+  position: absolute;
+  bottom: 12px; right: 12px;
+  font-family: var(--font-sans);
+  font-size: 9px;
+  color: rgba(255,255,255,.2);
+  letter-spacing: .1em;
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 3px 7px;
+}
+
+.producer-text .sec-h2 { color: var(--olive-dark); }
+
+.philosophy-box {
+  margin-top: 40px;
+  background: var(--olive-dark);
+  padding: 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.philosophy-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s ease .4s;
+}
+.philosophy-box.visible::before { transform: scaleX(1); }
+
+.philosophy-text {
+  font-family: var(--font-serif);
+  font-size: clamp(14px, 1.6vw, 17px);
+  color: rgba(255,255,255,.65);
+  line-height: 2.1;
+  letter-spacing: .05em;
+}
+.philosophy-attr {
+  margin-top: 18px;
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-style: italic;
+  color: rgba(200,217,160,.4);
+  letter-spacing: .15em;
+}
+
+/* ════════════════════════════
+   SECTION 8: CTA
+════════════════════════════ */
+.sec-cta {
+  background: var(--olive-dark);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景にオイルのリング */
+.cta-rings {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.cta-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(196,150,10,.08);
+  animation: ringexpand 6s ease-in-out infinite;
+}
+.cta-ring:nth-child(1) { width: 300px; height: 300px; animation-delay: 0s; }
+.cta-ring:nth-child(2) { width: 500px; height: 500px; animation-delay: 1.5s; }
+.cta-ring:nth-child(3) { width: 700px; height: 700px; animation-delay: 3s; }
+@keyframes ringexpand {
+  0%   { opacity: 0; transform: scale(.85); }
+  30%  { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.1); }
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 120px 32px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.cta-inner.visible { opacity: 1; transform: translateY(0); }
+
+.cta-deco {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, transparent, rgba(196,150,10,.7));
+  margin: 0 auto 52px;
+}
+
+.cta-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.5;
+  letter-spacing: .06em;
+  margin-bottom: 24px;
+}
+
+.cta-sub {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 300;
+  color: rgba(255,255,255,.4);
+  line-height: 2.0;
+  margin-bottom: 56px;
+  letter-spacing: .06em;
+}
+
+.cta-btn {
+  display: inline-block;
+  background: transparent;
+  color: white;
+  font-family: var(--font-serif);
+  font-size: clamp(14px, 1.5vw, 17px);
+  font-weight: 600;
+  letter-spacing: .14em;
+  padding: 20px 60px;
+  text-decoration: none;
+  border: 1px solid rgba(92,122,53,.6);
+  position: relative;
+  cursor: pointer;
+  transition: background .3s, border-color .3s;
+  overflow: hidden;
+}
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--olive-fresh);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
+  z-index: -1;
+}
+.cta-btn:hover::before { transform: scaleX(1); }
+.cta-btn:hover { border-color: var(--olive-fresh); }
+
+.cta-note {
+  margin-top: 32px;
+  font-family: var(--font-serif);
+  font-size: clamp(12px, 1.3vw, 14px);
+  color: rgba(255,255,255,.25);
+  line-height: 2.0;
+  letter-spacing: .07em;
+}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+footer {
+  background: var(--olive-deep);
+  padding: 48px 32px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.footer-brands {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+.footer-brand {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(200,217,160,.35);
+  letter-spacing: .22em;
+}
+.footer-sep {
+  width: 20px; height: 1px;
+  background: rgba(196,150,10,.3);
+}
+.footer-copy {
+  font-family: var(--font-en);
+  font-size: 10px;
+  color: rgba(255,255,255,.12);
+  letter-spacing: .1em;
+}
+
+/* ════════════════════════════
+   SCROLL REVEAL (汎用)
+════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .85s ease, transform .85s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .22s; }
+.reveal-delay-3 { transition-delay: .38s; }
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media (max-width: 768px) {
+  .product-layout,
+  .product-layout.flip { grid-template-columns: 1fr; direction: ltr; gap: 40px; }
+  .steps { grid-template-columns: 1fr; }
+  .producer-grid { grid-template-columns: 1fr; gap: 40px; }
+  .exp-block { padding: 28px 24px; }
+  .sec-inner { padding: 72px 24px; }
+}
+
+@keyframes fadeup {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-photo" id="heroPhoto"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-bar-top"></div>
+  <div class="hero-bar-bottom"></div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">Inoue Seikouen × Kikutaro</span>
+    <h1 class="hero-h1">
+      パンに、オイルを。<br>それだけのことが、<br><span class="word-dip">なぜこんなに特別なのか。</span>
+    </h1>
+    <p class="hero-sub">
+      知らなかった朝に、もう戻れない。
+      <span class="sub2">— 緑果オリーブオイル × 菊太郎生食パン</span>
+    </p>
+    <div class="hero-brands">
+      <span class="hero-brand">井上誠耕園</span>
+      <div class="hero-brand-sep"></div>
+      <span class="hero-brand">菊太郎</span>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span class="scroll-cue-label">SCROLL</span>
+    <div class="scroll-cue-line"></div>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave-divider" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z" fill="#F7F3E8"/>
+</svg>
+
+<!-- ══════════ SECTION 2: 問いかけ ══════════ -->
+<section class="sec-question">
+  <div class="sec-inner">
+    <span class="eyebrow reveal">The Question</span>
+    <h2 class="sec-h2 reveal reveal-delay-1">
+      「かけた」ことはあっても、<br>「浸した」ことは、ありますか？
+    </h2>
+    <div class="rule reveal reveal-delay-2"></div>
+
+    <p class="bt reveal reveal-delay-2">
+      市販のパンに試したとき、なるほど、と思った。<br>
+      美味しかった。それは本当のことです。
+    </p>
+    <p class="bt reveal reveal-delay-3" style="margin-top:16px;">
+      でも菊太郎の生食パンと合わせたとき、<strong style="color:var(--olive-mid);">なんか、違った。</strong>
+    </p>
+
+    <div class="exp-block reveal">
+      <p class="exp-text">
+        浸す、という動詞を、<br>
+        食べ物に使う日が来るとは思っていなかった。<br><br>
+        パンの断面をオイルの海に沈めると、<br>
+        若草色の油が、白い生地の奥まで静かにゆっくりと染み入っていく。<br><br>
+        オイルの清々しさが消えない。<br>
+        小麦の甘みも、消えない。<br>
+        どちらも、そこに、<em>ちゃんといる</em>。<br><br>
+        市販のパンでは、この染み方をしない。<br>
+        菊太郎の、あの<em>密度と甘み</em>でなければ、<br>
+        オイルはただ「かかる」だけで終わってしまう。
+      </p>
+    </div>
+
+    <p class="yearning reveal">
+      ちょっと高いな、と思う。<br>
+      でも、知ってしまったら仕方ない。<br>
+      それがこの組み合わせの、少し困った真実です。
+    </p>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave-divider" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(180deg);background:var(--cream);">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z" fill="#1E2E12"/>
+</svg>
+
+<!-- ══════════ SECTION 3: 文化 ══════════ -->
+<section class="sec-culture">
+  <div class="sec-inner">
+    <span class="eyebrow reveal">The Origin</span>
+    <h2 class="sec-h2 reveal reveal-delay-1">
+      ギリシャの農家がずっとやってきたことを、<br>小豆島がちゃんと教えてくれた。
+    </h2>
+    <div class="rule reveal reveal-delay-2"></div>
+
+    <p class="bt reveal reveal-delay-2">ギリシャやスペインでは、秋の収穫が終わると家族が集まって、その年に搾れたばかりのオイルをパンに浸して食べる、という文化があるそうです。大げさでなく、それが一番のごちそうだったらしい。</p>
+    <p class="bt reveal reveal-delay-3">搾りたての緑のオイルを「液体の金」と呼ぶ人たちが、パンと組み合わせてきたのには、ちゃんと理由があった。</p>
+
+    <div class="quote-box reveal">
+      <p class="quote-text">
+        一年かけて育てたものを、<br>
+        パンに浸して、家族と食べる。<br>
+        それだけのことが、どうしてこんなに豊かなのか。<br>
+        小豆島に来て、少しわかった気がした。
+      </p>
+    </div>
+
+    <p class="bt reveal">その食べ方が、今、小豆島から届けられる。</p>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave-divider" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="background:var(--olive-dark);">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z" fill="#EDE6CF"/>
+</svg>
+
+<!-- ══════════ SECTION 4: 緑果オリーブオイル ══════════ -->
+<section class="sec-product-a">
+  <div class="sec-inner wide">
+    <div class="product-layout">
+
+      <!-- 写真スロット① -->
+      <div class="photo-slot" id="photoOil">
+  <img src="ph/oil.jpg" class="photo-img" alt="緑果オリーブオイル">
+  <div class="photo-overlay"></div>
+</div>
+
+      <div class="product-info">
+        <span class="eyebrow reveal">Product 01 — Inoue Seikouen</span>
+        <h3 class="product-h3 reveal reveal-delay-1">
+          まだ青い実から搾る、という<br>少し贅沢な選択。
+        </h3>
+        <p class="product-bt reveal reveal-delay-2">普通のオリーブオイルは、完熟した黒い実から搾る。緑果オリーブオイルは、まだ青いうちに収穫した実だけを使う。収穫できるのは、一年のうちわずか数週間だけ。</p>
+        <p class="product-bt reveal reveal-delay-2">喉の奥に感じる、あの清々しさ。少し辛くて、でもすっきりする。他のオイルで同じことをしようとしても、たぶん、こうはならない。</p>
+        <p class="product-accent reveal reveal-delay-3">「もったいない」と思うくらい浸してください。<br>それが、たぶん正しい食べ方です。</p>
+        <span class="product-price reveal">¥ 1,944 <small style="font-size:.55em;">〜</small></span>
+        <span class="product-price-note reveal">180ml / 税込</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 5: 菊太郎の生食パン ══════════ -->
+<section class="sec-product-b">
+  <div class="sec-inner wide">
+    <div class="product-layout flip">
+
+      <!-- 写真スロット② -->
+      <div class="photo-slot" id="photoBread" style="background:var(--olive-dark);">
+  <img src="ph/bread01.jpg" class="photo-img" alt="菊太郎生食パン">
+  <div class="photo-overlay"></div>
+</div>
+
+      <div class="product-info">
+        <span class="eyebrow reveal">Product 02 — Kikutaro</span>
+        <h3 class="product-h3 reveal reveal-delay-1">
+          パンが、ちゃんとオイルを<br>受け取ってくれた。
+        </h3>
+        <p class="product-bt reveal reveal-delay-2">湯種という製法がある。小麦粉を熱湯で一度糊化させてから生地に混ぜる。難しい話は置いておくと、要するに、もちもちしていて、かむほど甘い。</p>
+        <p class="product-bt reveal reveal-delay-2">この生地にオイルを浸すと、弾かない。でも溺れない。ちょうどいいところで受け取って、ちょうどいいところで返してくれる。そういうパンです。</p>
+        <p class="product-accent reveal reveal-delay-3">
+          市販のパンでも美味しい。<br>
+          でも菊太郎で浸したとき、なんか、違った。<br>
+          うまく説明できないけど、違った。
+        </p>
+        <span class="product-price reveal">¥ 1,800</span>
+        <span class="product-price-note reveal">一斤 / 税込 / 菊太郎（井上誠耕園グループ）</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave-divider" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(180deg);background:var(--cream);">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z" fill="#111A0A"/>
+</svg>
+
+<!-- ══════════ SECTION 6: 食べ方 ══════════ -->
+<section class="sec-ritual">
+  <div class="sec-inner">
+    <span class="eyebrow reveal">The Ritual</span>
+    <h2 class="sec-h2 reveal reveal-delay-1">むずかしくない。<br>3ステップで、朝が変わる。</h2>
+    <div class="rule reveal reveal-delay-2"></div>
+
+    <div class="steps">
+      <div class="step" id="step1">
+        <span class="step-num">01</span>
+        <span class="step-tag">Cut</span>
+        <div class="step-h">パンを、<br>少し厚めに切る。</div>
+        <p class="step-body">薄いと、オイルに負けてしまう。<br>厚みが、ちゃんと甘みを守ってくれる。</p>
+      </div>
+      <div class="step" id="step2">
+        <span class="step-num">02</span>
+        <span class="step-tag">Pour</span>
+        <div class="step-h">オイルは、<br>小皿に注ぐ。かけない。</div>
+        <p class="step-body">そこが大事。<br>小皿に、緑の池をつくる。</p>
+      </div>
+      <div class="step" id="step3">
+        <span class="step-num">03</span>
+        <span class="step-tag">Dip</span>
+        <div class="step-h">断面を浸して、<br>3秒、待つ。</div>
+        <p class="step-body">急がなくていい。<br>オイルが、パンに入っていくのを感じる。</p>
+      </div>
+    </div>
+
+    <div class="ritual-end" id="ritualEnd">
+      <p class="ritual-end-text">おいしいって、たぶん、こういうことだ。</p>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave-divider" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="background:var(--olive-deep);">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z" fill="#F7F3E8"/>
+</svg>
+
+<!-- ══════════ SECTION 7: 生産者 ══════════ -->
+<section class="sec-producer">
+  <div class="sec-inner wide">
+    <div class="producer-grid">
+
+      <!-- 写真スロット③ -->
+      <div class="producer-photo" id="photoProducer">
+  <img src="ph/staff01.jpg" class="photo-img" alt="小豆島の農園">
+  <div class="producer-photo-overlay"></div>
+  <div class="producer-photo-cap">
+    <span class="producer-photo-en">Shodoshima<br>Since 1940</span>
+    <span class="producer-photo-jp">井上誠耕園</span>
+  </div>
+</div>
+
+      <div class="producer-text">
+        <span class="eyebrow reveal">The Producer</span>
+        <h2 class="sec-h2 reveal reveal-delay-1">大げさじゃなく、<br>本物をつくっている人がいる。</h2>
+        <div class="rule reveal reveal-delay-2"></div>
+        <p class="bt reveal reveal-delay-2">1940年に創業し、小豆島で柑橘やオリーブを育ててきた。派手な広告より、いいものをつくることに時間をかけてきた会社です。</p>
+        <p class="bt reveal reveal-delay-3">グループの菊太郎も、同じ考え方でパンをつくっている。そういう人たちがつくったものだから、浸すだけで、こんなに美味しい。</p>
+
+        <div class="philosophy-box" id="philosophyBox">
+          <p class="philosophy-text">「農は国の基なり」<br><br>難しい言葉だけど、要するに、<br>ちゃんとしたものをつくり続けよう、ということだと思っています。</p>
+          <p class="philosophy-attr">— 井上誠耕園　代表</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<svg class="wave-divider" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="transform:rotate(180deg);background:var(--cream);">
+  <path d="M0,20 C360,40 1080,0 1440,20 L1440,40 L0,40 Z" fill="#1E2E12"/>
+</svg>
+
+<!-- ══════════ SECTION 8: CTA ══════════ -->
+<section class="sec-cta">
+  <div class="cta-rings">
+    <div class="cta-ring"></div>
+    <div class="cta-ring"></div>
+    <div class="cta-ring"></div>
+  </div>
+
+  <div class="cta-inner" id="ctaInner">
+    <div class="cta-deco"></div>
+    <h2 class="cta-h2">大げさじゃなく、<br>人生が少し変わる朝食がある。</h2>
+    <p class="cta-sub">
+      緑果オリーブオイルと、菊太郎の生食パン。<br>
+      この組み合わせを、まだ知らない朝がある。
+    </p>
+    <a class="cta-btn" href="#">体験セットを注文する</a>
+    <p class="cta-note">
+      市販のパンでも美味しかった。<br>
+      でも菊太郎で浸した朝を知ったら、<br>
+      普通の朝に、少し物足りなさを感じるようになりました。<br>
+      それが、少し困った真実です。
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-brands">
+    <span class="footer-brand">井上誠耕園</span>
+    <div class="footer-sep"></div>
+    <span class="footer-brand">菊太郎</span>
+  </div>
+  <p class="footer-copy">© Inoue Seikouen. All rights reserved.</p>
+</footer>
+
+<script>
+// ── Hero背景のロード演出 ──
+window.addEventListener('load', () => {
+  document.getElementById('heroPhoto').classList.add('loaded');
+});
+
+// ── Intersection Observer (汎用reveal) ──
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll(
+  '.reveal, .exp-block, .quote-box, .photo-slot, .producer-photo, .step, .ritual-end, .cta-inner, .philosophy-box'
+).forEach(el => revealObs.observe(el));
+
+// ── パララックス: Hero写真がスクロールで奥へ引く ──
+const heroPhoto = document.getElementById('heroPhoto');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  heroPhoto.style.transform = `scale(1.08) translateY(${y * 0.25}px)`;
+
+  // 製品写真のスクロール連動浮き上がり
+  document.querySelectorAll('.photo-slot.visible .photo-img').forEach(img => {
+    const rect = img.closest('.photo-slot').getBoundingClientRect();
+    const progress = 1 - (rect.top / window.innerHeight);
+    const shift = Math.max(0, Math.min(1, progress)) * 12;
+    img.style.transform = `scale(1) translateY(-${shift}px)`;
+  });
+}, { passive: true });
+
+// ── ステップのホバーエフェクト（タッチデバイス対応） ──
+document.querySelectorAll('.step').forEach(step => {
+  step.addEventListener('click', () => {
+    step.style.background = 'rgba(92,122,53,.08)';
+    setTimeout(() => step.style.background = '', 600);
+  });
+});
+</script>
+</body>
+</html>

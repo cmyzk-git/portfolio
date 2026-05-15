@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Ko Miyazaki / 宮崎響">
+<meta name="creator" content="Ko Miyazaki — Creative Director">
+<meta name="description" content="inOli 第2章 ブランド戦略提案書 — Creative Direction by Ko Miyazaki / 宮崎響">
+<meta name="copyright" content="© 2026 Ko Miyazaki / 宮崎響. All rights reserved. This proposal document was conceived and created by Ko Miyazaki as an original work of creative direction.">
+<meta name="date" content="2026-03-02">
+<title>inOli 第2章 — 祈り、指先から。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #3a3a3a;
+    --ink-muted: #888;
+    --bg: #fafaf8;
+    --bg-warm: #f5f4f0;
+    --bg-dark: #111110;
+    --gold: #b8975a;
+    --gold-light: #d4b078;
+    --line: #e0ddd8;
+    --line-dark: #2a2a28;
+    --serif-en: 'Cormorant Garamond', serif;
+    --serif-ja: 'Noto Serif JP', serif;
+    --sans-ja: 'Noto Sans JP', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif-ja);
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    transition: all 0.3s ease;
+  }
+
+  nav.dark {
+    background: rgba(17,17,16,0.92);
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .nav-logo {
+    font-family: var(--serif-en);
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  nav.dark .nav-logo { color: #f0ede8; }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--sans-ja);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav.dark .nav-links a { color: #888; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-top-btn {
+    font-family: var(--sans-ja);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    padding: 0.4rem 1rem;
+    transition: all 0.2s;
+  }
+
+  .nav-top-btn:hover {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 8rem 10% 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 40%, rgba(184,151,90,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(184,151,90,0.05) 0%, transparent 60%);
+  }
+
+  .hero-sub {
+    font-family: var(--sans-ja);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif-en);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: #f0ede8;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-title-ja {
+    font-family: var(--serif-ja);
+    font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+    font-weight: 200;
+    color: #a09a90;
+    letter-spacing: 0.25em;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .hero-desc {
+    font-family: var(--serif-ja);
+    font-size: 0.95rem;
+    font-weight: 200;
+    color: #706a62;
+    letter-spacing: 0.1em;
+    line-height: 2;
+    max-width: 440px;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .hero-scroll {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #555;
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.1s forwards;
+  }
+
+  .hero-scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    animation: expandLine 1.2s ease 1.4s both;
+  }
+
+  .hero-chapter-num {
+    position: absolute;
+    right: 8%;
+    bottom: 12%;
+    font-family: var(--serif-en);
+    font-size: clamp(6rem, 15vw, 14rem);
+    font-weight: 300;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 7rem 10%;
+    position: relative;
+  }
+
+  section + section {
+    border-top: 1px solid var(--line);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-num {
+    font-family: var(--serif-en);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+
+  .section-title-en {
+    font-family: var(--serif-en);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-muted);
+  }
+
+  .section-divider {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  h2 {
+    font-family: var(--serif-ja);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 2.5rem;
+  }
+
+  h3 {
+    font-family: var(--serif-ja);
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── EXECUTIVE SUMMARY ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .summary-card {
+    background: var(--bg-warm);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .summary-card:hover { transform: translateY(-4px); }
+
+  .summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .summary-card:hover::before { opacity: 1; }
+
+  .card-tag {
+    font-family: var(--sans-ja);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .summary-roi {
+    grid-column: 1 / -1;
+    background: var(--ink);
+    color: #f0ede8;
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }
+
+  .roi-item {
+    text-align: center;
+  }
+
+  .roi-num {
+    font-family: var(--serif-en);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .roi-label {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: #888;
+  }
+
+  .roi-divider {
+    width: 1px;
+    height: 50px;
+    background: #333;
+  }
+
+  /* ── INSIGHT ── */
+  .insight-section {
+    background: var(--bg-dark);
+    color: #f0ede8;
+  }
+
+  .insight-section h2 { color: #f0ede8; }
+
+  .insight-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 3rem 0;
+    justify-content: center;
+  }
+
+  .insight-node {
+    text-align: center;
+    padding: 2rem 1.8rem;
+    position: relative;
+    min-width: 140px;
+  }
+
+  .node-circle {
+    width: 80px;
+    height: 80px;
+    border: 1px solid rgba(184,151,90,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-family: var(--serif-ja);
+    font-size: 0.85rem;
+    font-weight: 200;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+    transition: all 0.3s;
+  }
+
+  .insight-node:hover .node-circle {
+    background: rgba(184,151,90,0.1);
+    border-color: var(--gold);
+  }
+
+  .node-label {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    color: #666;
+    letter-spacing: 0.12em;
+  }
+
+  .insight-arrow {
+    font-size: 1.2rem;
+    color: rgba(184,151,90,0.3);
+    padding: 0 0.5rem;
+  }
+
+  .insight-center {
+    text-align: center;
+    padding: 3rem;
+    border: 1px solid rgba(184,151,90,0.2);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .insight-center-title {
+    font-family: var(--serif-en);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .insight-quote {
+    font-family: var(--serif-ja);
+    font-size: 0.88rem;
+    font-weight: 200;
+    color: #888;
+    line-height: 2;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── MARKET ── */
+  .market-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: 3rem 0;
+  }
+
+  .stat-box {
+    background: var(--bg);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--serif-en);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--ink);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-unit {
+    font-family: var(--serif-ja);
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--ink-soft);
+  }
+
+  .stat-label {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  .market-white {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .white-item {
+    padding: 2rem 0;
+    border-top: 2px solid var(--line);
+    transition: border-color 0.3s;
+  }
+
+  .white-item:hover { border-top-color: var(--gold); }
+
+  .white-num {
+    font-family: var(--serif-en);
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  /* ── CONCEPT ── */
+  .concept-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .product-spec {
+    background: var(--bg-warm);
+    padding: 3rem;
+    border-left: 3px solid var(--gold);
+  }
+
+  .spec-row {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.88rem;
+  }
+
+  .spec-row:last-child { border-bottom: none; }
+
+  .spec-key {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    min-width: 80px;
+    padding-top: 0.1rem;
+  }
+
+  .spec-val {
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .prayer-trio {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .prayer-item {
+    padding: 1.8rem;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .prayer-item:hover {
+    border-color: var(--gold);
+    background: rgba(184,151,90,0.02);
+  }
+
+  .prayer-icon {
+    font-family: var(--serif-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  /* ── CHANNEL ── */
+  .channel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+
+  .channel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .channel-item {
+    background: var(--bg-warm);
+    padding: 2rem;
+    border-left: 3px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .channel-item:hover {
+    border-left-color: var(--gold);
+  }
+
+  .channel-rank {
+    font-family: var(--serif-en);
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .no-discount {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .nd-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+  }
+
+  .nd-num {
+    font-family: var(--serif-en);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2rem;
+  }
+
+  /* ── PRICE TABLE ── */
+  .price-section { background: var(--bg-warm); }
+
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    font-size: 0.88rem;
+  }
+
+  .price-table th {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-muted);
+    padding: 0.8rem 1.5rem;
+    text-align: left;
+    border-bottom: 2px solid var(--ink);
+    font-weight: 400;
+  }
+
+  .price-table td {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .price-table tr:hover td { background: rgba(184,151,90,0.04); }
+
+  .price-highlight td {
+    background: var(--ink);
+    color: #f0ede8;
+  }
+
+  .price-highlight td:first-child {
+    border-left: 3px solid var(--gold);
+  }
+
+  .starter-box {
+    background: var(--ink);
+    color: #f0ede8;
+    padding: 3rem;
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .starter-num {
+    font-family: var(--serif-en);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+  }
+
+  /* ── FOOD × BEAUTY ── */
+  .food-beauty {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 3rem 0;
+    background: var(--line);
+  }
+
+  .fb-panel {
+    background: var(--bg);
+    padding: 3rem 2.5rem;
+    text-align: center;
+  }
+
+  .fb-panel.dark {
+    background: var(--ink);
+    color: #f0ede8;
+  }
+
+  .fb-panel.dark h3 { color: #f0ede8; }
+  .fb-panel.dark p { color: #888; }
+
+  .fb-label {
+    font-family: var(--sans-ja);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .fb-icon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .cycle-quote {
+    text-align: center;
+    padding: 3rem;
+    background: var(--bg-warm);
+    font-family: var(--serif-ja);
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--ink-soft);
+    line-height: 2.2;
+    letter-spacing: 0.06em;
+    border-left: 3px solid var(--gold);
+    font-style: italic;
+    margin-top: 2rem;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--line);
+    margin: 3rem 0;
+  }
+
+  .phase {
+    background: var(--bg);
+    padding: 2.5rem 1.8rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .phase:hover { background: var(--bg-warm); }
+
+  .phase-num {
+    font-family: var(--serif-en);
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  .phase-period {
+    font-family: var(--sans-ja);
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  /* ── ROI ── */
+  .roi-section { background: var(--bg-dark); color: #f0ede8; }
+  .roi-section h2 { color: #f0ede8; }
+
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+
+  .cost-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .cost-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line-dark);
+    gap: 1rem;
+  }
+
+  .cost-name {
+    font-family: var(--serif-ja);
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: #c0b9b0;
+    line-height: 1.5;
+  }
+
+  .cost-sub {
+    font-size: 0.72rem;
+    color: #555;
+    display: block;
+    margin-top: 0.3rem;
+  }
+
+  .cost-amount {
+    font-family: var(--serif-en);
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    white-space: nowrap;
+  }
+
+  .revenue-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .rev-item {
+    padding: 1.8rem;
+    border: 1px solid var(--line-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color 0.3s;
+  }
+
+  .rev-item:hover { border-color: var(--gold); }
+
+  .rev-num {
+    font-family: var(--serif-en);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .rev-label {
+    font-family: var(--serif-ja);
+    font-size: 0.78rem;
+    color: #888;
+    font-weight: 200;
+  }
+
+  .roi-total {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    background: rgba(184,151,90,0.06);
+    border: 1px solid rgba(184,151,90,0.2);
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .roi-total-item { text-align: center; }
+
+  .roi-total-num {
+    font-family: var(--serif-en);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+  }
+
+  .roi-total-label {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    color: #666;
+    letter-spacing: 0.15em;
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* ── CLOSING ── */
+  .closing {
+    background: var(--bg-dark);
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 8rem 10%;
+    position: relative;
+    overflow: hidden;
+    border-top: none;
+  }
+
+  .closing::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 60% at 70% 50%, rgba(184,151,90,0.06) 0%, transparent 70%);
+  }
+
+  .closing-label {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .closing-title {
+    font-family: var(--serif-ja);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 200;
+    color: #f0ede8;
+    line-height: 1.6;
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+  }
+
+  .closing-title em {
+    font-style: normal;
+    color: var(--gold-light);
+  }
+
+  .closing-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+    max-width: 600px;
+  }
+
+  .closing-bullets li {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    font-family: var(--serif-ja);
+    font-size: 0.9rem;
+    font-weight: 200;
+    color: #888;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+  }
+
+  .closing-bullets li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .closing-footer {
+    font-family: var(--sans-ja);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: #444;
+    position: absolute;
+    bottom: 3rem;
+    left: 10%;
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--gold);
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* ── SCROLL TO TOP ── */
+  .scroll-top {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    z-index: 100;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-dark);
+    border: 1px solid var(--line-dark);
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .scroll-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scroll-top:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── FADE IN ON SCROLL ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes expandLine {
+    from { width: 0; }
+    to { width: 40px; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 6%; }
+    .hero { padding: 7rem 6% 5rem; }
+    .summary-grid, .market-stats, .roadmap { grid-template-columns: 1fr; }
+    .concept-layout, .channel-grid, .roi-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .market-white, .food-beauty { grid-template-columns: 1fr; }
+    .summary-roi { flex-direction: column; text-align: center; }
+    .roi-divider { width: 80px; height: 1px; }
+    .closing { padding: 7rem 6% 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation -->
+<nav id="mainNav">
+  <a href="#top" class="nav-logo">inOli</a>
+  <ul class="nav-links">
+    <li><a href="#letter">はじめに</a></li>
+    <li><a href="#summary">概要</a></li>
+    <li><a href="#insight">コアインサイト</a></li>
+    <li><a href="#why">なぜ指先か</a></li>
+    <li><a href="#market">市場</a></li>
+    <li><a href="#concept">プロダクト</a></li>
+    <li><a href="#uniqueness">優位性</a></li>
+    <li><a href="#channel">チャネル</a></li>
+    <li><a href="#price">価格</a></li>
+    <li><a href="#cross">食×美</a></li>
+    <li><a href="#roadmap">展開</a></li>
+    <li><a href="#roi">ROI</a></li>
+    <li><a href="#kpi">KPI</a></li>
+    <li><a href="index.html">ホームへもどる</a></li>
+  </ul>
+  <a href="#top" class="nav-top-btn">↑ TOP</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-sub">inOli — CHAPTER TWO / ブランド戦略提案書</div>
+  <h1 class="hero-title">祈り、<br>指先から。</h1>
+  <div class="hero-title-ja">A Creative Direction Proposal</div>
+  <p class="hero-desc">大地に祈り、収穫に感謝し、その結晶を指先に。<br>第1章で育てたものを礎に、<br>もう一度、一緒に作り上げてみたい世界がある。</p>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+  <div class="hero-chapter-num">II</div>
+</section>
+
+<!-- Letter from Ko Miyazaki -->
+<section id="letter" style="background:var(--bg-dark);padding:6rem 10%;border-top:none;">
+  <div style="max-width:680px;margin:0 auto;" class="fade-in">
+    <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.25em;color:var(--gold);margin-bottom:3rem;">A NOTE FROM THE AUTHOR</div>
+
+    <p style="font-family:var(--serif-ja);font-size:.95rem;font-weight:200;color:#c0b9b0;line-height:2.4;letter-spacing:.06em;margin-bottom:2rem;">
+      はじめに、ひとことだけ申し上げさせてください。
+    </p>
+    <p style="font-family:var(--serif-ja);font-size:.92rem;font-weight:200;color:#888;line-height:2.4;letter-spacing:.05em;margin-bottom:2rem;">
+      この提案書は、inOliというブランドと、それを生み出された井上誠耕園様の歩みに、深く心を動かされた一人の人間が、この素晴らしい灯を絶やすことなく、次世代へと繋いでいきたいという切なる願いを込めて書き上げたものです。
+    </p>
+    <p style="font-family:var(--serif-ja);font-size:.92rem;font-weight:200;color:#888;line-height:2.4;letter-spacing:.05em;margin-bottom:2rem;">
+      マーケティングの専門家でも、美容業界の経験者でもありません。ただ、80年をかけて育てられたオリーブと柑橘の物語が、もっと多くの人の指先に届いてほしいという思いだけを、正直に言葉にしました。至らない点は多くあると思います。それでも、この提案が少しでも、次の一歩を考えるきっかけになれたなら、これ以上嬉しいことはありません。
+    </p>
+
+    <div style="margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid #2a2a28;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;">
+      <div>
+        <div style="font-family:var(--serif-ja);font-size:1.3rem;font-weight:200;color:#f0ede8;letter-spacing:.15em;margin-bottom:.4rem;">宮崎　響</div>
+        <div style="font-family:var(--serif-en);font-size:.85rem;font-weight:300;color:var(--gold);letter-spacing:.15em;">Ko Miyazaki</div>
+        <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:#555;margin-top:.5rem;">Creative Director</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:var(--serif-en);font-size:.75rem;color:#444;letter-spacing:.12em;line-height:1.8;">
+          Original proposal document<br>
+          Conceived &amp; authored by Ko Miyazaki<br>
+          © 2026 Ko Miyazaki / 宮崎響
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 01 Executive Summary -->
+<section id="summary">
+  <div class="section-label fade-in">
+    <span class="section-num">00</span>
+    <span class="section-title-en">EXECUTIVE SUMMARY</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">この企画が解くべき問い——そして、答え</h2>
+  <p class="fade-in" style="max-width:640px;">3年間、土と向き合い、言葉を磨き、積み上げてきたものがある。<br>その全てを礎に、第2章はより深く、指先という、祈りの最果てへ。<br>第1章で得た知見を凝縮し、3つの戦略で「祈りの一滴」へリフォーカスする。</p>
+
+  <div class="summary-grid fade-in">
+    <div class="summary-card">
+      <span class="card-tag">STRATEGY 01</span>
+      <h3>資産を、聖域へ昇華する</h3>
+      <p>3年間で育てた素材・物語・ファンは、本物ではないでしょうか。「全身用」から「指先専用」へ。ポジションを絞ることで、価値はより深く、より確かに届くと思うのです。</p>
+    </div>
+    <div class="summary-card">
+      <span class="card-tag">STRATEGY 02</span>
+      <h3>チャネルの聖域化</h3>
+      <p>初年度500店舗、2年度目1,000店舗という段階的な専売契約で、ブランドの品格を丁寧に守り抜けるのではないでしょうか。定価を貫くことが、誠実さの証になると、私は信じています。</p>
+    </div>
+    <div class="summary-card">
+      <span class="card-tag">STRATEGY 03</span>
+      <h3>食×美のクロスセル</h3>
+      <p>サロンを食用オイルの「サテライト農園」と見なしLTV（顧客生涯価値）を最大化する。</p>
+    </div>
+    <div class="summary-roi">
+      <div class="roi-item">
+        <span class="roi-num">¥5,000万</span>
+        <span class="roi-label">投資コスト（初年度）</span>
+      </div>
+      <div class="roi-divider"></div>
+      <div class="roi-item">
+        <span class="roi-num">¥1.8億</span>
+        <span class="roi-label">売上見込み（初年度）</span>
+      </div>
+      <div class="roi-divider"></div>
+      <div class="roi-item">
+        <span class="roi-num">×3.6</span>
+        <span class="roi-label">投資回収率 ROI（初年度）</span>
+      </div>
+      <div class="roi-divider"></div>
+      <div class="roi-item">
+        <span class="roi-num">500<span style="font-size:1.2rem;">→</span>1,000</span>
+        <span class="roi-label">認定サロン（初年度→2年度）</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Chapter 1 Diagnosis -->
+<section id="diagnosis">
+  <div class="section-label fade-in">
+    <span class="section-num">01</span>
+    <span class="section-title-en">DIAGNOSIS — 第1章の診断</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">第1章が教えてくれたこと——積み重ねた資産と、次章への問い</h2>
+
+  <p class="fade-in" style="max-width:640px;color:var(--ink-soft);">第1章は、単なる商品の販売ではなかったのではないでしょうか。土地と人と想いを束ね、ゼロからブランドを立ち上げた3年間。その歩みが残した「資産」と、次章が向き合うべき「問い」を、ここに整理したいと思います。</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem;" class="fade-in">
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.2em;color:#2a7a4a;margin-bottom:1.5rem;">◎ 第1章が積み上げた資産</div>
+      <div style="display:flex;flex-direction:column;gap:1px;">
+        <div style="background:rgba(42,122,74,.05);border-left:3px solid #2a7a4a;padding:1.5rem 1.8rem;">
+          <h3 style="color:var(--ink);">素材の確立</h3>
+          <p>「伊予柑オリーブオイル」という他社が持ちえない独自素材の製法・ブランドが完成した。</p>
+        </div>
+        <div style="background:rgba(42,122,74,.05);border-left:3px solid #2a7a4a;padding:1.5rem 1.8rem;">
+          <h3 style="color:var(--ink);">顧客の共感</h3>
+          <p>「時短×上質」コンセプトに共鳴するコアなファン層が形成された。</p>
+        </div>
+        <div style="background:rgba(42,122,74,.05);border-left:3px solid #2a7a4a;padding:1.5rem 1.8rem;">
+          <h3 style="color:var(--ink);">農家ストーリー</h3>
+          <p>80年・三代にわたる農園の記憶がブランドの背骨として機能した。</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.2em;color:#b87a40;margin-bottom:1.5rem;">◇ 第2章への問いかけ</div>
+      <div style="display:flex;flex-direction:column;gap:1px;">
+        <div style="background:rgba(184,122,64,.04);border-left:3px solid #b87a40;padding:1.5rem 1.8rem;">
+          <h3 style="color:var(--ink);">価格とブランドの関係</h3>
+          <p>定価でご購入いただいたお客様への誠実さとは、何でしょうか。割引に触れた方が「次も定価で」と感じてくださるために、何ができるのでしょうか。これは、ブランドを愛する者が必ず向き合う問いだと思っています。</p>
+        </div>
+        <div style="background:rgba(184,122,64,.04);border-left:3px solid #b87a40;padding:1.5rem 1.8rem;">
+          <h3 style="color:var(--ink);">使い手の「シーン」を設計する</h3>
+          <p>「全身に使えるオイル」は、可能性に満ちています。一方で、特定の瞬間に特定の意味を持つ道具は、より深く記憶に刻まれるのではないでしょうか。用途を絞ることは、価値を磨くことだと、そう感じています。</p>
+        </div>
+        <div style="background:rgba(184,122,64,.04);border-left:3px solid #b87a40;padding:1.5rem 1.8rem;">
+          <h3 style="color:var(--ink);">体験の接点をどこに置くか</h3>
+          <p>どれほど優れた素材も、届け方が世界観と一致して初めて輝くのではないでしょうか。inOliの物語を「場」で体験させる接点が、第2章の鍵になるように思っています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02b Why Fingertips -->
+<section id="why" style="background:var(--bg-warm);">
+  <div class="section-label fade-in">
+    <span class="section-num">01+</span>
+    <span class="section-title-en">WHY FINGERTIPS — なぜ、指先なのか</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">「ゴール」を売る前に、「入り口」をつくる——そんな発想があるとしたら</h2>
+  <p class="fade-in" style="max-width:680px;color:var(--ink-soft);">泡クレンジングや全身シャンプーは、inOliというブランドへの信頼が十分に育った先にこそ輝く完成系のプロダクトではないでしょうか。いきなり豊かな実りを急ぐのではなく、まずは「指先」が触れる土の温もりを確かめる。そんな小さな関わりから、時間をかけて、正しく地面に根を伸ばしていく。このブランドには、季節の巡りに抗わず、土の中で静かに信頼を育んでいく「根の張り方の美しさ」があるように思っています。</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--line);margin:3rem 0;" class="fade-in">
+
+    <div style="background:var(--bg);padding:2.8rem 2.2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1.2rem;">RATIONAL / 合理的な理由</div>
+      <h3 style="margin-bottom:1rem;">少量で、最高が体験できる</h3>
+      <p style="font-size:.88rem;">全身に使うオイルとなると、消費の速さと価格のバランスに迷いが生じることもあるかもしれません。でも指先への一滴なら、最高級素材の価値を「長く使える贅沢」として、自然に納得いただけるのではないでしょうか。</p>
+    </div>
+
+    <div style="background:var(--bg);padding:2.8rem 2.2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1.2rem;">VISUAL / 見えることの力</div>
+      <h3 style="margin-bottom:1rem;">一番身近な鏡は、爪先かもしれない</h3>
+      <p style="font-size:.88rem;">顔は鏡を見なければ確認できませんが、手元は起きている間ずっと視界に入ります。スマホを触る、PCを打つ、名刺を差し出す——その全ての瞬間に、爪の輝きや血色の変化が「inOliを選んで良かった」という小さな確信を積み重ねてくれるのではないでしょうか。</p>
+    </div>
+
+    <div style="background:var(--bg);padding:2.8rem 2.2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1.2rem;">EMOTIONAL / 心理的な解放</div>
+      <h3 style="margin-bottom:1rem;">「自分に許せる、最小単位の聖域」</h3>
+      <p style="font-size:.88rem;">家族を優先しながら生きてきた30〜40代の方々にとって、「寝る前の5分、指先だけに集中する時間」は、罪悪感のない自己投資になれるのではないでしょうか。1本で済ませる「横着」ではなく、丁寧に自分を慈しむ「儀式」として。</p>
+    </div>
+  </div>
+
+  <!-- Nail biology -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:2rem;align-items:start;" class="fade-in">
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:1.5rem;">爪の生理学から見えてくること</div>
+      <h3 style="margin-bottom:1rem;">「隠す」ケアが、爪を傷める可能性があるとしたら</h3>
+      <p style="font-size:.88rem;margin-bottom:1.5rem;">縦筋や凹凸が気になるとき、多くの方がバッフィング（表面を削ること）やジェルネイルで隠そうとされます。ただ、爪を削ることは厚みを薄くし、さらなる乾燥を招く原因となります。また爪が乾燥して収縮すると、ジェルとの間に隙間が生じ、剥がれやすくなってしまうこともあるようです。</p>
+      <p style="font-size:.88rem;">「隠すためのネイルが、乾燥のせいで持たない」——もしそのような負の連鎖が生まれているとしたら、根本から潤すことの価値は、想像以上に大きいのではないでしょうか。</p>
+    </div>
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:1.5rem;">爪母ケアがもたらす循環</div>
+      <div style="display:flex;flex-direction:column;gap:1px;">
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.2rem 1.5rem;background:var(--bg);border-left:2px solid var(--gold);">
+          <span style="font-family:var(--serif-en);font-size:.7rem;color:var(--gold);letter-spacing:.15em;min-width:3rem;padding-top:.1rem;">APPLY</span>
+          <p style="font-size:.82rem;">良質な油分で爪表面と爪母の乾燥をブロックし、収縮を防ぐ</p>
+        </div>
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.2rem 1.5rem;background:var(--bg);border-left:2px solid var(--gold);">
+          <span style="font-family:var(--serif-en);font-size:.7rem;color:var(--gold);letter-spacing:.15em;min-width:3rem;padding-top:.1rem;">WARM</span>
+          <p style="font-size:.82rem;">マッサージで爪母を刺激し、末端の血行を促進する</p>
+        </div>
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.2rem 1.5rem;background:var(--bg);border-left:2px solid var(--gold);">
+          <span style="font-family:var(--serif-en);font-size:.7rem;color:var(--gold);letter-spacing:.15em;min-width:3rem;padding-top:.1rem;">GROW</span>
+          <p style="font-size:.82rem;">血流が栄養を届け、3ヶ月先、半年先の健やかな爪を育てる</p>
+        </div>
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.2rem 1.5rem;background:var(--bg);border-left:2px solid rgba(184,151,90,.5);">
+          <span style="font-family:var(--serif-en);font-size:.7rem;color:var(--gold-light);letter-spacing:.15em;min-width:3rem;padding-top:.1rem;">RESULT</span>
+          <p style="font-size:.82rem;">縦筋が目立たず、血色のよいピンクのネイルベッドが育まれる</p>
+        </div>
+      </div>
+      <p style="font-size:.78rem;color:var(--ink-muted);margin-top:1.2rem;line-height:1.7;">爪の生長サイクルは約30日。今日のケアは、1ヶ月後の自分への贈り物になるかもしれません。</p>
+    </div>
+  </div>
+
+  <!-- Entry → Trust → Expansion flow -->
+  <div style="margin-top:4rem;" class="fade-in">
+    <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:2rem;text-align:center;">期待されるブランド体験のフロー</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);">
+      <div style="background:var(--bg);padding:2.5rem 2rem;text-align:center;">
+        <div style="font-family:var(--serif-en);font-size:.7rem;color:var(--gold);letter-spacing:.2em;margin-bottom:.8rem;">ENTRY</div>
+        <h3 style="font-size:1rem;margin-bottom:.8rem;">指先から、出会う</h3>
+        <p style="font-size:.82rem;">inOli ネイルセラムを通じて、井上誠耕園の素材と思想に初めて触れていただく</p>
+      </div>
+      <div style="background:var(--bg);padding:2.5rem 2rem;text-align:center;position:relative;">
+        <div style="font-family:var(--serif-en);font-size:.7rem;color:var(--gold);letter-spacing:.2em;margin-bottom:.8rem;">TRUST</div>
+        <h3 style="font-size:1rem;margin-bottom:.8rem;">爪の変化が、信頼になる</h3>
+        <p style="font-size:.82rem;">毎日の視界に映る爪の輝きが、「この農園の素材は本物だ」という確信へ変わっていく</p>
+      </div>
+      <div style="background:var(--bg-warm);padding:2.5rem 2rem;text-align:center;border-left:3px solid var(--gold);">
+        <div style="font-family:var(--serif-en);font-size:.7rem;color:var(--gold);letter-spacing:.2em;margin-bottom:.8rem;">EXPANSION</div>
+        <h3 style="font-size:1rem;margin-bottom:.8rem;">「全身も、ここで」</h3>
+        <p style="font-size:.82rem;">「指先がこれなら、全身も」という確信のもと、撤退を検討されていた全身ケアラインが「上位のプレミアムライン」として新たな意味を持ち始めるかもしれない</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Core Insight -->
+<section id="insight" class="insight-section" style="border-top:none;">
+  <div class="section-label fade-in">
+    <span class="section-num">02</span>
+    <span class="section-title-en" style="color:#666;">CORE INSIGHT</span>
+    <div class="section-divider" style="background:#2a2a28;"></div>
+  </div>
+  <h2 class="fade-in">「inOli＝祈り」——ブランド名が第2章の答えを持っていた</h2>
+
+  <div class="insight-flow fade-in">
+    <div class="insight-node">
+      <div class="node-circle">inOli</div>
+      <div class="node-label">ブランド名に宿る音</div>
+    </div>
+    <div class="insight-arrow">→</div>
+    <div class="insight-node">
+      <div class="node-circle">いのり</div>
+      <div class="node-label">祈りという行為</div>
+    </div>
+    <div class="insight-arrow">→</div>
+    <div class="insight-node">
+      <div class="node-circle">手を<br>合わせる</div>
+      <div class="node-label">祈りの身体動作</div>
+    </div>
+    <div class="insight-arrow">→</div>
+    <div class="insight-node">
+      <div class="node-circle">指先が<br>見える</div>
+      <div class="node-label">視線が落ちる場所</div>
+    </div>
+    <div class="insight-arrow">→</div>
+    <div class="insight-node">
+      <div class="node-circle" style="border-color:rgba(184,151,90,.8);color:var(--gold-light);">爪・<br>ネイル</div>
+      <div class="node-label" style="color:var(--gold);">ブランドの第2章</div>
+    </div>
+  </div>
+
+  <div class="insight-center fade-in">
+    <div class="insight-center-title">三者の祈り</div>
+    <p class="insight-quote">農家が自然に祈るように、消費者も日々の祈りの瞬間に最良の素材を指先へ。<br>ネイリストもまた、削り・塗り・固める全工程でお客様の幸せを願う「手の職人」である。<br>この三者の「祈り」が交差する場所こそ、inOli 第2章の聖域となる。</p>
+  </div>
+</section>
+
+<!-- 04 Market -->
+<section id="market">
+  <div class="section-label fade-in">
+    <span class="section-num">03</span>
+    <span class="section-title-en">MARKET OPPORTUNITY</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">3万店舗のネイルサロン——ストーリーを持つ商品が存在しない市場</h2>
+
+  <div class="market-stats fade-in">
+    <div class="stat-box">
+      <span class="stat-num">3<span style="font-size:1.5rem;">万</span></span>
+      <span class="stat-label">全国ネイルサロン数</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">1,531<span class="stat-unit">億円</span></span>
+      <span class="stat-label">2023年市場規模</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">+6.0<span style="font-size:1.5rem;">%</span></span>
+      <span class="stat-label">前年比成長率（男女とも利用増）</span>
+    </div>
+  </div>
+
+  <div class="market-white fade-in">
+    <div class="white-item">
+      <span class="white-num">WHITE SPACE 01</span>
+      <h3>「物語」を置く場所が、まだない</h3>
+      <p>施設数の急増で競争が激しくなったからこそ、「語れるストーリーを持つ商品」を置けるサロンが輝けるタイミングが来ているのではないでしょうか。そのタイミングが、今だと感じています。</p>
+    </div>
+    <div class="white-item">
+      <span class="white-num">WHITE SPACE 02</span>
+      <h3>農家の文脈を持つブランドが、まだいない</h3>
+      <p>ネイルケア市場に、トレーサビリティと農園の物語を持つブランドは、まだ存在しないのではないでしょうか。inOliだけが持ちえる、唯一無二のポジションがここにあると思っています。</p>
+    </div>
+    <div class="white-item">
+      <span class="white-num">WHITE SPACE 03</span>
+      <h3>ネイリストは「語れる商品」を待っている</h3>
+      <p>技術だけでは伝えきれない想いを持つネイリストたちが、「接客の中で語れるストーリー」を求めているように感じます。inOliの物語は、その答えになれるのではないでしょうか。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Concept -->
+<section id="concept">
+  <div class="section-label fade-in">
+    <span class="section-num">04</span>
+    <span class="section-title-en">CONCEPT DESIGN</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">「一滴の祈り」——三者の祈りをつなぐプロダクト</h2>
+
+  <div class="concept-layout fade-in">
+    <div class="product-spec">
+      <div style="font-family:var(--serif-en);font-size:1.5rem;font-weight:300;color:var(--ink);margin-bottom:.3rem;">inOli ネイルセラム</div>
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.15em;color:var(--gold);margin-bottom:2rem;">「一滴の祈り」</div>
+      <div class="spec-row">
+        <span class="spec-key">コンセプト</span>
+        <span class="spec-val">爪母（ネイルマトリクス）へ浸透させる伊予柑オリーブオイル高濃縮美容液</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">容量</span>
+        <span class="spec-val">一般用 7ml ／ サロン店販用 10ml<br>業務用 30〜50ml（非売品）</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">形状</span>
+        <span class="spec-val">スポイト式 小瓶（お守りサイズ）</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">原料</span>
+        <span class="spec-val">伊予柑オリーブオイル（非加熱抽出）<br>皮脂近似のオレイン酸が細胞間脂質へ浸透</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-key">香り</span>
+        <span class="spec-val">伊予柑テルペン成分による<br>自律神経整調・血行促進効果</span>
+      </div>
+    </div>
+
+    <div class="prayer-trio">
+      <div class="prayer-item">
+        <span class="prayer-icon">FARMER'S PRAYER</span>
+        <h3>農家の祈り</h3>
+        <p>80年以上自然と向き合い、祈るように育てた農園の結晶。オレイン酸が爪母（新しい爪を生む工場）を土台から再生してくれるのではないでしょうか。</p>
+      </div>
+      <div class="prayer-item">
+        <span class="prayer-icon">NAILIST'S PRAYER</span>
+        <h3>ネイリストの祈り</h3>
+        <p>施術の仕上げに1滴。伊予柑の香りで体験をアンカリングし、サロンのリピート率を高める「五感の設計」になれるのではないかと思っています。</p>
+      </div>
+      <div class="prayer-item">
+        <span class="prayer-icon">USER'S PRAYER</span>
+        <h3>使い手の祈り</h3>
+        <p>手を合わせる瞬間、自分の指先に宿る一滴。忙しい日常の中に「聖域の30秒」を作る、小さな儀式になってほしいと思っています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05b Only Inoue Seikoen -->
+<section id="uniqueness" style="background:var(--bg-dark);border-top:none;">
+  <div class="section-label fade-in">
+    <span class="section-num">04+</span>
+    <span class="section-title-en" style="color:#555;">ONLY INOUE SEIKOEN — 井上誠耕園にしか作れない理由</span>
+    <div class="section-divider" style="background:#2a2a28;"></div>
+  </div>
+  <h2 class="fade-in" style="color:#f0ede8;">小豆島の根っこと、爪の根っこが、<br>同じ「祈り」で繋がっている</h2>
+  <p class="fade-in" style="max-width:680px;color:#888;font-size:.92rem;line-height:2;">「オリーブと柑橘の専門家が作った美容液」——その一文だけで、他のどんなネイルケアブランドとも異なる文脈が生まれると思っています。しかし井上誠耕園様の強みは、それだけではないのではないでしょうか。</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#1a1a18;margin:3rem 0;" class="fade-in">
+    <div style="padding:3rem 2.5rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1.5rem;">SCIENCE / エビデンスの差別化</div>
+      <h3 style="color:#f0ede8;margin-bottom:1rem;">「専門家の油」だからこそ浸透する</h3>
+      <p style="color:#888;font-size:.88rem;line-height:1.9;">一般的なハンドクリームが爪の表面にとどまるのに対し、オリーブオイルの微細な粒子は爪の微細な隙間（ラメラ構造）へ浸透できる可能性があると言われています。また、オレイン酸は皮脂と近似した構造を持ち、細胞間脂質へなじみやすい性質があるようです。美容オイルとしてではなく、「植物の専門家が設計した機能的オイル」としての信頼は、他社には簡単に模倣できないのではないでしょうか。</p>
+    </div>
+    <div style="padding:3rem 2.5rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1.5rem;">STORY / 物語の必然性</div>
+      <h3 style="color:#f0ede8;margin-bottom:1rem;">「植物の根を大切にする農園」と「爪の根元を育てるセラム」</h3>
+      <p style="color:#888;font-size:.88rem;line-height:1.9;">小豆島で手摘みされ、土の下の根から育てるオリーブの哲学。そして、爪の根元「爪母（そうぼ）」から健やかな爪を育てるというプロダクトコンセプト。この二つが、偶然ではなく必然として重なり合うとしたら——それこそが、広告費では買えない「ブランドの背骨」になるのではないでしょうか。</p>
+    </div>
+  </div>
+
+  <div style="padding:3rem;border:1px solid #2a2a28;max-width:720px;margin:0 auto;" class="fade-in">
+    <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1.5rem;text-align:center;">末端冷え性という切り口——美容が、健康に繋がる瞬間</div>
+    <p style="color:#888;font-size:.88rem;line-height:2;text-align:center;">多くの方が悩む「指先の冷え」は、毛細血管の血流が滞ることで深刻化すると言われています。オイルを塗りながら爪母を丁寧にマッサージする習慣は、末端の血行促進に繋がる可能性があるようです。「美しい指先のためのケア」が、同時に「冷えを和らげる温活」にもなるとしたら——inOliは、美容と健康の境目を、やさしく溶かしてくれるプロダクトになれるのではないでしょうか。</p>
+  </div>
+</section>
+
+<!-- 06 Channel -->
+<section id="channel">
+  <div class="section-label fade-in">
+    <span class="section-num">05</span>
+    <span class="section-title-en">CHANNEL STRATEGY</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">ネイルサロンを「聖域」に——BtoB2Cの専売モデル</h2>
+
+  <div class="channel-grid fade-in">
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:1.5rem;">チャネル構造</div>
+      <div class="channel-list">
+        <div class="channel-item">
+          <span class="channel-rank">TIER 01 — BtoB</span>
+          <h3>高級サロン専売</h3>
+          <p>全3万店舗のうち約1.7%＝500店舗のプライベート・高単価サロンを初年度の認定パートナーとする、丁寧な専売契約を目指しています。2年度目には1,000店舗へ。数より質を守ることが、ブランドの品格を守ることではないでしょうか。</p>
+        </div>
+        <div class="channel-item">
+          <span class="channel-rank">TIER 02 — BtoB2C</span>
+          <h3>サロン店販</h3>
+          <p>ネイリストがお客様に直接販売していただける仕組みです。定価4,000円・仕入2,000円（50%利益）。メーカー直販も同定価で統一することで、価格の信頼を守れると考えています。</p>
+        </div>
+        <div class="channel-item">
+          <span class="channel-rank">TIER 03 — D2C</span>
+          <h3>セルフケア層向けEC</h3>
+          <p>第1章の既存顧客には「進化の手紙」を送付し、新コンセプトへ接続。ECでは定価を守り続けることで、ご購入いただいた方全員に「あの選択は正しかった」と感じていただける関係を築く。</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:1.5rem;">定価を守り続ける、3つの誓い</div>
+      <div class="no-discount">
+        <div class="nd-item">
+          <span class="nd-num">①</span>
+          <div>
+            <h3 style="margin-bottom:.5rem;">先に信じてくださった方への誠実さ</h3>
+            <p>定価でお選びいただいた全てのお客様に「あの選択は正しかった」と感じ続けていただくこと。それがブランドへの信頼を積み重ねる、最初の一歩になるのではないでしょうか。</p>
+          </div>
+        </div>
+        <div class="nd-item">
+          <span class="nd-num">②</span>
+          <div>
+            <h3 style="margin-bottom:.5rem;">「本当に欲しい人」に届けるために</h3>
+            <p>割引を待つ習慣が生まれると、価格ではなく価値でお選びいただく関係が遠ざかるように思います。inOliには、値段ではなく物語で手に取っていただけるブランドであり続けてほしいと願っています。</p>
+          </div>
+        </div>
+        <div class="nd-item">
+          <span class="nd-num">③</span>
+          <div>
+            <h3 style="margin-bottom:.5rem;">農園の誇りを、価格で守る</h3>
+            <p>80年をかけて育てた農園の結晶には、「祈りの道具」としての品格があるように感じます。定価を守り続けることは、農家の誇りと、それを信じるブランドの姿勢そのものではないでしょうか。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nailist deep section -->
+  <div style="margin-top:5rem;" class="fade-in">
+    <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:2rem;">ネイリストは、単なる販売チャネルではないかもしれない</div>
+    <h3 style="font-size:1.2rem;font-weight:300;letter-spacing:.06em;margin-bottom:1.5rem;">ネイリストが抱える、静かなジレンマ</h3>
+    <p style="max-width:680px;font-size:.9rem;color:var(--ink-soft);margin-bottom:3rem;">多くのネイリストは、お客様の爪を美しくしたいと心から願いながら、同時にこんな工程に心を痛めていると聞いています。ジェルを密着させるために自爪を削るサンディング、傷んだ爪からジェルをオフする際のリスク、亀裂をカバーするための厚塗り。「inOliによって自爪が健康になれば、これらのやりたくない工程が減るかもしれない」——そう感じてくださるネイリストが、きっといるのではないでしょうか。</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+      <div>
+        <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:1.5rem;">ネイリストが「語り手」になれる理由</div>
+        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+          <div style="padding:1.8rem;border:1px solid var(--line);transition:border-color .3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--line)'">
+            <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.6rem;">1〜2時間の、深い対話</div>
+            <p style="font-size:.85rem;">ネイリストとお客様が過ごす時間は、現代では稀有な1対1の濃密な対話の場です。「○○さんの爪、最近すごく状態がいいですね」という会話から、inOliの物語が自然に広がっていくのではないでしょうか。</p>
+          </div>
+          <div style="padding:1.8rem;border:1px solid var(--line);transition:border-color .3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--line)'">
+            <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.6rem;">小豆島の風景が、会話になる</div>
+            <p style="font-size:.85rem;">成分の説明ではなく、手摘みのオリーブ、80年の農園、三代にわたる想い——そういった物語こそが、施術中の豊かなコンテンツになるのではないかと思っています。</p>
+          </div>
+          <div style="padding:1.8rem;border:1px solid var(--line);transition:border-color .3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--line)'">
+            <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.6rem;">専門家が薦める信頼感</div>
+            <p style="font-size:.85rem;">広告より、信頼するプロの一言の方が深く届くことがあります。ネイリストが「私が信じるブランド」としてinOliを語るとき、そこには広告費では買えない、熱量を持った真実の言葉が生まれるのではないでしょうか。</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);margin-bottom:1.5rem;">パートナーシップの循環——エコシステム</div>
+        <div style="display:flex;flex-direction:column;gap:1px;">
+          <div style="display:flex;gap:1.5rem;padding:1.5rem 1.8rem;background:var(--bg-warm);align-items:flex-start;">
+            <span style="font-family:var(--serif-en);font-size:2rem;font-weight:300;color:var(--gold);line-height:1;min-width:2.5rem;">1</span>
+            <div>
+              <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.4rem;">SHARE</div>
+              <p style="font-size:.83rem;">井上誠耕園が、ネイリストにinOliの素材と農園のストーリーを伝える</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:1.5rem;padding:1.5rem 1.8rem;background:var(--bg-warm);align-items:flex-start;">
+            <span style="font-family:var(--serif-en);font-size:2rem;font-weight:300;color:var(--gold);line-height:1;min-width:2.5rem;">2</span>
+            <div>
+              <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.4rem;">FEEL</div>
+              <p style="font-size:.83rem;">ネイリストが自身とお客様の爪で変化を実感し、施術が喜びに変わっていく</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:1.5rem;padding:1.5rem 1.8rem;background:var(--bg-warm);align-items:flex-start;">
+            <span style="font-family:var(--serif-en);font-size:2rem;font-weight:300;color:var(--gold);line-height:1;min-width:2.5rem;">3</span>
+            <div>
+              <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.4rem;">TELL</div>
+              <p style="font-size:.83rem;">施術中の自然な会話の中で、ネイリストが自分の言葉でinOliを語り始める</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:1.5rem;padding:1.5rem 1.8rem;background:var(--bg-warm);align-items:flex-start;">
+            <span style="font-family:var(--serif-en);font-size:2rem;font-weight:300;color:var(--gold);line-height:1;min-width:2.5rem;">4</span>
+            <div>
+              <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.4rem;">TRUST</div>
+              <p style="font-size:.83rem;">お客様は信頼するプロが薦めるものとして、安心してinOliを手に取り、習慣化する</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:1.5rem;padding:1.5rem 1.8rem;background:rgba(184,151,90,.06);border:1px solid rgba(184,151,90,.2);align-items:flex-start;">
+            <span style="font-family:var(--serif-en);font-size:2rem;font-weight:300;color:var(--gold-light);line-height:1;min-width:2.5rem;">5</span>
+            <div>
+              <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.4rem;">CYCLE</div>
+              <p style="font-size:.83rem;">健康な爪のお客様が増え、サロンの体験価値がさらに高まる——善循環が生まれていく</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 Price -->
+<section id="price" class="price-section">
+  <div class="section-label fade-in">
+    <span class="section-num">06</span>
+    <span class="section-title-en">PRICE DESIGN</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">「1：2」の価格法則——ネイリストが「即決」する設計</h2>
+
+  <table class="price-table fade-in">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>定価</th>
+        <th>卸値</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>業務用オイル（30ml〜）</td>
+        <td>非売品</td>
+        <td>非売品</td>
+        <td>原価 ¥20 / 人（業務用1本→約100人分）</td>
+      </tr>
+      <tr class="price-highlight">
+        <td><strong>サロン店販用（10ml）</strong></td>
+        <td><strong>¥4,000</strong></td>
+        <td><strong>¥2,000</strong></td>
+        <td>サロン利益率 50%</td>
+      </tr>
+      <tr>
+        <td>EC・一般用（7ml）</td>
+        <td>¥4,000</td>
+        <td>—</td>
+        <td>定価統一・割引なし</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--bg-warm);padding:2rem 3rem;margin:1rem 0;font-size:.88rem;color:var(--ink-soft);" class="fade-in">
+    <strong style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.15em;color:var(--ink-muted);display:block;margin-bottom:.8rem;">施術オプション収益性</strong>
+    施術1回2滴使用 → 原価 ¥20/人 ／ 施術オプション価格「inOli 祈りの一滴仕上げ」+¥500/人 ／ 100人で <strong style="color:var(--gold);">¥50,000 の売上</strong>
+  </div>
+
+  <div class="starter-box fade-in">
+    <div>
+      <span class="starter-num">¥20,000</span>
+      <span style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.15em;color:#666;display:block;margin-top:.4rem;">スターターキット</span>
+    </div>
+    <div style="flex:1;">
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.15em;color:var(--gold);margin-bottom:1rem;">CONTENTS</div>
+      <p style="color:#888;font-size:.88rem;line-height:1.8;">店販10本 + 業務用1本 + テスター + POP + コンセプトブック×10冊</p>
+    </div>
+    <div style="text-align:center;">
+      <span style="font-family:var(--serif-en);font-size:3rem;font-weight:300;color:var(--gold-light);display:block;line-height:1;">96<span style="font-size:1.5rem;">%</span></span>
+      <span style="font-family:var(--sans-ja);font-size:.65rem;color:#666;letter-spacing:.15em;">利益率</span>
+    </div>
+  </div>
+</section>
+
+<!-- 08 Food × Beauty -->
+<section id="cross">
+  <div class="section-label fade-in">
+    <span class="section-num">07</span>
+    <span class="section-title-en">FOOD × BEAUTY</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">「内から、外から」——井上誠耕園の世界観を生活全体に宿す</h2>
+
+  <div class="food-beauty fade-in">
+    <div class="fb-panel dark">
+      <span class="fb-icon">🌿</span>
+      <span class="fb-label">INNER</span>
+      <h3>内側から</h3>
+      <h3 style="font-size:.9rem;color:#888;font-weight:200;margin-bottom:1rem;">食用オリーブオイル（食）</h3>
+      <p>施術前、旬の伊予柑や食材に最高級オイルを垂らした一皿をご提供することで、味覚で信頼を先払いできるのではないでしょうか。</p>
+    </div>
+    <div class="fb-panel">
+      <span class="fb-icon">💧</span>
+      <span class="fb-label">OUTER</span>
+      <h3>外側から</h3>
+      <h3 style="font-size:.9rem;color:var(--ink-muted);font-weight:300;margin-bottom:1rem;">inOli ネイルセラム（美容）</h3>
+      <p>施術の仕上げ、伊予柑の香りで体験をアンカリングすることで、お客様は「農園の祈り」を身体で記憶してくださるのではないでしょうか。</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem;" class="fade-in">
+    <div style="padding:2rem;background:var(--bg-warm);">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.8rem;">RETENTION</div>
+      <h3>店販→自宅ケア</h3>
+      <p>「夜寝る前の1滴」が1ヶ月後の指先を変えると伝えることで、爪の生長サイクル（約30日）に沿った自然なリピートが生まれるのではないかと思っています。</p>
+    </div>
+    <div style="padding:2rem;background:var(--bg-warm);">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.8rem;">ANTENNA SHOP</div>
+      <h3>サロンをアンテナショップ化</h3>
+      <p>棚に数本だけ美しく陳列し、QRコードで農園直送へ繋ぐ。サロンは在庫リスクなく、紹介料を得られる仕組みになれるのではないでしょうか。</p>
+    </div>
+  </div>
+
+  <div class="cycle-quote fade-in">
+    「あなたの美しい指先を育むのは、今日あなたが口にした一滴と、今日あなたが指先に落とした一滴です。」
+  </div>
+</section>
+
+<!-- 09 Roadmap -->
+<section id="roadmap">
+  <div class="section-label fade-in">
+    <span class="section-num">08</span>
+    <span class="section-title-en">ROLLOUT PLAN</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="fade-in">90日で動かし、1年で黒字化する——4フェーズ実行計画</h2>
+
+  <div class="roadmap fade-in">
+    <div class="phase">
+      <span class="phase-num">PHASE 1</span>
+      <span class="phase-period">1〜2ヶ月</span>
+      <h3>ネイリスト座談会・共創</h3>
+      <p style="font-size:.82rem;">・阪神間・首都圏プライベートサロン3〜5名を招集。テクスチャー・香り・トークの温度感を確認。「inOli 認定アンバサダー」を囲い込む。</p>
+    </div>
+    <div class="phase">
+      <span class="phase-num">PHASE 2</span>
+      <span class="phase-period">3〜6ヶ月</span>
+      <h3>OEM開発・容器試作</h3>
+      <p style="font-size:.82rem;">農園原料持ち込み型OEMにより処方をネイル浸透特化へ調整。宝石のような小瓶デザインの試作。「五感の施術マニュアル」を作成。</p>
+    </div>
+    <div class="phase">
+      <span class="phase-num">PHASE 3</span>
+      <span class="phase-period">7〜9ヶ月</span>
+      <h3>限定先行販売・PR</h3>
+      <p style="font-size:.82rem;">高単価サロン100店舗から先行導入。SNSでネイリストが語る動画を設計。ビューティーワールドJapan出展など。</p>
+    </div>
+    <div class="phase">
+      <span class="phase-num">PHASE 4</span>
+      <span class="phase-period">10ヶ月〜</span>
+      <h3>500店舗 本格展開・2年度1,000店へ</h3>
+      <p style="font-size:.82rem;">認定パートナーサロンへの本格卸。食用オイルのクロスセルを同時起動。シリアルナンバー管理で転売を防止。</p>
+    </div>
+  </div>
+
+  <div style="background:var(--bg-warm);padding:2.5rem 3rem;margin-top:2rem;border-left:3px solid var(--gold);" class="fade-in">
+    <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.8rem;">CDとして最初の90日</div>
+    <p>「第2章 宣言書」の制作 ／ シグネチャー小瓶デザイン ／ ネイリスト向け五感の施術マニュアル作成——まずここから、一緒に始められればと思っています。</p>
+  </div>
+</section>
+
+<!-- 10 ROI -->
+<section id="roi" class="roi-section">
+  <div class="section-label fade-in">
+    <span class="section-num">09</span>
+    <span class="section-title-en" style="color:#555;">COST & ROI</span>
+    <div class="section-divider" style="background:#2a2a28;"></div>
+  </div>
+  <h2 class="fade-in">初年度コスト試算——投資5,000万円に対するROIの構造</h2>
+
+  <div class="roi-grid fade-in">
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.2em;color:#555;margin-bottom:1.5rem;">A. 開発・営業コスト（初年度）</div>
+      <div class="cost-list">
+        <div class="cost-item">
+          <div>
+            <span class="cost-name">開発・製造（OEM）</span>
+            <span class="cost-sub">処方リニューアル・容器設計・初期ロット3,000〜5,000本</span>
+          </div>
+          <span class="cost-amount">約2,000万円</span>
+        </div>
+        <div class="cost-item">
+          <div>
+            <span class="cost-name">クリエイティブ・販促</span>
+            <span class="cost-sub">映像制作・コンセプトブック・POP・SNS広告</span>
+          </div>
+          <span class="cost-amount">約1,500万円</span>
+        </div>
+        <div class="cost-item">
+          <div>
+            <span class="cost-name">営業・人件費</span>
+            <span class="cost-sub">専任営業・展示会・座談会・認定パートナー制度運用</span>
+          </div>
+          <span class="cost-amount">約1,500万円</span>
+        </div>
+        <div class="cost-item" style="border-bottom:none;padding-top:1.5rem;">
+          <span class="cost-name" style="color:#f0ede8;font-size:.95rem;">合計</span>
+          <span class="cost-amount" style="font-size:1.5rem;">約5,000万円</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.2em;color:#555;margin-bottom:1.5rem;">B. 収益見込み（初年度）</div>
+      <div class="revenue-list">
+        <div class="rev-item">
+          <div>
+            <span class="rev-num">¥1,000万</span>
+            <span class="rev-label">スターターキット売上<br>500店 × ¥20,000</span>
+          </div>
+        </div>
+        <div class="rev-item">
+          <div>
+            <span class="rev-num">¥6,000万</span>
+            <span class="rev-label">サロン店販リピート<br>5本/月 × 500店 × 12ヶ月 × ¥2,000</span>
+          </div>
+        </div>
+        <div class="rev-item">
+          <div>
+            <span class="rev-num">¥1.1億</span>
+            <span class="rev-label">食×美 クロスセル<br>購入者10%が食用定期購入に移行</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roi-total">
+      <div class="roi-total-item">
+        <span class="roi-total-num">¥1.8億</span>
+        <span class="roi-total-label">売上見込み計（初年度）</span>
+      </div>
+      <div style="width:1px;height:60px;background:#333;"></div>
+      <div class="roi-total-item">
+        <span class="roi-total-num">¥5,000万</span>
+        <span class="roi-total-label">初年度投資コスト</span>
+      </div>
+      <div style="width:1px;height:60px;background:#333;"></div>
+      <div class="roi-total-item">
+        <span class="roi-total-num" style="font-size:4rem;">×3.6</span>
+        <span class="roi-total-label">投資回収率（ROI・初年度）</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KPI Section -->
+<section id="kpi">
+  <div class="section-label fade-in">
+    <span class="section-num">10</span>
+    <span class="section-title-en">KPI DESIGN — 数字で責任を取る</span>
+    <div class="section-divider"></div>
+  </div>
+
+  <h2 class="fade-in">数字は、想いを裏切らない</h2>
+  <p class="fade-in" style="max-width:680px;color:var(--ink-soft);">どれほど美しいビジョンも、測れなければ育てられません。このプロジェクトで私が責任を持ちたいのは、「感動した」という声だけでなく、「数字が動いた」という事実です。ただ、KPIは多ければいいわけではないとも思っています。本当に大切な指標を絞り、チーム全員が同じ方向を向けるシンプルな設計を心がけました。</p>
+
+  <!-- 宣言部分 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--line);margin:3.5rem 0;" class="fade-in">
+    <div style="background:var(--bg-warm);padding:2.8rem 2.2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1rem;">WHAT WE MEASURE</div>
+      <h3 style="margin-bottom:.8rem;">測るのは、信頼の積み重ね</h3>
+      <p style="font-size:.85rem;">売上という結果の前に、「ネイリストが語っているか」「お客様がリピートしているか」という信頼の兆候を追います。信頼が育てば、売上はその後についてくると考えています。</p>
+    </div>
+    <div style="background:var(--bg-warm);padding:2.8rem 2.2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1rem;">WHO WE MEASURE</div>
+      <h3 style="margin-bottom:.8rem;">2つの視点で、全体を見る</h3>
+      <p style="font-size:.85rem;">ネイリスト・サロンへの浸透（BtoB）と、一般消費者の習慣化（BtoC）。この2軸が噛み合ったとき、ブランドは自走し始めるのではないでしょうか。</p>
+    </div>
+    <div style="background:var(--bg-warm);padding:2.8rem 2.2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:1rem;">HOW WE REVIEW</div>
+      <h3 style="margin-bottom:.8rem;">月次で確認、四半期で判断</h3>
+      <p style="font-size:.85rem;">毎月の数字は「健康診断」として確認し、3ヶ月ごとに戦略の微調整を行います。大きく外れたときは正直に立ち止まり、チームで原因を考えたいと思っています。</p>
+    </div>
+  </div>
+
+  <!-- BtoB KPI -->
+  <div class="fade-in" style="margin-top:3rem;">
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);">BtoB KPI</div>
+      <div style="font-family:var(--serif-ja);font-size:.9rem;font-weight:300;color:var(--ink);">ネイルサロン・ネイリスト向け指標</div>
+      <div style="flex:1;height:1px;background:var(--line);"></div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--ink);">
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">指標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">何を測るか</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:center;">3ヶ月目標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:center;">12ヶ月目標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">なぜこの指標か</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">認定パートナーサロン数</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">専売契約を結んだサロンの累計数</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">100店</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">500店</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">ブランドの「聖域」がどこまで広がったかを示す、最も基本的な指標</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);background:rgba(184,151,90,.03);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">サロン継続率<br><span style="font-size:.75rem;color:var(--ink-muted);">（月次リピート）</span></td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">スターターキット導入後、翌月も追加発注したサロンの割合</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">60%</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">80%</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「売れた」ではなく「売れ続けている」かを確認する。ブランドの実力を映す鏡</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">施術オプション採用率</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「祈りの一滴仕上げ」を施術メニューに取り入れたサロンの割合</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">40%</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">70%</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">ネイリストが「自分のサービスの一部」としてinOliを使っているかを示す</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);background:rgba(184,151,90,.03);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">ネイリストSNS投稿数</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">inOliについて自発的にSNS発信したネイリストの累計数</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">30人</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">300人</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">広告費ゼロの「本物の言葉」がどれだけ生まれているか。信頼の熱量を測る</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BtoC KPI -->
+  <div class="fade-in" style="margin-top:3.5rem;">
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:2rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);">BtoC KPI</div>
+      <div style="font-family:var(--serif-ja);font-size:.9rem;font-weight:300;color:var(--ink);">一般消費者向け指標</div>
+      <div style="flex:1;height:1px;background:var(--line);"></div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--ink);">
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">指標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">何を測るか</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:center;">3ヶ月目標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:center;">12ヶ月目標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">なぜこの指標か</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">30日リピート率</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">初回購入から30日以内に2回目を購入した顧客の割合</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">25%</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">45%</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">爪の生長サイクル（約30日）と合致。「習慣になったか」を最も正直に示す数字</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);background:rgba(184,151,90,.03);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">食用オイル<br>クロスセル転換率</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">ネイルセラム購入者のうち、食用オイルも購入した顧客の割合</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">5%</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">10%</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「指先から信頼した人が、食卓まで連れてきてくれる」。食×美シナジーの実績値</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">LTV<br><span style="font-size:.75rem;color:var(--ink-muted);">（顧客生涯価値）</span></td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">1人の顧客が1年間でinOli関連商品に使う総額の平均</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">¥8,000</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">¥24,000</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">単発の売上でなく「長く愛されているか」を測る。ブランドの健康状態そのもの</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);background:rgba(184,151,90,.03);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">NPS<br><span style="font-size:.75rem;color:var(--ink-muted);">（推奨意向スコア）</span></td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「inOliを友人・家族に薦めたいか」を0〜10点で回答。推奨者比率−批判者比率</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">+20</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">+50</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">口コミで広がるブランドかどうかを測る唯一の指標。+50は「愛されている」証拠</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Brand KPI -->
+  <div class="fade-in" style="margin-top:3.5rem;">
+    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.5rem;">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.2em;color:var(--ink-muted);">Brand KPI</div>
+      <div style="font-family:var(--serif-ja);font-size:.9rem;font-weight:300;color:var(--ink);">ブランド認知指標</div>
+      <div style="flex:1;height:1px;background:var(--line);"></div>
+    </div>
+
+    <p style="font-size:.85rem;color:var(--ink-soft);max-width:680px;margin-bottom:2rem;line-height:1.9;">「売れているか」と「知られているか」は、別の問いです。売上はある日突然落ちることがありますが、ブランド認知は積み上がった資産として残ります。inOliというブランドが、オリーブオイルを思い浮かべたときに自然と頭に浮かぶ存在になれているか——その問いを、定期的に正直に測り続けたいと思っています。</p>
+
+    <div style="background:var(--bg-warm);padding:2rem 2.5rem;margin-bottom:2rem;border-left:3px solid var(--gold);">
+      <div style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:1rem;">聞き方が、答えを決める</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+        <div>
+          <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.1em;color:#b84040;margin-bottom:.5rem;">❌ 迎合を生む聞き方</div>
+          <p style="font-size:.83rem;font-style:italic;color:var(--ink-muted);">「井上誠耕園のオリーブオイルをご存知ですか？」</p>
+          <p style="font-size:.78rem;color:var(--ink-muted);margin-top:.5rem;">名前を先に提示すると「知っている」と答えやすくなり、本当の認知度が測れません。</p>
+        </div>
+        <div>
+          <div style="font-family:var(--sans-ja);font-size:.68rem;letter-spacing:.1em;color:#2a7a4a;margin-bottom:.5rem;">✓ 本音を引き出す聞き方</div>
+          <p style="font-size:.83rem;font-style:italic;color:var(--ink-soft);">「オリーブオイルのブランドといえば、どこが思い浮かびますか？」</p>
+          <p style="font-size:.78rem;color:var(--ink-muted);margin-top:.5rem;">何も見せずに自然に名前が出てくるか。これが本当のブランド力を映す鏡になるのではないでしょうか。</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--ink);">
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">指標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">何を・どう測るか</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:center;">1年目目標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:center;">3年目目標</th>
+            <th style="font-family:var(--sans-ja);font-size:.65rem;letter-spacing:.12em;color:var(--ink-muted);font-weight:400;padding:.8rem 1.2rem;text-align:left;">なぜこの指標か</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">純粋想起率<br><span style="font-size:.72rem;color:var(--ink-muted);font-weight:300;">Unaided Awareness</span></td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「オリーブオイルブランドといえば？」と聞き、何も見せずに「井上誠耕園」が出てくる割合。半年ごとにサロン顧客50名程度にアンケート</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">5%</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">20%</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">最も正直なブランド力の指標。広告なしに名前が出てくるなら、本物の認知が育っている証拠</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);background:rgba(184,151,90,.03);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">助成想起率<br><span style="font-size:.72rem;color:var(--ink-muted);font-weight:300;">Aided Awareness</span></td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「井上誠耕園というブランドをご存知ですか？」と名前を提示した上での認知率。純粋想起との差がブランド浸透の伸びしろを示す</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">30%</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">60%</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">純粋想起との差が縮まるほど、ブランドが深く定着しているサイン。2つセットで追う</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">認知経路の把握<br><span style="font-size:.72rem;color:var(--ink-muted);font-weight:300;">Channel Attribution</span></td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「inOliを何で知りましたか？」と初回購入者に聞く。サロン経由・SNS経由・EC経由・口コミの比率を追う</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">サロン<br>50%以上</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">口コミ<br>30%以上</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">どのチャネルがブランドを育てているかを知ることで、投資先の判断ができるようになるのではないでしょうか</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line);background:rgba(184,151,90,.03);">
+            <td style="padding:1.2rem;color:var(--ink);font-weight:400;">ブランド連想の質<br><span style="font-size:.72rem;color:var(--ink-muted);font-weight:300;">Brand Association</span></td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">「inOliと聞いて、どんな言葉が浮かびますか？」と自由回答で聞く。「農園」「祈り」「誠実」などの言葉が出るかを確認</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">農園・<br>物語</td>
+            <td style="padding:1.2rem;text-align:center;font-family:var(--serif-en);font-size:1.1rem;color:var(--gold);">祈り・<br>信頼</td>
+            <td style="padding:1.2rem;color:var(--ink-soft);">数値だけでは測れない「ブランドの色」を定期的に確認する。意図した世界観が伝わっているかどうかの羅針盤</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:2rem;padding:2rem 2.5rem;background:var(--bg-warm);display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;" class="fade-in">
+      <div style="text-align:center;">
+        <div style="font-family:var(--sans-ja);font-size:.62rem;letter-spacing:.15em;color:var(--ink-muted);margin-bottom:.6rem;">測定タイミング</div>
+        <div style="font-family:var(--serif-en);font-size:1.3rem;font-weight:300;color:var(--ink);">半年ごと</div>
+        <p style="font-size:.78rem;color:var(--ink-muted);margin-top:.4rem;">ブランド認知はゆっくり育つもの。月次より半年サイクルが現実的ではないでしょうか</p>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:var(--sans-ja);font-size:.62rem;letter-spacing:.15em;color:var(--ink-muted);margin-bottom:.6rem;">調査対象</div>
+        <div style="font-family:var(--serif-en);font-size:1.3rem;font-weight:300;color:var(--ink);">50〜100名</div>
+        <p style="font-size:.78rem;color:var(--ink-muted);margin-top:.4rem;">認定サロンの顧客を中心に、小規模でも継続することに意味があると思っています</p>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:var(--sans-ja);font-size:.62rem;letter-spacing:.15em;color:var(--ink-muted);margin-bottom:.6rem;">最終的に目指す姿</div>
+        <div style="font-family:var(--serif-en);font-size:1.3rem;font-weight:300;color:var(--ink);">Top of Mind</div>
+        <p style="font-size:.78rem;color:var(--ink-muted);margin-top:.4rem;">「オリーブオイルといえば井上誠耕園」と、誰かが自然に口にしてくれる日のために</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Overall KPI summary -->
+  <div style="background:var(--ink);padding:3.5rem;margin-top:3rem;display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;text-align:center;" class="fade-in">
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.6rem;letter-spacing:.18em;color:#555;margin-bottom:.8rem;">初年度売上達成率</div>
+      <div style="font-family:var(--serif-en);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1;">100<span style="font-size:1rem;">%</span></div>
+      <div style="font-family:var(--sans-ja);font-size:.62rem;color:#444;margin-top:.5rem;line-height:1.6;">¥1.8億に対する<br>進捗を月次管理</div>
+    </div>
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.6rem;letter-spacing:.18em;color:#555;margin-bottom:.8rem;">認定サロン数</div>
+      <div style="font-family:var(--serif-en);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1;">500<span style="font-size:1rem;color:#555;"> → 1,000</span></div>
+      <div style="font-family:var(--sans-ja);font-size:.62rem;color:#444;margin-top:.5rem;line-height:1.6;">12ヶ月以内<br>Phase4完了時点</div>
+    </div>
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.6rem;letter-spacing:.18em;color:#555;margin-bottom:.8rem;">サロン継続率</div>
+      <div style="font-family:var(--serif-en);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1;">80<span style="font-size:1rem;">%</span></div>
+      <div style="font-family:var(--sans-ja);font-size:.62rem;color:#444;margin-top:.5rem;line-height:1.6;">12ヶ月時点での<br>月次リピート率</div>
+    </div>
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.6rem;letter-spacing:.18em;color:#555;margin-bottom:.8rem;">顧客NPS</div>
+      <div style="font-family:var(--serif-en);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1;">+50</div>
+      <div style="font-family:var(--sans-ja);font-size:.62rem;color:#444;margin-top:.5rem;line-height:1.6;">「語りたくなる<br>ブランド」の証明</div>
+    </div>
+    <div>
+      <div style="font-family:var(--sans-ja);font-size:.6rem;letter-spacing:.18em;color:#555;margin-bottom:.8rem;">純粋想起率（3年目）</div>
+      <div style="font-family:var(--serif-en);font-size:2.2rem;font-weight:300;color:var(--gold-light);line-height:1;">20<span style="font-size:1rem;">%</span></div>
+      <div style="font-family:var(--sans-ja);font-size:.62rem;color:#444;margin-top:.5rem;line-height:1.6;">「オリーブオイルといえば」<br>で自然に出てくる割合</div>
+    </div>
+  </div>
+
+  <p class="fade-in" style="margin-top:2.5rem;font-size:.85rem;color:var(--ink-muted);font-style:italic;line-height:2;max-width:640px;">※ 上記数値は、市場データと本提案の戦略仮説をもとに設定した目標値です。実際の運用では、現場のデータを優先しながら四半期ごとに見直していくことを前提としています。</p>
+
+</section>
+
+
+<!-- Closing -->
+<section class="closing" id="closing">
+  <div class="closing-label fade-in">inOli — CHAPTER TWO / CREATIVE DIRECTION PROPOSAL</div>
+  <div class="closing-title fade-in">
+    第2章は、<br><em>祈り</em>から始まる。<br><span style="font-size:clamp(1rem,2vw,1.5rem);color:#666;letter-spacing:.08em;">——共に、もう一度。</span>
+  </div>
+  <ul class="closing-bullets fade-in">
+    <li>「inOli」というブランド名が、最初から第2章のコンセプトを宿していたのではないでしょうか</li>
+    <li>3万店舗のネイルサロンが、誠実に語れるプロダクトをまだ待っているように感じています</li>
+    <li>投資¥5,000万に対し、初年度売上見込み¥1.8億（ROI約3.6倍）。2年度目1,000店舗体制で、さらなる拡張を目指したいと思っています</li>
+    <li>第1章で積み上げてきたもの全てに、心から敬意を持って。この物語の続きを、一緒に書かせていただけたら、これ以上嬉しいことはありません</li>
+  </ul>
+  <div class="closing-footer" style="display:flex;flex-direction:column;gap:.6rem;">
+    <span>井上オリーブ柑橘研究所 ／ inOli Chapter 2 Creative Direction Proposal</span>
+    <span style="color:#333;letter-spacing:.18em;">Creative Direction &amp; Proposal — 宮崎　響 / Ko Miyazaki &nbsp;© 2026</span>
+  </div>
+</section>
+
+<!-- Scroll to Top -->
+<a href="#top" class="scroll-top" id="scrollTop">↑</a>
+
+<script>
+  // Progress bar
+  const progressBar = document.getElementById('progressBar');
+  const scrollTop = document.getElementById('scrollTop');
+  const nav = document.getElementById('mainNav');
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrolled / total) * 100;
+    progressBar.style.width = progress + '%';
+
+    // Scroll to top button
+    if (scrolled > 600) {
+      scrollTop.classList.add('visible');
+    } else {
+      scrollTop.classList.remove('visible');
+    }
+
+    // Nav dark mode (hero section)
+    const heroHeight = document.querySelector('.hero').offsetHeight;
+    const insightTop = document.getElementById('insight').offsetTop;
+    const roiTop = document.getElementById('roi').offsetTop;
+    const closingTop = document.getElementById('closing').offsetTop;
+
+    if (scrolled < heroHeight - 80 ||
+        (scrolled >= insightTop - 80 && scrolled < insightTop + document.getElementById('insight').offsetHeight - 80) ||
+        (scrolled >= roiTop - 80 && scrolled < roiTop + document.getElementById('roi').offsetHeight - 80) ||
+        scrolled >= closingTop - 80) {
+      nav.classList.add('dark');
+    } else {
+      nav.classList.remove('dark');
+    }
+  });
+
+  // Fade-in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
