@@ -6,229 +6,416 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --gold: #b8975a;
-    --nav-bg: rgba(20,20,20,0.88);
-    --nav-border: rgba(184,151,90,0.25);
-  }
-
-  html, body {
-    width: 100%; height: 100%;
-    background: #111;
-    overflow: hidden;
-    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-    cursor: none;
-  }
-
-  /* CURSOR */
-  #cursor {
-    position: fixed; width: 6px; height: 6px;
-    background: var(--gold); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-  }
-  #cursor-ring {
-    position: fixed; width: 28px; height: 28px;
-    border: 1px solid rgba(184,151,90,0.5); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%);
-    transition: width 0.2s, height 0.2s;
-  }
-  body:has(button:hover) #cursor-ring,
-  body:has(.thumb:hover) #cursor-ring { width: 40px; height: 40px; }
-
-  /* STAGE */
-  #stage {
-    position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  #stage-inner {
-    position: relative;
-    width: 794px; height: 1123px;
-    transform-origin: center center;
-  }
-
-  /* PAGE WRAPPERS */
-  .pw {
-    position: absolute; inset: 0;
-    will-change: transform, opacity;
-    pointer-events: none;
-    transition: transform 0.65s cubic-bezier(0.76,0,0.24,1),
-                opacity   0.55s cubic-bezier(0.76,0,0.24,1);
-  }
-  .pw[data-s="cur"]  { transform: translateX(0)     scale(1);    opacity: 1; pointer-events: all; z-index: 10; }
-  .pw[data-s="next"] { transform: translateX(110%)  scale(0.94); opacity: 0; z-index: 5; }
-  .pw[data-s="prev"] { transform: translateX(-110%) scale(0.94); opacity: 0; z-index: 5; }
-  .pw[data-s="hide"] { transform: translateX(0)     scale(0.88); opacity: 0; z-index: 1; }
-
-  /* A4 PAGE */
-  .page {
-    width: 100%; height: 100%;
-    background: #1c1c1c;
-    box-shadow: 0 8px 60px rgba(0,0,0,0.6), 0 2px 12px rgba(0,0,0,0.4);
-    position: relative; overflow: hidden;
-    cursor: zoom-in;
-  }
-  .page img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    display: block;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-drag: none;
-  }
-  /* placeholder */
-  .ph {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 10px;
-    pointer-events: none;
-  }
-  .ph-n {
-    font-size: 88px; font-weight: 700;
-    color: rgba(255,255,255,0.04); line-height: 1;
-  }
-  .ph-l {
-    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
-    color: rgba(255,255,255,0.1);
-  }
-
-  /* NAV BAR */
-  #nav {
-    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-    z-index: 100;
-    display: flex; align-items: center; gap: 2px;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid var(--nav-border);
-    border-radius: 999px;
-    padding: 8px 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  }
-  .nb {
-    background: none; border: none;
-    width: 34px; height: 34px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: none; color: rgba(255,255,255,0.4);
-    border-radius: 50%;
-    transition: color 0.15s, background 0.15s;
-  }
-  .nb:hover { color: var(--gold); background: rgba(184,151,90,0.08); }
-  .nb:disabled { opacity: 0.15; pointer-events: none; }
-  .nb svg { width: 15px; height: 15px; }
-  .nd { width: 1px; height: 18px; background: rgba(184,151,90,0.2); margin: 0 6px; }
-  #nc {
-    font-size: 11px; letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.3); padding: 0 10px;
-    min-width: 52px; text-align: center;
-  }
-  #nc b { color: var(--gold); font-weight: 400; }
-
-  /* THUMBNAIL STRIP */
-  #thumbs {
-    position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%);
-    z-index: 99;
-    display: flex; gap: 5px; align-items: flex-end;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.25s;
-  }
-  #nav:hover ~ #thumbs, #thumbs:hover { opacity: 1; pointer-events: all; }
-  .thumb {
-    width: 26px; height: 37px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(184,151,90,0.15);
-    border-radius: 2px; cursor: none;
-    transition: transform 0.2s, border-color 0.15s;
-    position: relative; overflow: hidden;
-    display: flex; align-items: flex-end; justify-content: center;
-    padding-bottom: 3px;
-  }
-  .thumb img {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; opacity: 0.55; pointer-events: none;
-  }
-  .thumb span {
-    position: relative; z-index: 1;
-    font-size: 7px; color: rgba(255,255,255,0.25);
-  }
-  .thumb.on { border-color: var(--gold); transform: scaleY(1.18) translateY(-4px); }
-  .thumb.on img { opacity: 1; }
-  .thumb:hover { border-color: rgba(184,151,90,0.5); transform: scaleY(1.1) translateY(-2px); }
-
-  /* LIGHTBOX */
-  #lb {
-    position: fixed; inset: 0; z-index: 1000;
-    background: rgba(8,8,8,0.97);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s;
-  }
-  #lb.on { opacity: 1; pointer-events: all; }
-
-#lb-scroll {
-  position: relative;
-  width: 92vw; height: 92vh;
-  overflow: scroll;
-  display: flex;
-  align-items: flex-start;      /* ← center → flex-start */
-  justify-content: center;
-  padding: 40px 0;              /* ← 上下に余白を追加 */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #b8975a;
+  --nav-bg: rgba(20,20,20,0.92);
+  --nav-border: rgba(184,151,90,0.28);
 }
-  #lb-scroll::-webkit-scrollbar { display: none; }
 
-  #lb-img {
-    display: block;
-    max-width: none;
-    transform-origin: center center;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-drag: none;
-    transition: transform 0.15s ease;
-  }
-  #lb-img:active { cursor: grabbing; }
+html, body {
+  width: 100%; height: 100%;
+  background: #111;
+  overflow: hidden;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  cursor: none;
+}
 
-  /* LB Controls */
-  #lb-ctrl {
-    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-    display: flex; align-items: center; gap: 2px;
-    background: var(--nav-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--nav-border);
-    border-radius: 999px; padding: 8px 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  }
-  .zb {
-    background: none; border: none;
-    width: 34px; height: 34px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: none; color: rgba(255,255,255,0.45);
-    border-radius: 50%; font-size: 18px; line-height: 1;
-    transition: color 0.15s, background 0.15s;
-  }
-  .zb:hover { color: var(--gold); background: rgba(184,151,90,0.08); }
-  .zb.sm { font-size: 10px; letter-spacing: 0.05em; }
+/* ── global-heade ── */
 
-  #lb-close {
-    position: fixed; top: 22px; right: 28px; z-index: 2;
-    background: none; border: none; cursor: none;
-    color: rgba(255,255,255,0.35); font-size: 22px;
-    transition: color 0.15s, transform 0.2s;
-  }
-  #lb-close:hover { color: var(--gold); transform: rotate(90deg); }
+#global-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 54px; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(184,151,90,0.15);
+  background: rgba(13, 13, 13, 0.5);
+  backdrop-filter: blur(20px);
+}
 
-  /* KEY HINT */
-  #hint {
-    position: fixed; top: 20px; left: 28px;
-    font-size: 9px; letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.7); z-index: 100;
-    pointer-events: none; line-height: 2;
-  }
+#header-label {
+  font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(184,151,90,0.45);
+}
+
+#header-switch-btn {
+  background: none;
+  border: 1px solid rgba(184,151,90,0.35);
+  border-radius: 999px; padding: 4px 14px;
+  font-family: inherit; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); cursor: none;
+  transition: all 0.2s;
+  display: flex; align-items: center;
+}
+
+#header-switch-btn:hover { background: var(--gold); color: #111; }
+
+/* 作品がヘッダーの下に潜り込まないように調整 */
+#stage { padding-top: 54px; }
+
+/* ── CURSOR ── */
+#cursor {
+  position: fixed; width: 6px; height: 6px;
+  background: var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+}
+#cursor-ring {
+  position: fixed; width: 28px; height: 28px;
+  border: 1px solid rgba(184,151,90,0.5); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: width 0.2s, height 0.2s;
+}
+
+/* ── PRINT STAGE ── */
+#stage {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+#stage-inner {
+  position: relative;
+  width: 794px; height: 1123px;
+  transform-origin: center center;
+}
+.pw {
+  position: absolute; inset: 0;
+  will-change: transform, opacity;
+  pointer-events: none;
+  transition: transform 0.65s cubic-bezier(0.76,0,0.24,1),
+              opacity   0.55s cubic-bezier(0.76,0,0.24,1);
+}
+.pw[data-s="cur"]  { transform: translateX(0)     scale(1);    opacity: 1; pointer-events: all; z-index: 10; }
+.pw[data-s="next"] { transform: translateX(110%)  scale(0.94); opacity: 0; z-index: 5; }
+.pw[data-s="prev"] { transform: translateX(-110%) scale(0.94); opacity: 0; z-index: 5; }
+.pw[data-s="hide"] { transform: translateX(0)     scale(0.88); opacity: 0; z-index: 1; }
+.page {
+  width: 100%; height: 100%;
+  background: #1c1c1c;
+  box-shadow: 0 8px 60px rgba(0,0,0,0.6), 0 2px 12px rgba(0,0,0,0.4);
+  position: relative; overflow: hidden;
+  cursor: zoom-in;
+}
+.page img {
+  width: 100%; height: 100%; object-fit: contain;
+  display: block; pointer-events: none;
+  user-select: none; -webkit-user-drag: none;
+}
+.ph {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  pointer-events: none;
+}
+.ph-n { font-size: 88px; font-weight: 700; color: rgba(255,255,255,0.04); line-height: 1; }
+.ph-l { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
+
+/* ── MAIN NAV ── */
+#nav {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  z-index: 200;
+  display: flex; align-items: center; gap: 2px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--nav-border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.nb {
+  background: none; border: none;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none; color: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transition: color 0.15s, background 0.15s;
+}
+.nb:hover { color: var(--gold); background: rgba(184,151,90,0.08); }
+.nb:disabled { opacity: 0.15; pointer-events: none; }
+.nb svg { width: 15px; height: 15px; }
+.nd { width: 1px; height: 18px; background: rgba(184,151,90,0.2); margin: 0 6px; }
+#nc {
+  font-size: 11px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3); padding: 0 10px;
+  min-width: 52px; text-align: center;
+}
+#nc b { color: var(--gold); font-weight: 400; }
+
+/* WEB ボタン */
+#btn-web {
+  background: none;
+  border: 1px solid rgba(184,151,90,0.5);
+  border-radius: 999px; padding: 4px 13px;
+  font-family: inherit;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); cursor: none;
+  transition: color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  margin-left: 4px;
+}
+#btn-web:hover {
+  color: #111;
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 16px rgba(184,151,90,0.5);
+}
+
+/* ── THUMBNAIL STRIP ── */
+#thumbs {
+  position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%);
+  z-index: 199;
+  display: flex; gap: 5px; align-items: flex-end;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+#nav:hover ~ #thumbs, #thumbs:hover { opacity: 1; pointer-events: all; }
+.thumb {
+  width: 26px; height: 37px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(184,151,90,0.15);
+  border-radius: 2px; cursor: none;
+  transition: transform 0.2s, border-color 0.15s;
+  position: relative; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 3px;
+}
+.thumb img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.55; pointer-events: none;
+}
+.thumb span { position: relative; z-index: 1; font-size: 7px; color: rgba(255,255,255,0.25); }
+.thumb.on { border-color: var(--gold); transform: scaleY(1.18) translateY(-4px); }
+.thumb.on img { opacity: 1; }
+.thumb:hover { border-color: rgba(184,151,90,0.5); transform: scaleY(1.1) translateY(-2px); }
+
+/* ── LIGHTBOX ── */
+#lb {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(8,8,8,0.97);
+  display: none; align-items: center; justify-content: center;
+}
+#lb.on { display: flex; }
+#lb-scroll {
+  width: 92vw; height: 92vh;
+  overflow: scroll; display: flex;
+  align-items: flex-start; justify-content: center;
+  padding: 40px 0;
+}
+#lb-scroll::-webkit-scrollbar { display: none; }
+#lb-img {
+  display: block; max-width: none;
+  cursor: grab; user-select: none; -webkit-user-drag: none;
+}
+#lb-img:active { cursor: grabbing; }
+#lb-ctrl {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 2px;
+  background: var(--nav-bg); backdrop-filter: blur(20px);
+  border: 1px solid var(--nav-border);
+  border-radius: 999px; padding: 8px 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.zb {
+  background: none; border: none;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none; color: rgba(255,255,255,0.45);
+  border-radius: 50%; font-size: 18px; line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+.zb:hover { color: var(--gold); background: rgba(184,151,90,0.08); }
+.zb.sm { font-size: 10px; letter-spacing: 0.05em; }
+#lb-close {
+  position: fixed; top: 22px; right: 28px; z-index: 2;
+  background: none; border: none; cursor: none;
+  color: rgba(255,255,255,0.35); font-size: 22px;
+  transition: color 0.15s, transform 0.2s;
+}
+#lb-close:hover { color: var(--gold); transform: rotate(90deg); }
+
+/* ── HINT ── */
+#hint {
+  position: fixed; top: 20px; left: 28px;
+  font-size: 9px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7); z-index: 100;
+  pointer-events: none; line-height: 2;
+}
 #hint kbd {
-  /* 0.1 を 0.3 に上げ枠線がはっきり */
-  border: 1px solid rgba(255,255,255, 0.3);
+  border: 1px solid rgba(255,255,255,0.3);
   padding: 1px 5px; border-radius: 2px; font-family: inherit;
 }
+
+/* ════════════════════════════════
+   WEB VIEW
+   display:none / flex で切り替え
+   ════════════════════════════════ */
+#web-view {
+  position: fixed; inset: 0; z-index: 500;
+  background: #0d0d0d;
+  display: none;
+  flex-direction: column;
+}
+
+#wv-header {
+  flex: none; height: 54px;
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(184,151,90,0.15);
+}
+
+/* PRINT HEADER */
+
+#pw-header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:72px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 32px;
+
+  z-index:200;
+
+  backdrop-filter:blur(20px);
+  background:rgba(10,10,10,.35);
+
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+#pw-title{
+  font-size:11px;
+  letter-spacing:.28em;
+  color:#d6d0c4;
+}
+
+#pw-web-btn{
+  height:40px;
+  padding:0 18px;
+
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+
+  background:rgba(255,255,255,.04);
+
+  color:#fff;
+
+  font-size:11px;
+  letter-spacing:.18em;
+
+  cursor:pointer;
+
+  transition:.3s;
+}
+
+#pw-web-btn:hover{
+  background:rgba(255,255,255,.1);
+}
+
+#wv-back {
+  display: flex; align-items: center; gap: 6px;
+  background: none;
+  border: 1px solid rgba(184,151,90,0.35);
+  border-radius: 999px; padding: 4px 14px;
+  font-family: inherit; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(184,151,90,0.8); cursor: none;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+#wv-back:hover { color: #111; background: var(--gold); border-color: var(--gold); }
+#wv-back svg { width: 10px; height: 10px; }
+
+#wv-tabs { display: flex; gap: 4px; }
+.wv-tab {
+  background: none;
+  border: 1px solid rgba(184,151,90,0.2);
+  border-radius: 999px; padding: 3px 16px;
+  font-family: inherit; font-size: 9px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); cursor: none;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.wv-tab.on { color: var(--gold); border-color: rgba(184,151,90,0.6); background: rgba(184,151,90,0.1); }
+.wv-tab:hover:not(.on) { color: rgba(255,255,255,0.6); border-color: rgba(184,151,90,0.4); }
+
+#wv-label {
+  margin-left: auto;
+  font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(184,151,90,0.3);
+}
+
+#wv-body { flex: 1 1 0; display: flex; min-height: 0; }
+
+/* 左：説明 */
+#wv-desc {
+  flex: 0 0 300px;
+  border-right: 1px solid rgba(184,151,90,0.1);
+  overflow-y: auto;
+  padding: 36px 28px 36px 32px;
+}
+#wv-desc::-webkit-scrollbar { width: 2px; }
+#wv-desc::-webkit-scrollbar-thumb { background: rgba(184,151,90,0.2); }
+
+.sp { display: none; }
+.sp.on { display: block; }
+.sp-tag { font-size: 8px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(184,151,90,0.45); margin-bottom: 16px; }
+.sp-title { font-size: 18px; line-height: 1.4; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+.sp-en { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(184,151,90,0.35); margin-bottom: 32px; }
+.sp-rule { width: 20px; height: 1px; background: rgba(184,151,90,0.3); margin-bottom: 24px; }
+.sp-lbl { font-size: 7.5px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(184,151,90,0.4); margin-bottom: 10px; }
+.sp-body {
+  font-size: 12.5px; line-height: 2; color: rgba(255,255,255,0.5); margin-bottom: 32px;
+  font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Meiryo', sans-serif;
+}
+.sp-meta { display: flex; flex-direction: column; gap: 10px; }
+.sp-row { display: flex; gap: 12px; }
+.sp-key { font-size: 7.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(184,151,90,0.38); flex: 0 0 56px; padding-top: 1px; }
+.sp-val { font-size: 10px; color: rgba(255,255,255,0.38); line-height: 1.7; font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', sans-serif; }
+
+/* 右：iframe */
+#wv-iframe-area {
+  flex: 1 1 0; position: relative;
+  background: #fff; min-width: 0;
+}
+/* 修正版：iframe切替CSS */
+.wv-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+
+  /* 指摘の通り、displayを使わずに制御 */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  
+  /* 任意：切り替えを滑らかにする場合 */
+  transition: opacity 0.4s ease;
+}
+
+.wv-frame.on {
+  display: block; /* ここを削除、または block のままでも visibility が優先されます */
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#wv-loader {
+  position: absolute; inset: 0; z-index: 2;
+  background: #0d0d0d;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+#wv-loader.hide { display: none; }
+.ld { width: 5px; height: 5px; border-radius: 50%; background: rgba(184,151,90,0.5); }
+.ld:nth-child(1) { animation: pulse 1.2s 0s   infinite; }
+.ld:nth-child(2) { animation: pulse 1.2s 0.2s infinite; }
+.ld:nth-child(3) { animation: pulse 1.2s 0.4s infinite; }
+@keyframes pulse { 0%,80%,100%{transform:scale(0.6);opacity:0.3} 40%{transform:scale(1);opacity:1} }
 </style>
 </head>
 <body>
@@ -236,264 +423,398 @@
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
+<header id="global-header">
+  <div id="header-label">PRINT WORKS</div>
+  <button id="header-switch-btn">
+    <span id="header-btn-text">WEB WORKS</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="12" height="12" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</header>
+
 <div id="stage"><div id="stage-inner"></div></div>
 
-<nav id="nav">
-  <button class="nb" id="b-first" title="最初へ">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <polyline points="11 17 6 12 11 7"/><line x1="18" y1="12" x2="6" y2="12"/>
-    </svg>
-  </button>
-  <button class="nb" id="b-prev" title="前へ">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <polyline points="15 18 9 12 15 6"/>
-    </svg>
-  </button>
-  <div class="nd"></div>
-  <div id="nc"><b>1</b> / 20</div>
-  <div class="nd"></div>
-  <button class="nb" id="b-next" title="次へ">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <polyline points="9 18 15 12 9 6"/>
-    </svg>
-  </button>
-  <button class="nb" id="b-last" title="最後へ">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <polyline points="13 17 18 12 13 7"/><line x1="6" y1="12" x2="18" y2="12"/>
-    </svg>
-  </button>
-</nav>
+<!-- HINT -->
+<div id="hint">
+  <kbd>←</kbd><kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>Z</kbd> zoom &nbsp;·&nbsp; <kbd>Esc</kbd> close
+</div>
 
+<!-- THUMBNAIL STRIP -->
 <div id="thumbs"></div>
 
+<!-- MAIN NAV -->
+<nav id="nav">
+  <button class="nb" id="b-first" title="First">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+  </button>
+  <button class="nb" id="b-prev" title="Prev">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="nd"></div>
+  <span id="nc"><b>1</b> / 1</span>
+  <div class="nd"></div>
+  <button class="nb" id="b-next" title="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <button class="nb" id="b-last" title="Last">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="7 17 12 12 7 7"/><polyline points="14 17 19 12 14 7"/></svg>
+  </button>
+  <div class="nd"></div>
+  <button id="btn-web">WEB</button>
+</nav>
+
+<!-- LIGHTBOX -->
 <div id="lb">
+  <button id="lb-close">&#x2715;</button>
   <div id="lb-scroll">
-    <img id="lb-img" src="" alt="">
+    <img id="lb-img" src="" alt="lightbox">
   </div>
-  <button id="lb-close">✕</button>
   <div id="lb-ctrl">
-    <button class="zb" id="zi">＋</button>
-    <button class="zb" id="zo">－</button>
-    <div class="nd"></div>
-    <button class="zb sm" id="zr">1:1</button>
-    <div class="nd"></div>
     <button class="zb" id="lp">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
     <button class="zb" id="ln">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
+    <div class="nd"></div>
+    <button class="zb" id="zo">&#x2212;</button>
+    <button class="zb sm" id="zr">100%</button>
+    <button class="zb" id="zi">&#x2b;</button>
   </div>
 </div>
 
-<div id="hint">
-  <kbd>← →</kbd> ページ移動 &nbsp; <kbd>Z</kbd> 拡大 &nbsp; <kbd>ESC</kbd> 閉じる
+<!-- WEB VIEW -->
+<div id="web-view">
+  <div id="wv-header">
+    <button id="wv-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+      PRINT WORKS
+    </button>
+    <div id="wv-tabs">
+      <button class="wv-tab on" data-idx="0">Site 01</button>
+      <button class="wv-tab"    data-idx="1">Site 02</button>
+    </div>
+    <div id="wv-label">WEB WORKS</div>
+  </div>
+
+  <div id="wv-body">
+    <div id="wv-desc">
+
+      <!-- ★ Site 01 説明 ★ -->
+<div class="sp on" data-panel="0">
+  <div class="sp-tag">Web Work — 01</div>
+  <div class="sp-title">アットリス<br>サービスサイト</div>
+  <div class="sp-en">ATTOLIS SERVICE SITE</div>
+  <div class="sp-rule"></div>
+  <div class="sp-lbl">Concept</div>
+  <div class="sp-body">
+    グループ会社の株式会社ゼプトスとの共同事業として展開する、AI営業支援サービス「アットリス」の立ち上げに伴うLP制作。
+    「営業のすべてを、『アッ』という間に。」をコンセプトに、営業担当者が本来注力すべき商談に集中できるよう、リスト作成や一次架電といった「付随業務」をAIが代行する合理性と革新性を訴求しました。
+    信頼感を醸成するネイビーを基調としつつ、AIの先進性を感じさせるグラデーションや、実際のAI音声を体験できるインタラクティブなUIを実装。数値を視覚化するROIシミュレーターや動的なカウントアップ演出により、導入メリットを直感的に理解できる設計を目指しました。
+  </div>
+  <div class="sp-lbl">Details</div>
+  <div class="sp-meta">
+    <div class="sp-row"><span class="sp-key">Client</span><span class="sp-val">Self Project / Deptos Inc.</span></div>
+    <div class="sp-row"><span class="sp-key">Role</span><span class="sp-val">Planning / UX Design / Copywriting / Frontend Development</span></div>
+    <div class="sp-row"><span class="sp-key">Year</span><span class="sp-val">2026</span></div>
+  </div>
+</div>
+
+      <!-- ★ Site 02 説明 ★ -->
+      <div class="sp" data-panel="1">
+  <div class="sp-tag">Web Work — Concept Work</div>
+  <div class="sp-title">井上誠耕園<br>ブランド再定義プロトタイプ</div>
+  <div class="sp-en">INOUE SEIKOUEN BRANDING PROTOTYPE</div>
+  <div class="sp-rule"></div>
+  <div class="sp-lbl">Concept</div>
+  <div class="sp-body">
+    小豆島で大地を耕し続ける「井上誠耕園」のブランド価値を、デジタル上の体験として再構築したプロトタイプ。
+    「大地を、食卓を、耕す。」という哲学を軸に、スクロールに合わせて「視覚・聴覚・触覚」を刺激するストーリーテリングを設計しました。
+    特に『緑果オリーブオイル』のページでは、パンをオイルに浸す一連の所作をパララックス演出で表現。単なる製品紹介に留まらず、ユーザーの生活に寄り添う「時間」と「情緒」をコードによって可視化する試みを行っています。ブランドの深淵に触れる「編集後記」のモーダル実装など、細部まで徹底した体験設計を追求しました。
+  </div>
+  <div class="sp-lbl">Details</div>
+  <div class="sp-meta">
+    <div class="sp-row"><span class="sp-key">Project</span><span class="sp-val">Creative Branding Lab (Self-Initiated)</span></div>
+    <div class="sp-row"><span class="sp-key">Role</span><span class="sp-val">Creative Direction / Copywriting / UX Design / Development</span></div>
+    <div class="sp-row"><span class="sp-key">Tech</span><span class="sp-val">HTML5 / Tailwind CSS / JavaScript (Intersection Observer)</span></div>
+    <div class="sp-row"><span class="sp-key">Year</span><span class="sp-val">2026</span></div>
+  </div>
+</div>
+
+      <!-- ★ Site 03 説明 ★ -->
+
+    </div>
+
+    <div id="wv-iframe-area">
+      <div id="wv-loader">
+        <div class="ld"></div><div class="ld"></div><div class="ld"></div>
+      </div>
+      <!-- ★ src を実際のパスに変更 ★ -->
+      <iframe class="wv-frame on" data-frame="0" src="site01/index.html"></iframe>
+      <iframe class="wv-frame"    data-frame="1" src="site02/index.html"></iframe>
+    </div>
+  </div>
 </div>
 
 <script>
-// =============================================
-// 各ページの画像パスをここに設定してください
-// 例: 'images/page01.jpg'
-// htmlファイルと同じフォルダに images/ フォルダを置く場合
-// =============================================
-const images = [
-  'images/page01.jpg',  // 1
-  'images/page02.jpg',  // 2
-  'images/page03.jpg',  // 3
-  'images/page04.jpg',  // 4
-  'images/page05.jpg',  // 5
-  'images/page06.jpg',  // 6
-  'images/page07.jpg',  // 7
-  'images/page08.jpg',  // 8
-  'images/page09.jpg',  // 9
-  'images/page10.jpg',  // 10
-  'images/page11.jpg',  // 11
-  'images/page12.jpg',  // 12
-  'images/page13.jpg',  // 13
-  'images/page14.jpg',  // 14
-  'images/page15.jpg',  // 15
-  'images/page16.jpg',  // 16
-  'images/page17.jpg',  // 17
-  'images/page18.jpg',  // 18
-  'images/page19.jpg',  // 19
-  'images/page20.jpg',  // 20
-  'images/page21.jpg',  // 21
-  'images/page22.jpg',  // 22
+// ── 画像パス ──────────────────────────────
+var images = [
+  'images/page01.jpg','images/page02.jpg','images/page03.jpg','images/page04.jpg',
+  'images/page05.jpg','images/page06.jpg','images/page07.jpg','images/page08.jpg',
+  'images/page09.jpg','images/page10.jpg','images/page11.jpg','images/page12.jpg',
+  'images/page13.jpg','images/page14.jpg','images/page15.jpg','images/page16.jpg',
+  'images/page17.jpg','images/page18.jpg','images/page19.jpg','images/page20.jpg',
+  'images/page21.jpg','images/page22.jpg'
 ];
 
-const TOTAL = images.length;
-let cur = 0, busy = false;
-let lbZoom = 1, lbIdx = 0;
-let dragOn = false, dX = 0, dY = 0, sX = 0, sY = 0;
-let mX = 0, mY = 0, rX = 0, rY = 0;
+var TOTAL = images.length;
+var cur = -1, busy = false;
+var lbZoom = 1, lbIdx = 0;
+var dragOn = false, dX=0, dY=0, sX=0, sY=0;
 
-// Build pages
-const si = document.getElementById('stage-inner');
-const tb = document.getElementById('thumbs');
+// ── スライドページ生成 ───────────────────
+var si = document.getElementById('stage-inner');
+var tb = document.getElementById('thumbs');
 
-for (let i = 0; i < TOTAL; i++) {
-  const pw = document.createElement('div');
-  pw.className = 'pw';
-  pw.dataset.i = i;
-  pw.dataset.s = i === 0 ? 'cur' : 'hide';
+for (var i = 0; i < TOTAL; i++) {
+  (function(i){
+    var pw = document.createElement('div');
+    pw.className = 'pw'; pw.dataset.i = i; pw.dataset.s = 'hide';
 
-  const pg = document.createElement('div');
-  pg.className = 'page';
+    var pg = document.createElement('div'); pg.className = 'page';
+    if (images[i]) {
+      var img = document.createElement('img');
+      img.src = images[i]; img.alt = 'Page '+(i+1);
+      pg.appendChild(img);
+    } else {
+      var ph = document.createElement('div'); ph.className = 'ph';
+      ph.innerHTML = '<div class="ph-n">'+String(i+1).padStart(2,'0')+'</div><div class="ph-l">page '+(i+1)+'</div>';
+      pg.appendChild(ph);
+    }
+    pg.onclick = function(){ openLb(i); };
+    pw.appendChild(pg); si.appendChild(pw);
 
-  if (images[i]) {
-    const img = document.createElement('img');
-    img.src = images[i]; img.alt = `Page ${i+1}`;
-    pg.appendChild(img);
-  } else {
-    const ph = document.createElement('div');
-    ph.className = 'ph';
-    ph.innerHTML = `<div class="ph-n">${String(i+1).padStart(2,'0')}</div><div class="ph-l">image / page ${i+1}</div>`;
-    pg.appendChild(ph);
-  }
-
-  pg.addEventListener('click', () => openLb(i));
-  pw.appendChild(pg);
-  si.appendChild(pw);
-
-  // thumb
-  const t = document.createElement('div');
-  t.className = 'thumb' + (i === 0 ? ' on' : '');
-  if (images[i]) {
-    const ti = document.createElement('img'); ti.src = images[i];
-    t.appendChild(ti);
-  }
-  t.appendChild(Object.assign(document.createElement('span'), { textContent: i + 1 }));
-  t.addEventListener('click', () => go(i));
-  tb.appendChild(t);
+    var t = document.createElement('div'); t.className = 'thumb';
+    if (images[i]) { var ti=document.createElement('img'); ti.src=images[i]; t.appendChild(ti); }
+    var sp=document.createElement('span'); sp.textContent=i+1; t.appendChild(sp);
+    t.onclick = function(){ go(i); };
+    tb.appendChild(t);
+  })(i);
 }
 
-// Scale to viewport
-function scale() {
-  const s = Math.min((innerWidth - 80) / 794, (innerHeight - 100) / 1123, 1);
-  si.style.transform = `scale(${s})`;
+function scaleStage() {
+  var s = Math.min((innerWidth-80)/794, (innerHeight-100)/1123, 1);
+  si.style.transform = 'scale('+s+')';
 }
-scale();
-window.addEventListener('resize', scale);
+scaleStage();
+window.onresize = scaleStage;
 
-// Navigate
 function go(idx) {
-  if (busy || idx < 0 || idx >= TOTAL || idx === cur) return;
-  busy = true; cur = idx;
-  document.querySelectorAll('.pw').forEach((p, i) => {
-    const d = i - cur;
-    p.dataset.s = d === 0 ? 'cur' : d > 0 ? 'next' : 'prev';
-  });
-  document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('on', i === cur));
-  document.getElementById('nc').innerHTML = `<b>${cur+1}</b> / ${TOTAL}`;
-  document.getElementById('b-prev').disabled = cur === 0;
-  document.getElementById('b-first').disabled = cur === 0;
-  document.getElementById('b-next').disabled = cur === TOTAL - 1;
-  document.getElementById('b-last').disabled = cur === TOTAL - 1;
-  setTimeout(() => { busy = false; }, 700);
+  if (busy || idx<0 || idx>=TOTAL || idx===cur) return;
+  busy=true; cur=idx;
+  var pws=document.querySelectorAll('.pw');
+  for(var i=0;i<pws.length;i++){
+    var d=i-cur; pws[i].dataset.s=d===0?'cur':d>0?'next':'prev';
+  }
+  var ts=document.querySelectorAll('.thumb');
+  for(var i=0;i<ts.length;i++) ts[i].classList.toggle('on',i===cur);
+  document.getElementById('nc').innerHTML='<b>'+(cur+1)+'</b> / '+TOTAL;
+  document.getElementById('b-prev').disabled  = cur===0;
+  document.getElementById('b-first').disabled = cur===0;
+  document.getElementById('b-next').disabled  = cur===TOTAL-1;
+  document.getElementById('b-last').disabled  = cur===TOTAL-1;
+  setTimeout(function(){ busy=false; }, 700);
 }
 go(0);
 
-document.getElementById('b-prev').addEventListener('click', () => go(cur - 1));
-document.getElementById('b-next').addEventListener('click', () => go(cur + 1));
-document.getElementById('b-first').addEventListener('click', () => go(0));
-document.getElementById('b-last').addEventListener('click', () => go(TOTAL - 1));
+document.getElementById('b-prev').onclick  = function(){ go(cur-1); };
+document.getElementById('b-next').onclick  = function(){ go(cur+1); };
+document.getElementById('b-first').onclick = function(){ go(0); };
+document.getElementById('b-last').onclick  = function(){ go(TOTAL-1); };
 
-// Lightbox
-const lb = document.getElementById('lb');
-const lbScroll = document.getElementById('lb-scroll');
-const lbImg = document.getElementById('lb-img');
+// ── WEB VIEW 制御 ────────────────────────────
+var webView = document.getElementById('web-view');
+var loader = document.getElementById('wv-loader');
+var frames = document.querySelectorAll('.wv-frame');
 
-function openLb(idx) {
-  lbIdx = idx; lbZoom = 1;
-  const src = images[idx];
-  lbImg.src = src || '';
-  lbImg.style.display = src ? 'block' : 'none';
-  lbImg.style.transform = 'scale(1)';
-  lbScroll.scrollTop = 0; lbScroll.scrollLeft = 0;
+// 全てのiframeに対してロード完了時の処理を事前に設定
+frames.forEach(function(frame) {
+  frame.onload = function() {
+    frame.dataset.loaded = '1';
+    // 今表示すべきフレームがロード完了したらローダーを隠す
+    if (frame.classList.contains('on')) {
+      loader.classList.add('hide');
+    }
+  };
+});
+
+// btn-web / wv-back の onclick は下部の updateHeader() で一元管理
+
+// タブ切替
+var tabs = document.querySelectorAll('.wv-tab');
+tabs.forEach(function(tab) {
+  tab.onclick = function() {
+    var idx = parseInt(tab.dataset.idx, 10);
+
+    // タブのON/OFF
+    tabs.forEach(function(t) { t.classList.remove('on'); });
+    tab.classList.add('on');
+
+    // パネルのON/OFF
+    var panels = document.querySelectorAll('.sp');
+    panels.forEach(function(p) { p.classList.remove('on'); });
+    document.querySelector('.sp[data-panel="'+idx+'"]').classList.add('on');
+
+    // iframeのON/OFF
+    var targetFrame = document.querySelector('.wv-frame[data-frame="'+idx+'"]');
+    frames.forEach(function(f) { f.classList.remove('on'); });
+    targetFrame.classList.add('on');
+
+    // ロード判定：既に完了していれば隠す、まだならローダーを表示
+    if (targetFrame.dataset.loaded === '1') {
+      loader.classList.add('hide');
+    } else {
+      loader.classList.remove('hide');
+      
+      // 保険：5秒経っても消えない場合は強制表示（念のため）
+      setTimeout(function(){
+        loader.classList.add('hide');
+      }, 5000);
+    }
+  };
+});
+
+// ── Lightbox ──────────────────────────
+var lb      = document.getElementById('lb');
+var lbScroll= document.getElementById('lb-scroll');
+var lbImg   = document.getElementById('lb-img');
+
+function openLb(idx){
+  lbIdx=idx; lbZoom=1;
+  lbImg.src = images[idx]||'';
+  lbImg.style.transform='scale(1)';
+  lbScroll.scrollTop=0; lbScroll.scrollLeft=0;
   lb.classList.add('on');
 }
-function closeLb() { lb.classList.remove('on'); }
-function zoomSet(z) {
-  lbZoom = Math.max(0.5, Math.min(5, z));
-  lbImg.style.transform = `scale(${lbZoom})`;
-}
+function closeLb(){ lb.classList.remove('on'); }
+function zoomSet(z){ lbZoom=Math.max(0.5,Math.min(5,z)); lbImg.style.transform='scale('+lbZoom+')'; }
 
-document.getElementById('lb-close').addEventListener('click', closeLb);
-lb.addEventListener('click', e => { if (e.target === lb || e.target === lbScroll) closeLb(); });
-document.getElementById('zi').addEventListener('click', () => zoomSet(lbZoom + 0.5));
-document.getElementById('zo').addEventListener('click', () => zoomSet(lbZoom - 0.5));
-document.getElementById('zr').addEventListener('click', () => zoomSet(1));
-document.getElementById('lp').addEventListener('click', e => {
-  e.stopPropagation(); if (lbIdx > 0) { lbIdx--; go(lbIdx); openLb(lbIdx); }
+document.getElementById('lb-close').onclick=closeLb;
+lb.onclick=function(e){ if(e.target===lb||e.target===lbScroll) closeLb(); };
+document.getElementById('zi').onclick=function(){ zoomSet(lbZoom+0.5); };
+document.getElementById('zo').onclick=function(){ zoomSet(lbZoom-0.5); };
+document.getElementById('zr').onclick=function(){ zoomSet(1); };
+document.getElementById('lp').onclick=function(e){
+  e.stopPropagation(); if(lbIdx>0){lbIdx--;go(lbIdx);openLb(lbIdx);}
+};
+document.getElementById('ln').onclick=function(e){
+  e.stopPropagation(); if(lbIdx<TOTAL-1){lbIdx++;go(lbIdx);openLb(lbIdx);}
+};
+lbImg.addEventListener('mousedown',function(e){
+  dragOn=true; dX=e.clientX; dY=e.clientY;
+  sX=lbScroll.scrollLeft; sY=lbScroll.scrollTop; e.preventDefault();
 });
-document.getElementById('ln').addEventListener('click', e => {
-  e.stopPropagation(); if (lbIdx < TOTAL-1) { lbIdx++; go(lbIdx); openLb(lbIdx); }
+document.addEventListener('mousemove',function(e){
+  if(!dragOn)return;
+  lbScroll.scrollLeft=sX-(e.clientX-dX);
+  lbScroll.scrollTop =sY-(e.clientY-dY);
 });
+document.addEventListener('mouseup',function(){ dragOn=false; });
+lbScroll.addEventListener('wheel',function(e){
+  e.preventDefault(); zoomSet(lbZoom+(e.deltaY<0?0.25:-0.25));
+},{passive:false});
 
-// Drag pan
-lbImg.addEventListener('mousedown', e => {
-  dragOn = true; dX = e.clientX; dY = e.clientY;
-  sX = lbScroll.scrollLeft; sY = lbScroll.scrollTop;
-  e.preventDefault();
-});
-document.addEventListener('mousemove', e => {
-  if (!dragOn) return;
-  lbScroll.scrollLeft = sX - (e.clientX - dX);
-  lbScroll.scrollTop  = sY - (e.clientY - dY);
-});
-document.addEventListener('mouseup', () => { dragOn = false; });
-
-// Wheel zoom in lb
-lbScroll.addEventListener('wheel', e => {
-  e.preventDefault();
-  zoomSet(lbZoom + (e.deltaY < 0 ? 0.25 : -0.25));
-}, { passive: false });
-
-// Keyboard
-document.addEventListener('keydown', e => {
-  if (lb.classList.contains('on')) {
-    if (e.key === 'Escape') closeLb();
-    if (e.key === '+' || e.key === '=') zoomSet(lbZoom + 0.5);
-    if (e.key === '-') zoomSet(lbZoom - 0.5);
-    if (e.key === '0') zoomSet(1);
-    if (e.key === 'ArrowRight') { if (lbIdx < TOTAL-1) { lbIdx++; go(lbIdx); openLb(lbIdx); } }
-    if (e.key === 'ArrowLeft')  { if (lbIdx > 0)       { lbIdx--; go(lbIdx); openLb(lbIdx); } }
+// ── Keyboard ─────────────────────────
+document.addEventListener('keydown',function(e){
+  if(lb.classList.contains('on')){
+    if(e.key==='Escape') closeLb();
+    if(e.key==='+'||e.key==='=') zoomSet(lbZoom+0.5);
+    if(e.key==='-') zoomSet(lbZoom-0.5);
+    if(e.key==='0') zoomSet(1);
+    if(e.key==='ArrowRight'&&lbIdx<TOTAL-1){lbIdx++;go(lbIdx);openLb(lbIdx);}
+    if(e.key==='ArrowLeft'&&lbIdx>0){lbIdx--;go(lbIdx);openLb(lbIdx);}
     return;
   }
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(cur + 1);
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(cur - 1);
-  if (e.key === 'Home') go(0);
-  if (e.key === 'End')  go(TOTAL - 1);
-  if (e.key === 'z' || e.key === 'Z') openLb(cur);
+  if(webView.style.display==='flex'){
+    if(e.key==='Escape' && window._updateHeader) window._updateHeader(false);
+    return;
+  }
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(cur-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(TOTAL-1);
+  if(e.key==='z'||e.key==='Z') openLb(cur);
 });
 
-// Wheel page nav
-let wt = null;
-document.addEventListener('wheel', e => {
-  if (lb.classList.contains('on')) return;
-  if (wt) return;
-  go(e.deltaY > 20 ? cur + 1 : e.deltaY < -20 ? cur - 1 : cur);
-  wt = setTimeout(() => { wt = null; }, 650);
-}, { passive: true });
+// Wheel
+var wt=null;
+document.addEventListener('wheel',function(e){
+  if(lb.classList.contains('on')||webView.style.display==='flex') return;
+  if(wt)return;
+  go(e.deltaY>20?cur+1:e.deltaY<-20?cur-1:cur);
+  wt=setTimeout(function(){wt=null;},650);
+},{passive:true});
 
-// Touch swipe
-let tx = 0;
-document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-document.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - tx;
-  if (Math.abs(dx) > 50) go(dx < 0 ? cur + 1 : cur - 1);
-}, { passive: true });
+// Touch
+var tx=0;
+document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',function(e){
+  if(webView.style.display==='flex')return;
+  var dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50) go(dx<0?cur+1:cur-1);
+},{passive:true});
 
-// Cursor
-const ce = document.getElementById('cursor');
-const cr = document.getElementById('cursor-ring');
-document.addEventListener('mousemove', e => { mX = e.clientX; mY = e.clientY; });
-(function anim() {
-  rX += (mX - rX) * 0.14; rY += (mY - rY) * 0.14;
-  ce.style.left = mX+'px'; ce.style.top = mY+'px';
-  cr.style.left = rX+'px'; cr.style.top = rY+'px';
+// ── Cursor ────────────────────────────
+var ce=document.getElementById('cursor');
+var cr=document.getElementById('cursor-ring');
+var mX=0,mY=0,rX=0,rY=0;
+document.addEventListener('mousemove',function(e){mX=e.clientX;mY=e.clientY;});
+(function anim(){
+  rX+=(mX-rX)*0.14; rY+=(mY-rY)*0.14;
+  ce.style.left=mX+'px'; ce.style.top=mY+'px';
+  cr.style.left=rX+'px'; cr.style.top=rY+'px';
   requestAnimationFrame(anim);
 })();
+
+// pw-web-btn は updateHeader() で管理するため個別ハンドラ不要
+
+// ── ビュー切替：一元管理 ──────────────────────
+(function() {
+  const hLabel = document.getElementById('header-label');
+  const sBtn   = document.getElementById('header-switch-btn');
+  const bText  = document.getElementById('header-btn-text');
+  const wView  = document.getElementById('web-view');
+
+  if (!sBtn || !wView || !hLabel || !bText) return;
+
+  function updateHeader(isWeb) {
+    if (isWeb) {
+      wView.style.display = 'flex';
+      hLabel.innerText = 'WEB WORKS';
+      bText.innerText  = 'BACK TO PRINT';
+    } else {
+      wView.style.display = 'none';
+      hLabel.innerText = 'PRINT WORKS';
+      bText.innerText  = 'WEB WORKS';
+    }
+  }
+
+  // ヘッダー切替ボタン
+  sBtn.addEventListener('click', function() {
+    updateHeader(wView.style.display !== 'flex');
+  });
+
+  // ナビの「WEB」ボタン
+  var navWebBtn = document.getElementById('btn-web');
+  if (navWebBtn) navWebBtn.addEventListener('click', function() { updateHeader(true); });
+
+  // Webビュー内の「戻る」ボタン
+  var wvBackBtn = document.getElementById('wv-back');
+  if (wvBackBtn) wvBackBtn.addEventListener('click', function() { updateHeader(false); });
+
+  // Escキーでも閉じる（keydownリスナーと連動）
+  window._updateHeader = updateHeader;
+})();
+
 </script>
 </body>
 </html>
