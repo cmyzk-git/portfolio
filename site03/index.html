@@ -1,884 +1,840 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script type="application/ld+json">
-</script>
-　　　<meta name="keywords" content="大阪, 結婚式, ウェディングムービー, エンドロール, プロフィールムービー">
-	<meta name="description" content="結婚式を最高の映像で残しませんか？エンドロール、プロフィールムービーなど、感動的なウェディングムービーを制作します。">
 <meta charset="UTF-8">
-<title>Wedding Memorial Movie</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Wedding Memorial Movie">
-<link rel="stylesheet" href="css/style.css">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #b8975a;
+  --nav-bg: rgba(20,20,20,0.92);
+  --nav-border: rgba(184,151,90,0.28);
+}
+html, body {
+  width: 100%; height: 100%;
+  background: #111;
+  overflow: hidden;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  cursor: none;
+}
+
+/* ── global-heade ── */
+
+#global-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 54px; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(184,151,90,0.15);
+  background: rgba(13, 13, 13, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+#header-label {
+  font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(184,151,90,0.45);
+}
+
+#header-switch-btn {
+  background: none;
+  border: 1px solid rgba(184,151,90,0.35);
+  border-radius: 999px; padding: 4px 14px;
+  font-family: inherit; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); cursor: none;
+  transition: all 0.2s;
+  display: flex; align-items: center;
+}
+
+#header-switch-btn:hover { background: var(--gold); color: #111; }
+
+/* 作品がヘッダーの下に潜り込まないように調整 */
+#stage { padding-top: 54px; }
+
+/* ── CURSOR ── */
+#cursor {
+  position: fixed; width: 6px; height: 6px;
+  background: var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+}
+#cursor-ring {
+  position: fixed; width: 28px; height: 28px;
+  border: 1px solid rgba(184,151,90,0.5); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: width 0.2s, height 0.2s;
+}
+
+/* ── PRINT STAGE ── */
+#stage {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+#stage-inner {
+  position: relative;
+  width: 794px; height: 1123px;
+  transform-origin: center center;
+}
+.pw {
+  position: absolute; inset: 0;
+  will-change: transform, opacity;
+  pointer-events: none;
+  transition: transform 0.65s cubic-bezier(0.76,0,0.24,1),
+              opacity   0.55s cubic-bezier(0.76,0,0.24,1);
+}
+.pw[data-s="cur"]  { transform: translateX(0)     scale(1);    opacity: 1; pointer-events: all; z-index: 10; }
+.pw[data-s="next"] { transform: translateX(110%)  scale(0.94); opacity: 0; z-index: 5; }
+.pw[data-s="prev"] { transform: translateX(-110%) scale(0.94); opacity: 0; z-index: 5; }
+.pw[data-s="hide"] { transform: translateX(0)     scale(0.88); opacity: 0; z-index: 1; }
+.page {
+  width: 100%; height: 100%;
+  background: #1c1c1c;
+  box-shadow: 0 8px 60px rgba(0,0,0,0.6), 0 2px 12px rgba(0,0,0,0.4);
+  position: relative; overflow: hidden;
+  cursor: zoom-in;
+}
+.page img {
+  width: 100%; height: 100%; object-fit: contain;
+  display: block; pointer-events: none;
+  user-select: none; -webkit-user-drag: none;
+}
+.ph {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  pointer-events: none;
+}
+.ph-n { font-size: 88px; font-weight: 700; color: rgba(255,255,255,0.04); line-height: 1; }
+.ph-l { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.1); }
+
+/* ── MAIN NAV ── */
+#nav {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  z-index: 200;
+  display: flex; align-items: center; gap: 2px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--nav-border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.nb {
+  background: none; border: none;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none; color: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transition: color 0.15s, background 0.15s;
+}
+.nb:hover { color: var(--gold); background: rgba(184,151,90,0.08); }
+.nb:disabled { opacity: 0.15; pointer-events: none; }
+.nb svg { width: 15px; height: 15px; }
+.nd { width: 1px; height: 18px; background: rgba(184,151,90,0.2); margin: 0 6px; }
+#nc {
+  font-size: 11px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3); padding: 0 10px;
+  min-width: 52px; text-align: center;
+}
+#nc b { color: var(--gold); font-weight: 400; }
+
+/* WEB ボタン */
+#btn-web {
+  background: none;
+  border: 1px solid rgba(184,151,90,0.5);
+  border-radius: 999px; padding: 4px 13px;
+  font-family: inherit;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); cursor: none;
+  transition: color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  margin-left: 4px;
+}
+#btn-web:hover {
+  color: #111;
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 16px rgba(184,151,90,0.5);
+}
+
+/* ── THUMBNAIL STRIP ── */
+#thumbs {
+  position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%);
+  z-index: 199;
+  display: flex; gap: 5px; align-items: flex-end;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+#nav:hover ~ #thumbs, #thumbs:hover { opacity: 1; pointer-events: all; }
+.thumb {
+  width: 26px; height: 37px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(184,151,90,0.15);
+  border-radius: 2px; cursor: none;
+  transition: transform 0.2s, border-color 0.15s;
+  position: relative; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 3px;
+}
+.thumb img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.55; pointer-events: none;
+}
+.thumb span { position: relative; z-index: 1; font-size: 7px; color: rgba(255,255,255,0.25); }
+.thumb.on { border-color: var(--gold); transform: scaleY(1.18) translateY(-4px); }
+.thumb.on img { opacity: 1; }
+.thumb:hover { border-color: rgba(184,151,90,0.5); transform: scaleY(1.1) translateY(-2px); }
+
+/* ── LIGHTBOX ── */
+#lb {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(8,8,8,0.97);
+  display: none; align-items: center; justify-content: center;
+}
+#lb.on { display: flex; }
+#lb-scroll {
+  width: 92vw; height: 92vh;
+  overflow: scroll; display: flex;
+  align-items: flex-start; justify-content: center;
+  padding: 40px 0;
+}
+#lb-scroll::-webkit-scrollbar { display: none; }
+#lb-img {
+  display: block; max-width: none;
+  cursor: grab; user-select: none; -webkit-user-drag: none;
+}
+#lb-img:active { cursor: grabbing; }
+#lb-ctrl {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 2px;
+  background: var(--nav-bg); backdrop-filter: blur(20px);
+  border: 1px solid var(--nav-border);
+  border-radius: 999px; padding: 8px 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.zb {
+  background: none; border: none;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: none; color: rgba(255,255,255,0.45);
+  border-radius: 50%; font-size: 18px; line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+.zb:hover { color: var(--gold); background: rgba(184,151,90,0.08); }
+.zb.sm { font-size: 10px; letter-spacing: 0.05em; }
+#lb-close {
+  position: fixed; top: 22px; right: 28px; z-index: 2;
+  background: none; border: none; cursor: none;
+  color: rgba(255,255,255,0.35); font-size: 22px;
+  transition: color 0.15s, transform 0.2s;
+}
+#lb-close:hover { color: var(--gold); transform: rotate(90deg); }
+
+/* ── HINT ── */
+#hint {
+  position: fixed; top: 20px; left: 28px;
+  font-size: 9px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7); z-index: 100;
+  pointer-events: none; line-height: 2;
+}
+#hint kbd {
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 1px 5px; border-radius: 2px; font-family: inherit;
+}
+
+/* ════════════════════════════════
+   WEB VIEW
+   display:none / flex で切り替え
+   ════════════════════════════════ */
+#web-view {
+  position: fixed; inset: 0; z-index: 500;
+  background: #0d0d0d;
+  display: none;
+  flex-direction: column;
+}
+
+#wv-header {
+  flex: none; height: 54px;
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(184,151,90,0.15);
+}
+
+/* PRINT HEADER */
+
+#pw-header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+
+  height:72px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 32px;
+
+  z-index:200;
+
+  backdrop-filter:blur(20px);
+  background:rgba(10,10,10,.35);
+
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+#pw-title{
+  font-size:11px;
+  letter-spacing:.28em;
+  color:#d6d0c4;
+}
+
+#pw-web-btn{
+  height:40px;
+  padding:0 18px;
+
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+
+  background:rgba(255,255,255,.04);
+
+  color:#fff;
+
+  font-size:11px;
+  letter-spacing:.18em;
+
+  cursor:pointer;
+
+  transition:.3s;
+}
+
+#pw-web-btn:hover{
+  background:rgba(255,255,255,.1);
+}
+
+#wv-back {
+  display: flex; align-items: center; gap: 6px;
+  background: none;
+  border: 1px solid rgba(184,151,90,0.35);
+  border-radius: 999px; padding: 4px 14px;
+  font-family: inherit; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(184,151,90,0.8); cursor: none;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+#wv-back:hover { color: #111; background: var(--gold); border-color: var(--gold); }
+#wv-back svg { width: 10px; height: 10px; }
+
+#wv-tabs { display: flex; gap: 4px; }
+.wv-tab {
+  background: none;
+  border: 1px solid rgba(184,151,90,0.2);
+  border-radius: 999px; padding: 3px 16px;
+  font-family: inherit; font-size: 9px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); cursor: none;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.wv-tab.on { color: var(--gold); border-color: rgba(184,151,90,0.6); background: rgba(184,151,90,0.1); }
+.wv-tab:hover:not(.on) { color: rgba(255,255,255,0.6); border-color: rgba(184,151,90,0.4); }
+
+#wv-label {
+  margin-left: auto;
+  font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(184,151,90,0.3);
+}
+
+#wv-body { flex: 1 1 0; display: flex; min-height: 0; }
+
+/* 左：説明 */
+#wv-desc {
+  flex: 0 0 300px;
+  border-right: 1px solid rgba(184,151,90,0.1);
+  overflow-y: auto;
+  padding: 36px 28px 36px 32px;
+}
+#wv-desc::-webkit-scrollbar { width: 2px; }
+#wv-desc::-webkit-scrollbar-thumb { background: rgba(184,151,90,0.2); }
+
+.sp { display: none; }
+.sp.on { display: block; }
+.sp-tag { font-size: 8px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(184,151,90,0.45); margin-bottom: 16px; }
+.sp-title { font-size: 18px; line-height: 1.4; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+.sp-en { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(184,151,90,0.35); margin-bottom: 32px; }
+.sp-rule { width: 20px; height: 1px; background: rgba(184,151,90,0.3); margin-bottom: 24px; }
+.sp-lbl { font-size: 7.5px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(184,151,90,0.4); margin-bottom: 10px; }
+.sp-body {
+  font-size: 12.5px; line-height: 2; color: rgba(255,255,255,0.5); margin-bottom: 32px;
+  font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Meiryo', sans-serif;
+}
+.sp-meta { display: flex; flex-direction: column; gap: 10px; }
+.sp-row { display: flex; gap: 12px; }
+.sp-key { font-size: 7.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(184,151,90,0.38); flex: 0 0 56px; padding-top: 1px; }
+.sp-val { font-size: 10px; color: rgba(255,255,255,0.38); line-height: 1.7; font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', sans-serif; }
+
+/* 右：iframe */
+#wv-iframe-area {
+  flex: 1 1 0; position: relative;
+  background: #fff; min-width: 0;
+}
+/* 修正版：iframe切替CSS */
+.wv-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+
+  /* 指摘の通り、displayを使わずに制御 */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  
+  /* 任意：切り替えを滑らかにする場合 */
+  transition: opacity 0.4s ease;
+}
+
+.wv-frame.on {
+  display: block; /* ここを削除、または block のままでも visibility が優先されます */
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#wv-loader {
+  position: absolute; inset: 0; z-index: 2;
+  background: #0d0d0d;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+#wv-loader.hide { display: none; }
+.ld { width: 5px; height: 5px; border-radius: 50%; background: rgba(184,151,90,0.5); }
+.ld:nth-child(1) { animation: pulse 1.2s 0s   infinite; }
+.ld:nth-child(2) { animation: pulse 1.2s 0.2s infinite; }
+.ld:nth-child(3) { animation: pulse 1.2s 0.4s infinite; }
+@keyframes pulse { 0%,80%,100%{transform:scale(0.6);opacity:0.3} 40%{transform:scale(1);opacity:1} }
+</style>
 </head>
+<body>
 
-<body class="home">
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<div id="container">
-
-
-
-<!--▼▼▼▼▼ここから「ヘッダー」-->
-<header>
-
-<h1 id="logo"><a href="index.html"><img src="images/em-logo-ol.svg" alt="ウェディングムービー"></a></h1>
-
-<nav>
-<ul>
-<li><a href="#kodawari">私たちのこだわり</a></li>
-<li><a href="#course">撮影・演出プランのご案内</a>
-	<ul>
-	<li><a href="#wp1">挙式・披露宴 撮影プラン</a></li>
-	<li><a href="#wp2">即日編集エンドロール撮影プラン</a></li>
-	<li><a href="#wp3">オープニングムービー 作成プラン</a></li>
-	<li><a href="#wp4">プロフィールムービー 作成プラン</a></li>
-	<li><a href="#wp5">スペシャルオプション</a></li>
-	</ul>
-</li>
-<li><a href="#koe">お客様の声</a></li>
-<li><a href="#faq">よく頂く質問</a></li>
-</ul>
-</nav>
-
+<header id="global-header">
+  <div id="header-label">PRINT WORKS</div>
+  <button id="header-switch-btn">
+    <span id="header-btn-text">WEB WORKS</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="12" height="12" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
 </header>
-<!--▲▲▲▲▲ここまで「ヘッダー」-->
 
-
-
-<!--▼▼▼▼▼ここから画面右側の縦向きの「お問い合わせ」のボタン-->
-<p id="btn-special"><a href="https://cvision.jp/hilton/contactform/" class="border"><i class="fa-solid fa-envelope"></i>お問い合わせ</a></p>
-<!--▲▲▲▲▲ここまで-->
-
-<!--▼▼▼▼▼ここから「スライドショー」-->
-<div id="svg-box">
-
-<div class="slide-type1">
-
-<div class="slide img1">
-<a href="#"><img src="images/1.jpg" alt=""></a>
-</div>
-
-<div class="slide img2">
-<a href="#"><img src="images/2.jpg" alt=""></a>
-</div>
-
-<div class="slide img3">
-<a href="#"><img src="images/3.jpg" alt=""></a>
-</div>
-	
-<!--インジケーターボタン（現在表示中ボタン）-->
-<div class="slide-indicators"></div>
-</div>
-<!--/.slide-type1-->
-
-<!--回転する円形のテキストアニメーション-->
-<img src="images/bg_text1.svg" alt="" class="animation-text spin">
-
-<svg  width="0" height="0" viewBox="0 0 1600 900">
-<defs>
-<clipPath id="myClip1" clipPathUnits="objectBoundingBox">
-<path transform="scale(0.000625,0.001111)" d="M244.6,20v94c0,11-9,20-20,20H19.6c-11,0-20,9-20,20v726c0,11,9,20,20,20h1560c11,0,20-9,20-20V20c0-11-9-20-20-20H264.6c-11,0-20,9-20,20Z">
-</clippath>
-</defs>
-</svg>
-
-</div>
-<!--▲▲▲▲▲ここまで「スライドショー」-->
-
-
-
-<main>
-
-
-
-<!--▼▼▼▼▼ここから「感動を永遠に」-->
-<section class="box1" id="kodawari">
-
-<p class="deco-text">Our Values</p>
-<img src="images/illust1.svg" alt="" class="illust1">
-<img src="images/illust2.svg" alt="" class="illust2">
-
-<div class="text order1 blur">
-
-<h2><span class="main-text">感動を永遠に</span><span class="sub-text">Our Values</span></h2>
-
-<div class="center-text">
-<center>おふたりが共に歩み始めた、かけがえのない一日。<br>
-その日、確かにそこにあった、たくさんの笑顔とあたたかい涙。<br>
-言葉では伝えきれないほどの、たくさんの想い。<br>
-いつまでも色褪せることのない、大切な記憶。<br>
-そんなおふたりの宝物を、最高の映像で永遠に残しませんか？<br>
-私たちは、単なる記録映像ではなく、<br>
-おふたりの愛の物語を、<br>
-まるで映画のように美しく、感動的に描き出します。<br>
-特別な舞台で結ばれた、おふたりだけの忘れられない物語。<br>
-おふたりの未来へ、色あせることのない感動を。<br>
-その大切な一瞬を、永遠の輝きに変える<br>
-お手伝いをさせてください。<br></center>
-</div>
-
-<p class="btn1" style="display: none;"><a href="#">View More</a></p>
-
-</div>
-<!--/.text-->
-
-<div class="image blur">
-<img src="images/sample1.jpg" alt="" class="speed1">
-<img src="images/sample2.jpg" alt="" class="speed2">
-</div>
-
-</section>
-<!--▲▲▲▲▲ここまで「感動を永遠に」-->
-
-
-
-<!--▼▼▼▼▼ここから「撮影演出プランのご案内」-->
-<section class="logo-kazari padding-lr0" id="course">
-
-<div class="title-bg blur">
-<h2><span class="tate order1">撮影・演出プランのご案内</span><span class="yoko">Course Information</span></h2>
-</div>
-
-<div class="list1 image1 up">
-
-<div class="text">
-<p>挙式・披露宴 撮影プラン　／　エターナル メモリーズ</p>
-<h3><span class="large">Eternal Memories<br></span>永遠の愛を<br>最高の映像で<span></span></h3><br>
-<p>おふたりの愛が永遠に輝き続けるように。<br>
-かけがえのない瞬間を最高の映像で永遠の記憶へと刻み込む。<br>
-「Eternal Memories」は、<br>
-そんな願いを込めたウェディング撮影プランです。<br>
-挙式、披露宴、その裏側にある<br>
-たくさんの笑顔と涙、感動の瞬間。<br>
-私たちは、それらすべてを、<br>
-映画のワンシーンのように美しく、<br>
-ドラマチックに描き出します。</p>
-<p class="btn2" ><a href="#wp1">View More</a></p>
-<!-- <p class="btn2" style="display: none;"></p> -->
-</div>
-
-</div>
-<!--/.list1.image1-->
-
-<div class="list1 image2 up">
-
-<div class="text reverse">
-
-<p>即日編集エンドロール撮影プラン　／　グランド フィナーレ</p>
-<h3><span class="large">The Grand Finale<br></span>ゲストへの感謝を<br>エンドロールに込めて<span></span></h3><br>
-<p>
-結婚式という、人生最良の日。<br>
-それは、おふたりだけのものではありません。<br>
-今日という日を、共に喜び、<br>
-祝福してくれた、大切なゲストの皆様。<br>
-その笑顔、涙、そして温かい祝福の言葉。<br>
-すべてが、おふたりの宝物。<br>
-「The Grand Finale」は、<br>
-そんなゲストへの感謝の気持ちを、<br>
-最高の映像で永遠に記録します。<br>
-心あたたまるエンドロールに、<br>
-ゲスト一人ひとりへのメッセージを込めて。<br>
-おふたりの想いを、映像と音楽で紡ぎます。</p>
-<p class="btn2" ><a href="#wp2">View More</a></p>
-
-</div>
-
-</div>
-<!--/.list1.image2-->
-
-<div class="list1 image3 up">
-
-<div class="text">
-
-<p>オープニングムービー 作成プラン　／　ファースト キャプチャー</p>
-<h3><span class="large">The First Chapter<br></span>ふたりの物語<br>はじまりの瞬間<span></span></h3><br>
-<p>
-扉が開く、その瞬間。<br>
-それは、おふたりの新たな物語の幕開け。<br>
-ゲストの期待と祝福に満ちた、特別な時間。<br>
-「The First Chapter」は、<br>
-そんな感動的なオープニングを、最高の映像で残します。<br>
-出逢いから今日までの軌跡、そして未来への誓い。<br>
-おふたりの想いを、映画のような美しい映像で紡ぎます。</p>
-<p class="btn2" ><a href="#wp3">View More</a></p>
-
-</div>
-
-</div>
-<!--/.list1.image3-->
-
-<div class="list1 image4 up">
-
-<div class="text reverse">
-
-<p>プロフィールムービー 作成プラン　／　アワ ジャーニー</p>
-<h3><span class="large">Our Journey<br></span>ふたりの足跡<br>感謝を込めて<span></span></h3><br>
-<p>
-おふたりの人生という名の、美しい旅路。<br>
-出逢い、喜び、やすらぎ、ぬくもり、<br>
-時には涙もあった、かけがえのない日々。<br>
-今日という日を迎えられたのは、<br>
-いつもそばで支えてくれた大切な人たちのおかげ。<br>
-「Our-Journey」は、そんな感謝を込めて、<br>
-おふたりの足跡を辿る、<br>
-特別なプロフィールムービー作成プランです。<br>
-幼い頃の愛らしい姿、青春時代の輝かしい思い出、<br>
-そしてふたりが出逢い、愛を育んだ日々。<br>
-ゲストへの感謝と共に、おふたりの歴史を、<br>
-心温まる映像で綴ります。</p>
-<p class="btn2" ><a href="#wp4">View More</a></p>
-
-</div>
-
-</div>
-<!--/.list1.image4-->
-
-</section>
-<!--▲▲▲▲▲ここまで「コースのご案内」-->
-
-
-
-<!--▼▼▼▼▼ここから「横サムネイルスライドショー」-->
-<div id="slide-thumbnail-box" style="display: none;">
-<section class="slide-thumbnail-box">
-
-<div class="slide-thumbnail1">
-<div class="img rtl">
-<div><a href="#"><img src="images/1.jpg" alt=""></a></div>
-<div><a href="#"><img src="images/2.jpg" alt=""></a></div>
-<div><a href="#"><img src="images/3.jpg" alt=""></a></div>
-<div><a href="#"><img src="images/4.jpg" alt=""></a></div>
-</div>
-</div>
-
-<div class="slide-thumbnail1">
-<div class="img ltr">
-<div><a href="#"><img src="images/1.jpg" alt=""></a></div>
-<div><a href="#"><img src="images/2.jpg" alt=""></a></div>
-<div><a href="#"><img src="images/3.jpg" alt=""></a></div>
-<div><a href="#"><img src="images/4.jpg" alt=""></a></div>
-</div>
-</div>
-</div>
-
-</section>
-<!--▲▲▲▲▲ここまで「横サムネイルスライドショー」-->
-
-
-
-<!--▼▼▼▼▼ここから「3カラム－挙式披露宴撮影」-->
-<section class="bg1" id="wp1">
-
-<h2 class="c no-line"><span class="main-text">挙式・披露宴 撮影プラン　￥93,500～</span><span class="sub-text">Eternal Memories／エターナル メモリーズ</span></h2>
-
-<div class="list-grid1">
-
-<div class="list blur">
-<figure><!--<a href="">--><img src="images/ceremony_01.jpg" alt=""></a></figure>
-<div class="text">
-<h3>Ceremony　～ セレモニー ～</h3>
-<p><b>誓いの瞬間を 永遠のカタチに<br></b>
-<br>
-結婚式は、おふたりにとって人生最良の日。<br>
-「Ceremony -セレモニー-」は、<br>
-挙式のみ撮影を行うおふたりのための<br>
-シンプルなブライダル映像プランです。<br>
-<br>
-特別な演出はなくても、<br>
-挙式での誓いや指輪交換、感動の涙など、<br>
-大切な瞬間はたくさんあります。<br>
-シンプルだからこそ、大切な瞬間が際立ちます。<br>
-挙式のみの記録で充分と考える おふたりのために、<br>
-大切な時間を色あせない映像としてお届けします。<br>
-</p>
-</div>
-</div>
-
-<div class="list blur">
-<figure><!--<a href="">--><img src="images/memorial_01.jpg" alt=""></a></figure>
-<div class="text">
-<h3>Memorial　～ メモリアル ～</h3>
-<p><b>心に刻む 最高の思い出<br></b>
-<br>
-結婚式の感動を永遠に刻む「Memorial -メモリアル-」は、<br>
-おふたりの心に深く残る美しい映像を残すプランです。<br>
-
-喜び、涙、笑顔。<br>
-感情溢れる一日を丁寧に記録し、<br>
-時が経っても鮮やかによみがえる映像を制作します。<br>
-細部にまでこだわり、最高の思い出を<br>
-永遠に色あせない映像として残します。<br>
-<br>
-おふたりの想いをそのままカタチにし、<br>
-かけがえのない宝物となるような、<br>
-心あたたまる映像をお届けします。<br>
-</p>
-</div>
-</div>
-
-<div class="list blur">
-<figure><!--<a href="">--><img src="images/deluxe_01.jpg" alt=""></a></figure>
-<div class="text">
-<h3>Deluxe　～ デラックス ～</h3>
-<p><b>おふたりだけの特別な物語を 永遠に<br></b>
-<br>
-結婚式の感動を永遠に刻む「Deluxe -デラックス-」は、<br>
-おふたりの想いを宝石のように輝かせる、<br>
-最高品質のブライダル映像プランです。<br>
-
-二台のカメラがおふたりの想いを豊かにとらえ、<br>
-まるで映画のようにドラマティックな映像に仕上げます。<br>
-喜び、涙、笑顔、想い、それらすべてを、<br>
-かけがえのない記憶として残します。<br>
-<br>
-結婚式という特別な一日。<br>
-一生に一度の結婚式だからこそ、最高のものを選びたい。<br>
-そんなおふたりのためのプランです。<br>
-</p>
-</div>
-</div>
-
-</div>
-<!--/.list-grid1-->
-
-	
-	
-</section>
-<!--▲▲▲▲▲ここまで「3カラム－挙式披露宴撮影」-->
-<!--▼▼▼▼▼ここから「2カラム-エンドロール」-->
-<section class="bg1" id="wp2">
-
-<h2 class="c no-line"><span class="main-text">即日編集エンドロール 撮影プラン　￥179,300～</span><span class="sub-text">The Grand Finale ／グランド フィナーレ</span></h2>
-
-<div class="list-grid1">
-
-<div class="list blur">
-<figure><a href="https://player.vimeo.com/video/497914035?h=e13e7305c6&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"><img src="images/motion_01.jpg" alt=""></a></figure>
-<div class="text">
-<h3>Motion　～ モーション ～</h3>
-<p><b>記憶に残る一日を ドラマチックな映像で<br></b>
-<br>
-臨場感あふれる映像で、感動を追体験。<br>
-最高の瞬間を、ハイクオリティ映像で永遠に。<br>
-</p>
-</div>
-</div>
-
-<div class="list blur">
-<figure><a href="https://player.vimeo.com/video/898043545?h=bf3d244668&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"><img src="images/cinematic_01.jpg" alt=""></a></figure>
-<div class="text">
-<h3>Cinematic　～ シネマティック ～</h3>
-<p><b>まるで映画を観ているような 感動のエンドロール<br></b>
-<br>
-映画のような美しい映像で、特別な一日をドラマチックに。<br>
-細部にまでこだわった映像で、憧れのシーンを撮影します。<br>
-</p>
-</div>
-</div>
-
-
-</div>
-<!--/.list-grid1-->
-
-	
-	
-</section>
-<!--▲▲▲▲▲ここまで「2カラム-エンドロール」-->
-<!--▼▼▼▼▼ここから「3カラム－オープニングムービー」-->
-<section class="bg1" id="wp3">
-
-<h2 class="c no-line"><span class="main-text">オープニングムービー 作成プラン　￥93,500～</span><span class="sub-text">Opening Movie</span></h2>
-
-<div class="list-grid1">
-
-<div class="list blur">
-  <figure style="position: relative; width: 110%; padding-bottom: 56.25%;">
-    <iframe src="https://player.vimeo.com/video/497914133?h=aeada76d6e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" title="Cool/opening"></iframe>
-  </figure>
-  <div class="text">
-    <h3>Cool　～ クール ～</h3>
-    <p><b>時間の経過を季節感で表現した商品<br></b>
-<br>
-写真・コメントが大きく表示されプロフィールムービー的な感覚で
-ご覧いただきたい方にお奨めです。<br>
-		<br>
-<H4>◆写真点数：15点<br>
-◆上映時間：約 1分30秒<br></H4>
-<br></p>
-  </div>
-</div>
-	
-<!--<div class="list blur">
-<figure><a href="#"><img src="images/1.jpg" alt=""></a></figure>
-<div class="text">
-<h3>Cool　～ クール ～</h3>
-<p><b>映像の簡単な説明<br></b>
-<br>
-映像の簡単な説明<br>
-</p>
-</div>
-</div>-->
-
-<div class="list blur">
-  <figure style="position: relative; width: 110%; padding-bottom: 56.25%;">
-    <iframe src="https://player.vimeo.com/video/898043187?h=c939bcfe4d&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" title="Luxe"></iframe>
-  </figure>
-<div class="text">
-<h3>Luxe　～ リュクス ～</h3>
-<p><b>光の演出でワクワク感を表現した商品<br></b>
-<br>
-オリジナルメッセージにも対応し<br>言葉でも気持ちを伝えたい方にお奨めです。
-<br>
-<br>
-<H4>◆写真点数：15点<br>
-◆上映時間：約 1分30秒<br></H4>
-</p>
-</div>
-</div>
-
-<div class="list blur">
-  <figure style="position: relative; width: 110%; padding-bottom: 56.25%;">
-    <iframe src="https://player.vimeo.com/video/898043140?h=0ca46b9ff1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" title="Abit"></iframe>
-  </figure>
-  <div class="text">
-<h3>Avit　～ アビット ～</h3>
-<p><b>雰囲気やインパクトで疾走感を表現した商品<br></b>
-<br>
-印象に残る映像をお求めの方にお奨めです。
-<br>
-<br>
-<H4>◆写真点数：15点<br>
-◆上映時間：約 50秒<br></H4>
-</p>
-</div>
-</div>
-
-</div>
-<!--/.list-grid1-->
-	
-</section>
-<!--▲▲▲▲▲ここまで「3カラム－オープニングムービー」-->
-	
-<!--▼▼▼▼▼ここから「3カラム－プロフィールムービー」-->
-<section class="bg1" id="wp4">
-
-<h2 class="c no-line"><span class="main-text">プロフィールムービー 作成プラン　￥93,500～</span><span class="sub-text">Plofile Movie</span></h2>
-
-<div class="list-grid1">
-
-<div class="list blur">
-  <figure style="position: relative; width: 100%; padding-bottom: 56.25%;">
-    <iframe src="https://player.vimeo.com/video/898042479?h=0d801713cd&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" title="Brush"></iframe>
-  </figure>
-  <div class="text">
-<h3>Brush　～ ブラッシュ ～</h3>
-<p><b>カラフルな色合いで、写真の見せ方に特徴のある商品<br></b>
-<br>
-デザインを重視される方にお奨めです。
-<br>
-<br>
-<H4>◆写真点数：30点<br>
-◆上映時間：約 7分<br></H4>
-</p>
-</div>
-</div>
-
-<div class="list blur">
-  <figure style="position: relative; width: 100%; padding-bottom: 56.25%;">
-    <iframe src="https://player.vimeo.com/video/898042605?h=17297b3b28&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" title="Link"></iframe>
-  </figure>
-  <div class="text">
-<h3>Link　～ リンク ～</h3>
-<p><b>お馴染みのフレームと緩やかな動きの写真を画面全体に表示する商品<br></b>
-<br>
-見やすさを重視されたい方にお奨めです。
-<br>
-<br>
-<H4>◆写真点数：30点<br>
-◆上映時間：約 6分30秒<br></H4>
-</p>
-</div>
-</div>
-
-<div class="list blur">
-  <figure style="position: relative; width: 100%; padding-bottom: 56.25%;">
-    <iframe src="https://player.vimeo.com/video/898042748?h=465a5abde4&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" title="Posi"></iframe>
-  </figure>
-  <div class="text">
-<h3>Poji　～ ポジ ～</h3>
-<p><b>フィルム写真をテーマに懐かしさを感じていただける商品<br></b>
-<br>
-ゆったりとご覧いただきたい方にお奨めです。
-<br>
-<br>
-<H4>◆写真点数：30点<br>
-◆上映時間：ご希望をご相談ください<br></H4>
-<br>
-</p>
-</div>
-</div>
-
-</div>
-<!--/.list-grid1-->
-
-</section>
-<!--▲▲▲▲▲ここまで「3カラム－プロフィールムービー」-->
-
-
-<!--▼▼▼▼▼ここから「スペシャルオプション」-->
-<section class="bg1" id="wp5">
-
-<h2 class="c no-line"><span class="main-text">スペシャルオプション</span><span class="sub-text">Special Options</span></h2>
-
-<div class="list-grid1">
-
-<div class="list blur">
-  <div class="text">
-    <h3>ゲストメッセージ撮影</h3>
-    <p><b>￥44,000</b></p>
-    <p>ゲストからの温かいメッセージを映像に残します。</p>
-  </div>
-</div>
-
-<div class="list blur">
-  <div class="text">
-    <h3>追加ディスク</h3>
-    <p>ブルーレイ：<b>￥33,000</b></p>
-    <p>DVD：<b>￥16,500</b></p>
-    <p>大切な思い出を、高画質ブルーレイまたはDVDで。</p>
-  </div>
-</div>
-
-<div class="list blur">
-  <div class="text">
-    <h3>挙式の出張撮影</h3>
-    <p><b>￥38,500</b></p>
-    <p>※セレモニーは対象外</p>
-    <p>挙式・披露宴の撮影をご希望の方に。</p>
-  </div>
-</div>
-
-</div>
-</section>
-<!--▲▲▲▲▲ここまで「3カラム－スペシャルオプション」-->	
-	
-<!--▼▼▼▼▼ここから「お客様の声」-->
-<section id="koe">
-
-<h2 class="c"><span class="main-text">お客様の声</span><span class="sub-text">Customer Testimonials</span></h2>
-
-<div class="list-yoko-scroll">
-
-<div class="list">
-<h4>一生の宝物になりました。</h4>
-<p class="text">プロの技術で、私たちの最高の瞬間を<br>
-美しく残していただき感謝しています。<br>
-映像を見るたびに感動が蘇ります。<br>
-あの日の感動が蘇ります。</p>
-<p class="name">大阪府　A様<img src="images/s001.jpg" alt=""></p>
-</div>
-
-<div class="list">
-<h4>想像以上のクオリティに感動！</h4>
-<p class="text">式当日は緊張していましたが、<br>
-映像を見て、自分たちの最高の笑顔や<br>
-感動的なシーンがしっかりと記録<br>
-されており、改めて感動しました。</p>
-<p class="name">兵庫県　K様<img src="images/s002.jpg" alt=""></p>
-</div>
-
-<div class="list">
-<h4>両親へのサプライズに最適。</h4>
-<p class="text">
-両親への感謝の気持ちを込めた映像は<br>
-感動的で、両親も涙ぐんでいました。<br>
-一生の思い出に残る<br>
-素敵なサプライズになりました。</p>
-<p class="name">京都府　M様<img src="images/s003.jpg" alt=""></p>
-</div>
-
-<div class="list">
-<h4>友人のメッセージに感動！</h4>
-<p class="text">
-友人たちの温かいメッセージや<br>
-笑顔が詰まった映像は一生の宝物です。<br>
-改めて、周りの方々に支えられて<br>
-いることを実感しました。</p>
-<p class="name">滋賀県　Y様<img src="images/s004.jpg" alt=""></p>
-</div>
-
-<div class="list">
-<h4>式を挙げられなかった私たちに。</h4>
-<p class="text">
-事情があって式を挙げられなかった<br>
-私たちにとって、この映像は結婚式の<br>
-代わりとなる、最高の思い出です。<br>
-本当にありがとうございました。</p>
-<p class="name">奈良県　T様<img src="images/s005.jpg" alt=""></p>
-</div>
-
-<div class="list">
-<h4>映像の力に感動！</h4>
-<p class="text">
-当日はあっという間でしたが、<br>
-映像を見ることで、改めて<br>
-式の素晴らしさを実感できました。<br>
-映像の力は本当にすごいと思います。</p>
-<p class="name">和歌山県　H様<img src="images/s006.jpg" alt=""></p>
-</div>
-
-<div class="list">
-<h4>親族のみの結婚式で。</h4>
-<p class="text">
-親族のみの結婚式でしたが、<br>
-映像のおかげで、温かく感動的な<br>
-雰囲気を残すことができました。<br>
-参列できなかった友人にも<br>
-見てもらえて嬉しいです。</p>
-<p class="name">三重県　I様<img src="images/s007.jpg" alt=""></p>
-</div>
-
-<div class="list">
-<h4>最高の思い出を形に。</h4>
-<p class="text">
-私たちのわがままをたくさん<br>
-聞いていただき、最高の思い出を<br>
-形にすることができました。<br>
-一生大切にします。<br>
-本当にありがとうございました。</p>
-<p class="name">大阪府　N様<img src="images/s008.jpg" alt=""></p>
-</div>
-
-</div>
-
-<p class="btn3" style="display: none;"><a href="#">View More</a></p>
-
-</section>
-<!--▲▲▲▲▲ここまで「お客様の声」-->
-
-
-
-<!--▼▼▼▼▼ここから「よく頂く質問」-->
-<section class="faq" id="faq">
-
-<h2>よく頂く質問<span class="kazari">FAQ</span></h2>
-
-<div class="text">
-
-<dl>
-
-<dt>映像の長さはどれくらいが最適ですか？</dt>
-<dd>映像の長さは、使用目的や上映場所によって異なります。<br><br>
-◆プロフィールムービー：5分～7分程度<br>
- 　じっくりとご覧いただきたい場合は、<br>
-　 7分を目安に映像を収めると<br>
-　 ゲストへのご負担がなく、<br>
-　 気持ちよくご視聴いただけます。<br><br>
-◆記録映像：30分～90分程度<br>
- 　挙式～披露宴までを収録する場合でも、<br>
-　ご希望に応じた長さでお作りいたします。<br><br>
-◆エンドロールムービー：3分～5分程度<br>
-　楽曲に指定がある場合、１曲そのままの<br>
-　再生時間に合わせてお作りいたします。<br><br>
-◆上映時間やゲストの集中力を考慮して、<br>
-　最適な長さを提案させていただきます。
-</dd>
-
-<dt>映像に使用する写真や動画は<br>どのように準備すれば良いですか？</dt><br>
-<dd>写真や動画は、以下の点にご注意ください。<br><br>
-◆写 真:<br>
- 　高画質のデータをご用意ください。<br>
- 　スマートフォンで撮影した写真を使用する場合は、<br>
- 　明るく鮮明なものを選んでください。<br><br>
-◆動 画:<br>
- 　できるだけ手ブレやピンボケが少ないものをご用意ください。<br><br>
-◆データの受け渡し:<br>
-　 オンラインストレージやUSBメモリなど、<br>
- 　お客様のご希望に合わせて対応いたします。<br>
- 　写真や動画の選び方やデータ形式について、<br>
- 　ご不明な点はお気軽にご相談ください。</dd>
-
-	
-</dl>
-
-<p class="btn3 white" style="display: none;"><a href="#">View More</a></p>
-
-</div>
-
-</section>
-<!--▲▲▲▲▲ここまで「よく頂く質問」-->
-
-
-
-<!--▼▼▼▼▼ここから「Contact」と「Reserve」-->
-<section class="padding0">
-
-<div class="list-c2">
-
-<a href="https://cvision.jp/hilton/contactform/">
-<div class="list image1">
-<div class="text">
-<h4><span class="sub-text">お問い合わせフォーム</span><span class="main-text">Contact</span></h4>
-<p><H3>ご希望の撮影プランやご要望・ご質問は、<br>
-	こちらの「お問い合わせフォーム」に<br>
-	ご記入のうえ送信ください。<br>
-	追ってご連絡させていただきます。</H3></p>
-</div>
-</div>
-</a>
-
-<a href="tel:06-6443-1112">
-<div class="list image2">
-<div class="text">
-<h4><span class="sub-text">お電話</span><span class="main-text">TEL</span></h4>
-<p><H3>お電話でのお問い合せ</H3><br>
-<H3>TEL: 06-6443-1112</H3><br>
-	（ 受付時間　11:00～18:00　※火・水曜定休 ）</H3></p>
-</div>
-</div>
-</a>
-
-</div>
-<!--/.list-c2-->
-
-</section>
-<!--▲▲▲▲▲ここまで「Contact」と「Reserve」-->
-
-
-<!--▼▼▼▼▼ここから「お知らせ」-->
-<section style="display: none;">
-
-<h2 class="c no-line"><span class="main-text">お知らせ</span><span class="sub-text">News</span></h2>
-
-<dl class="new">
-<dt>2024/11/13</dt>
-<dd>サンプルテキスト。サンプルテキスト。サンプルテキスト。</dd>
-<dt>0000/00/00</dt>
-<dd>サンプルテキスト。サンプルテキスト。サンプルテキスト。</dd>
-<dt>0000/00/00</dt>
-<dd>サンプルテキスト。サンプルテキスト。サンプルテキスト。</dd>
-<dt>0000/00/00</dt>
-<dd>サンプルテキスト。サンプルテキスト。サンプルテキスト。</dd>
-<dt>0000/00/00</dt>
-<dd>サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。サンプルテキスト。</dd>
-</dl>
-
-</section>
-<!--▲▲▲▲▲ここまで「お知らせ」-->-->
-
-
-
-<!--▼▼▼▼▼ここから「Google Map」
-<div class="iframe-box">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.211557946993!2d135.49334861184562!3d34.69984357280695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e68d493e485d%3A0xb1d734553bb0831a!2z44OS44Or44OI44Oz5aSn6Ziq!5e0!3m2!1sja!2sjp!4v1741755245573!5m2!1sja!2sjp" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
-▲▲▲▲▲ここまで「Google Map」-->
-
-
-
-</main>
-
-
-
-<!--▼▼▼▼▼ここから「フッター」-->
-<footer>
-
-<div class="text">
-
-<div>
-<h4>ウェディング メモリアルムービー コンシェルジュデスク</h4>
-<p>大阪府大阪市西区江戸堀1丁目9-6 肥後橋ユニオンビル7F<br>
-株式会社コスモビジョン<br>
-電話番号  06-6443-1112<br>
-営業時間  11:00〜18:00<br>
-定休日 火曜日・水曜日</p>
-</div>
-
-<!--<div>
-<h4>Follow Us</h4>
-<ul class="icons">
-<li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-<li><a href="#"><i class="fab fa-line"></i></a></li>
-<li><a href="#"><i class="fab fa-youtube"></i></a></li>
-<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-</ul>
-</div>-->
-
-</div>
-
-<div class="image">
-<p class="logo"><img src="images/em-logo-ol.svg" alt=""></p>
-<small>&copy; cosmovision</small>
-</div>
-
-</footer>
-<!--▲▲▲▲▲ここまで「フッター」-->
-</div>
-<!--/#container-->
-
-
-
-<!--開閉ボタン（ハンバーガーアイコン）-->
-<div id="menubar_hdr">
-<div class="menu-icon">
-<span></span><span></span>
-</div>
-</div>
-
-
-
-<!--開閉ブロック-->
-<div id="menubar">
-
-<nav>
-<ul>
-<li><a href="#">TOP</a></li>
-<li><a href="#kodawari">私たちのこだわり</a></li>
-<li><a href="#course">撮影・演出プランのご案内</a>
-	<ul>
-	<li><a href="#wp1">挙式・披露宴 撮影プラン</a></li>
-	<li><a href="#wp2">即日編集エンドロール 撮影プラン</a></li>
-	<li><a href="#wp3">オープニングムービー 作成プラン</a></li>
-	<li><a href="#wp4">プロフィールムービー 作成プラン</a></li>
-	<li><a href="#wp5">スペシャルオプション</a></li>
-	</ul>
-</li>
-<li><a href="#koe">お客様の声</a></li>
-<li><a href="#faq">よく頂く質問</a></li>
-<li><a href="https://cvision.jp/hilton/contactform/">お問い合わせ</a></li>
-</ul>
+<div id="stage"><div id="stage-inner"></div></div>
+
+<!-- HINT -->
+<div id="hint">
+  <kbd>←</kbd><kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>Z</kbd> zoom &nbsp;·&nbsp; <kbd>Esc</kbd> close
+</div>
+
+<!-- THUMBNAIL STRIP -->
+<div id="thumbs"></div>
+
+<!-- MAIN NAV -->
+<nav id="nav">
+  <button class="nb" id="b-first" title="First">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+  </button>
+  <button class="nb" id="b-prev" title="Prev">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="nd"></div>
+  <span id="nc"><b>1</b> / 1</span>
+  <div class="nd"></div>
+  <button class="nb" id="b-next" title="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <button class="nb" id="b-last" title="Last">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="7 17 12 12 7 7"/><polyline points="14 17 19 12 14 7"/></svg>
+  </button>
+  <div class="nd"></div>
+  <button id="btn-web">WEB</button>
 </nav>
 
-<!--<p>ここのブロックは、htmlの下の方にある&lt;div id=&quot;menubar&quot;&gt;で編集できます。<br>
-ヘッダーのメニューとは別のブロックになるので注意して下さい。</p>-->
-
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button id="lb-close">&#x2715;</button>
+  <div id="lb-scroll">
+    <img id="lb-img" src="" alt="lightbox">
+  </div>
+  <div id="lb-ctrl">
+    <button class="zb" id="lp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="zb" id="ln">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="nd"></div>
+    <button class="zb" id="zo">&#x2212;</button>
+    <button class="zb sm" id="zr">100%</button>
+    <button class="zb" id="zi">&#x2b;</button>
+  </div>
 </div>
-<!--/#menubar-->
 
+<!-- WEB VIEW -->
+<div id="web-view">
+  <div id="wv-header">
+    <button id="wv-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+      PRINT WORKS
+    </button>
+    <div id="wv-tabs">
+      <button class="wv-tab on" data-idx="0">Site 01</button>
+      <button class="wv-tab"    data-idx="1">Site 02</button>
+      <button class="wv-tab"    data-idx="2">Site 03</button>
+    </div>
+    <div id="wv-label">WEB WORKS</div>
+  </div>
 
+  <div id="wv-body">
+    <div id="wv-desc">
 
-<!--jQueryの読み込み-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <!-- ★ Site 01 説明 ★ -->
+<div class="sp on" data-panel="0">
+  <div class="sp-tag">Web Work — 01</div>
+  <div class="sp-title">株式会社ゼプトス 様<br>アットリス サービスサイト</div>
+  <div class="sp-en">ATTOLIS SERVICE SITE</div>
+  <div class="sp-rule"></div>
+  <div class="sp-lbl">Concept</div>
+  <div class="sp-body">
+    グループ会社の株式会社ゼプトスとの共同事業として展開する、AI営業支援サービス「アットリス」の立ち上げに伴うLP制作。<br>
+    「営業のすべてを、『アッ』という間に。」をコンセプトに、営業担当者が本来注力すべき商談に集中できるよう、リスト作成や一次架電といった「付随業務」をAIが代行する合理性と革新性を訴求しました。<br>
+    信頼感を醸成するネイビーを基調としつつ、AIの先進性を感じさせるグラデーションや、実際のAI音声を体験できるインタラクティブなUIを実装。数値を視覚化するROIシミュレーターや動的なカウントアップ演出により、導入メリットを直感的に理解できる設計を目指しました。
+  </div>
+  <div class="sp-lbl">Details</div>
+  <div class="sp-meta">
+    <div class="sp-row"><span class="sp-key">Client</span><span class="sp-val">Inner Project / Zeptos Inc.</span></div>
+    <div class="sp-row"><span class="sp-key">Role</span><span class="sp-val">Planning / UX Design / Copywriting / Frontend Development</span></div>
+    <div class="sp-row"><span class="sp-key">Year</span><span class="sp-val">2026</span></div>
+  </div>
+</div>
 
-<!--パララックス（inview）-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/protonet-jquery.inview/1.1.2/jquery.inview.min.js"></script>
-<script src="js/jquery.inview_set.js"></script>
+      <!-- ★ Site 02 説明 ★ -->
+      <div class="sp" data-panel="1">
+  <div class="sp-tag">Web Work — Concept Work</div>
+  <div class="sp-title">井上誠耕園 様<br>ブランド再定義プロトタイプ</div>
+  <div class="sp-en">INOUE SEIKOUEN BRANDING PROTOTYPE</div>
+  <div class="sp-rule"></div>
+  <div class="sp-lbl">Concept</div>
+  <div class="sp-body">
+    小豆島で大地を耕し続ける「井上誠耕園」のブランド価値を、デジタル上の体験として再構築したプロトタイプ。<br>
+    「大地を、食卓を、耕す。」という哲学を軸に、スクロールに合わせて「視覚・聴覚・触覚」を刺激するストーリーテリングを設計しました。<br>
+    特に『緑果オリーブオイル』のページでは、パンをオイルに浸す一連の所作をパララックス演出で表現。単なる製品紹介に留まらず、ユーザーの生活に寄り添う「時間」と「情緒」をコードによって可視化する試みを行っています。ブランドの深淵に触れる「編集後記」のモーダル実装など、細部まで徹底した体験設計を追求しました。
+  </div>
+  <div class="sp-lbl">Details</div>
+  <div class="sp-meta">
+    <div class="sp-row"><span class="sp-key">Project</span><span class="sp-val">Creative Branding Lab (Self-Initiated)</span></div>
+    <div class="sp-row"><span class="sp-key">Role</span><span class="sp-val">Creative Direction / Copywriting / UX Design / Development</span></div>
+    <div class="sp-row"><span class="sp-key">Tech</span><span class="sp-val">HTML5 / Tailwind CSS / JavaScript (Intersection Observer)</span></div>
+    <div class="sp-row"><span class="sp-key">Year</span><span class="sp-val">2026</span></div>
+  </div>
+</div>
 
-<!--このテンプレート専用のスクリプト-->
-<script src="js/main.js"></script>
-<!--More View　スムーズに移動-->
+      <!-- ★ Site 03 説明 ★ -->
+<div class="sp" data-panel="2">
+  <div class="sp-tag">Web Work — 02</div>
+  <div class="sp-title">ヒルトン大阪 × 株式会社コスモビジョン 様<br>Wedding Memorial Movie サービスサイト</div>
+  <div class="sp-en">WEDDING MEMORIAL MOVIE SERVICE SITE</div>
+  <div class="sp-rule"></div>
+  <div class="sp-lbl">Concept</div>
+  <div class="sp-body">
+    ヒルトン大阪とグループ会社の株式会社コスモビジョンによる共同事業として、最高峰のウェディング映像を提供するサービスサイト。<br>
+    「その大切な一瞬を、永遠の輝きに変える」をテーマに、単なる記録ではない、映画のようなドラマチックな世界観をデジタル上で表現しました。<br>
+    スクロールに連動したフェードイン演出や、Vimeo APIを活用したインライン動画の実装により、映像のクオリティを直感的に体感できる構成を採用。膨大なプラン内容を整理し、ユーザーが「自分たちの理想の形」をスムーズに見つけられるよう、シンプルかつ上品なグリッドレイアウトで情報を構築しています。ホテルの格式高さと、映像が持つ温かな情緒が共存するユーザー体験を追求しました。
+  </div>
+  <div class="sp-lbl">Details</div>
+  <div class="sp-meta">
+    <div class="sp-row"><span class="sp-key">Client</span><span class="sp-val">Joint Venture / Hilton Osaka & Cosmovision Co., Ltd.</span></div>
+    <div class="sp-row"><span class="sp-key">Role</span><span class="sp-val">Information Architecture / UX Design / Frontend Development</span></div>
+    <div class="sp-row"><span class="sp-key">Tech</span><span class="sp-val">HTML5 / CSS3 / JavaScript (jQuery, Inview.js) / Vimeo API</span></div>
+    <div class="sp-row"><span class="sp-key">Year</span><span class="sp-val">2025</span></div>
+  </div>
+</div>
+
+    </div>
+
+    <div id="wv-iframe-area">
+      <div id="wv-loader">
+        <div class="ld"></div><div class="ld"></div><div class="ld"></div>
+      </div>
+      <!-- ★ src を実際のパスに変更 ★ -->
+      <iframe class="wv-frame on" data-frame="0" src="site01/index.html"></iframe>
+      <iframe class="wv-frame"    data-frame="1" src="site02/index.html"></iframe>
+      <iframe class="wv-frame"    data-frame="2" src="site02/index.html"></iframe>
+    </div>
+  </div>
+</div>
+
 <script>
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+// ── 画像パス ──────────────────────────────
+var images = [
+  'images/page01.jpg','images/page02.jpg','images/page03.jpg','images/page04.jpg',
+  'images/page05.jpg','images/page06.jpg','images/page07.jpg','images/page08.jpg',
+  'images/page09.jpg','images/page10.jpg','images/page11.jpg','images/page12.jpg',
+  'images/page13.jpg','images/page14.jpg','images/page15.jpg','images/page16.jpg',
+  'images/page17.jpg','images/page18.jpg','images/page19.jpg','images/page20.jpg',
+  'images/page21.jpg','images/page22.jpg'
+];
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
+var TOTAL = images.length;
+var cur = -1, busy = false;
+var lbZoom = 1, lbIdx = 0;
+var dragOn = false, dX=0, dY=0, sX=0, sY=0;
+
+// ── スライドページ生成 ───────────────────
+var si = document.getElementById('stage-inner');
+var tb = document.getElementById('thumbs');
+
+for (var i = 0; i < TOTAL; i++) {
+  (function(i){
+    var pw = document.createElement('div');
+    pw.className = 'pw'; pw.dataset.i = i; pw.dataset.s = 'hide';
+
+    var pg = document.createElement('div'); pg.className = 'page';
+    if (images[i]) {
+      var img = document.createElement('img');
+      img.src = images[i]; img.alt = 'Page '+(i+1);
+      pg.appendChild(img);
+    } else {
+      var ph = document.createElement('div'); ph.className = 'ph';
+      ph.innerHTML = '<div class="ph-n">'+String(i+1).padStart(2,'0')+'</div><div class="ph-l">page '+(i+1)+'</div>';
+      pg.appendChild(ph);
+    }
+    pg.onclick = function(){ openLb(i); };
+    pw.appendChild(pg); si.appendChild(pw);
+
+    var t = document.createElement('div'); t.className = 'thumb';
+    if (images[i]) { var ti=document.createElement('img'); ti.src=images[i]; t.appendChild(ti); }
+    var sp=document.createElement('span'); sp.textContent=i+1; t.appendChild(sp);
+    t.onclick = function(){ go(i); };
+    tb.appendChild(t);
+  })(i);
+}
+
+function scaleStage() {
+  var s = Math.min((innerWidth-80)/794, (innerHeight-100)/1123, 1);
+  si.style.transform = 'scale('+s+')';
+}
+scaleStage();
+window.onresize = scaleStage;
+
+function go(idx) {
+  if (busy || idx<0 || idx>=TOTAL || idx===cur) return;
+  busy=true; cur=idx;
+  var pws=document.querySelectorAll('.pw');
+  for(var i=0;i<pws.length;i++){
+    var d=i-cur; pws[i].dataset.s=d===0?'cur':d>0?'next':'prev';
+  }
+  var ts=document.querySelectorAll('.thumb');
+  for(var i=0;i<ts.length;i++) ts[i].classList.toggle('on',i===cur);
+  document.getElementById('nc').innerHTML='<b>'+(cur+1)+'</b> / '+TOTAL;
+  document.getElementById('b-prev').disabled  = cur===0;
+  document.getElementById('b-first').disabled = cur===0;
+  document.getElementById('b-next').disabled  = cur===TOTAL-1;
+  document.getElementById('b-last').disabled  = cur===TOTAL-1;
+  setTimeout(function(){ busy=false; }, 700);
+}
+go(0);
+
+document.getElementById('b-prev').onclick  = function(){ go(cur-1); };
+document.getElementById('b-next').onclick  = function(){ go(cur+1); };
+document.getElementById('b-first').onclick = function(){ go(0); };
+document.getElementById('b-last').onclick  = function(){ go(TOTAL-1); };
+
+// ── WEB VIEW 制御 ────────────────────────────
+var webView = document.getElementById('web-view');
+var loader = document.getElementById('wv-loader');
+var frames = document.querySelectorAll('.wv-frame');
+
+// 全てのiframeに対してロード完了時の処理を事前に設定
+frames.forEach(function(frame) {
+  frame.onload = function() {
+    frame.dataset.loaded = '1';
+    // 今表示すべきフレームがロード完了したらローダーを隠す
+    if (frame.classList.contains('on')) {
+      loader.classList.add('hide');
+    }
+  };
 });
-</script>
 
+// btn-web / wv-back の onclick は下部の updateHeader() で一元管理
+
+// タブ切替
+var tabs = document.querySelectorAll('.wv-tab');
+tabs.forEach(function(tab) {
+  tab.onclick = function() {
+    var idx = parseInt(tab.dataset.idx, 10);
+
+    // タブのON/OFF
+    tabs.forEach(function(t) { t.classList.remove('on'); });
+    tab.classList.add('on');
+
+    // パネルのON/OFF
+    var panels = document.querySelectorAll('.sp');
+    panels.forEach(function(p) { p.classList.remove('on'); });
+    document.querySelector('.sp[data-panel="'+idx+'"]').classList.add('on');
+
+    // iframeのON/OFF
+    var targetFrame = document.querySelector('.wv-frame[data-frame="'+idx+'"]');
+    frames.forEach(function(f) { f.classList.remove('on'); });
+    targetFrame.classList.add('on');
+
+    // ロード判定：既に完了していれば隠す、まだならローダーを表示
+    if (targetFrame.dataset.loaded === '1') {
+      loader.classList.add('hide');
+    } else {
+      loader.classList.remove('hide');
+      
+      // 保険：5秒経っても消えない場合は強制表示（念のため）
+      setTimeout(function(){
+        loader.classList.add('hide');
+      }, 5000);
+    }
+  };
+});
+
+// ── Lightbox ──────────────────────────
+var lb      = document.getElementById('lb');
+var lbScroll= document.getElementById('lb-scroll');
+var lbImg   = document.getElementById('lb-img');
+
+function openLb(idx){
+  lbIdx=idx; lbZoom=1;
+  lbImg.src = images[idx]||'';
+  lbImg.style.transform='scale(1)';
+  lbScroll.scrollTop=0; lbScroll.scrollLeft=0;
+  lb.classList.add('on');
+}
+function closeLb(){ lb.classList.remove('on'); }
+function zoomSet(z){ lbZoom=Math.max(0.5,Math.min(5,z)); lbImg.style.transform='scale('+lbZoom+')'; }
+
+document.getElementById('lb-close').onclick=closeLb;
+lb.onclick=function(e){ if(e.target===lb||e.target===lbScroll) closeLb(); };
+document.getElementById('zi').onclick=function(){ zoomSet(lbZoom+0.5); };
+document.getElementById('zo').onclick=function(){ zoomSet(lbZoom-0.5); };
+document.getElementById('zr').onclick=function(){ zoomSet(1); };
+document.getElementById('lp').onclick=function(e){
+  e.stopPropagation(); if(lbIdx>0){lbIdx--;go(lbIdx);openLb(lbIdx);}
+};
+document.getElementById('ln').onclick=function(e){
+  e.stopPropagation(); if(lbIdx<TOTAL-1){lbIdx++;go(lbIdx);openLb(lbIdx);}
+};
+lbImg.addEventListener('mousedown',function(e){
+  dragOn=true; dX=e.clientX; dY=e.clientY;
+  sX=lbScroll.scrollLeft; sY=lbScroll.scrollTop; e.preventDefault();
+});
+document.addEventListener('mousemove',function(e){
+  if(!dragOn)return;
+  lbScroll.scrollLeft=sX-(e.clientX-dX);
+  lbScroll.scrollTop =sY-(e.clientY-dY);
+});
+document.addEventListener('mouseup',function(){ dragOn=false; });
+lbScroll.addEventListener('wheel',function(e){
+  e.preventDefault(); zoomSet(lbZoom+(e.deltaY<0?0.25:-0.25));
+},{passive:false});
+
+// ── Keyboard ─────────────────────────
+document.addEventListener('keydown',function(e){
+  if(lb.classList.contains('on')){
+    if(e.key==='Escape') closeLb();
+    if(e.key==='+'||e.key==='=') zoomSet(lbZoom+0.5);
+    if(e.key==='-') zoomSet(lbZoom-0.5);
+    if(e.key==='0') zoomSet(1);
+    if(e.key==='ArrowRight'&&lbIdx<TOTAL-1){lbIdx++;go(lbIdx);openLb(lbIdx);}
+    if(e.key==='ArrowLeft'&&lbIdx>0){lbIdx--;go(lbIdx);openLb(lbIdx);}
+    return;
+  }
+  if(webView.style.display==='flex'){
+    if(e.key==='Escape' && window._updateHeader) window._updateHeader(false);
+    return;
+  }
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(cur-1);
+  if(e.key==='Home') go(0);
+  if(e.key==='End') go(TOTAL-1);
+  if(e.key==='z'||e.key==='Z') openLb(cur);
+});
+
+// Wheel
+var wt=null;
+document.addEventListener('wheel',function(e){
+  if(lb.classList.contains('on')||webView.style.display==='flex') return;
+  if(wt)return;
+  go(e.deltaY>20?cur+1:e.deltaY<-20?cur-1:cur);
+  wt=setTimeout(function(){wt=null;},650);
+},{passive:true});
+
+// Touch
+var tx=0;
+document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',function(e){
+  if(webView.style.display==='flex')return;
+  var dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50) go(dx<0?cur+1:cur-1);
+},{passive:true});
+
+// ── Cursor ────────────────────────────
+var ce=document.getElementById('cursor');
+var cr=document.getElementById('cursor-ring');
+var mX=0,mY=0,rX=0,rY=0;
+document.addEventListener('mousemove',function(e){mX=e.clientX;mY=e.clientY;});
+(function anim(){
+  rX+=(mX-rX)*0.14; rY+=(mY-rY)*0.14;
+  ce.style.left=mX+'px'; ce.style.top=mY+'px';
+  cr.style.left=rX+'px'; cr.style.top=rY+'px';
+  requestAnimationFrame(anim);
+})();
+
+// pw-web-btn は updateHeader() で管理するため個別ハンドラ不要
+
+// ── ビュー切替：一元管理 ──────────────────────
+(function() {
+  const hLabel = document.getElementById('header-label');
+  const sBtn   = document.getElementById('header-switch-btn');
+  const bText  = document.getElementById('header-btn-text');
+  const wView  = document.getElementById('web-view');
+
+  if (!sBtn || !wView || !hLabel || !bText) return;
+
+  function updateHeader(isWeb) {
+    if (isWeb) {
+      wView.style.display = 'flex';
+      hLabel.innerText = 'WEB WORKS';
+      bText.innerText  = 'BACK TO PRINT';
+    } else {
+      wView.style.display = 'none';
+      hLabel.innerText = 'PRINT WORKS';
+      bText.innerText  = 'WEB WORKS';
+    }
+  }
+
+  // ヘッダー切替ボタン
+  sBtn.addEventListener('click', function() {
+    updateHeader(wView.style.display !== 'flex');
+  });
+
+  // ナビの「WEB」ボタン
+  var navWebBtn = document.getElementById('btn-web');
+  if (navWebBtn) navWebBtn.addEventListener('click', function() { updateHeader(true); });
+
+  // Webビュー内の「戻る」ボタン
+  var wvBackBtn = document.getElementById('wv-back');
+  if (wvBackBtn) wvBackBtn.addEventListener('click', function() { updateHeader(false); });
+
+  // Escキーでも閉じる（keydownリスナーと連動）
+  window._updateHeader = updateHeader;
+})();
+
+</script>
 </body>
 </html>
