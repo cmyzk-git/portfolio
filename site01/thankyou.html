@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ありがとうございます | アットリス</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKLJT4CB0M"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TKLJT4CB0M');
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: DM Serif Display + Noto Sans JP -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --blue-light: #eff6ff;
+            --slate-900: #0f172a;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #f8faff;
+            color: var(--slate-900);
+        }
+
+        /* ── grid dots background ── */
+        .dot-bg {
+            background-color: #f8faff;
+            background-image: radial-gradient(rgba(37,99,235,0.10) 1.5px, transparent 1.5px);
+            background-size: 28px 28px;
+        }
+
+        /* ── floating orbs ── */
+        .orb {
+            position: fixed;
+            border-radius: 9999px;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: rgba(37,99,235,0.08);
+            top: -120px; right: -80px;
+            animation: drift1 14s ease-in-out infinite alternate;
+        }
+        .orb-2 {
+            width: 380px; height: 380px;
+            background: rgba(124,58,237,0.06);
+            bottom: 60px; left: -100px;
+            animation: drift2 18s ease-in-out infinite alternate;
+        }
+        @keyframes drift1 {
+            from { transform: translate(0,0) scale(1); }
+            to   { transform: translate(30px, 40px) scale(1.06); }
+        }
+        @keyframes drift2 {
+            from { transform: translate(0,0) scale(1); }
+            to   { transform: translate(-20px, -30px) scale(1.04); }
+        }
+
+        /* ── serif display ── */
+        .serif { font-family: 'DM Serif Display', serif; }
+
+        /* ── card ── */
+        .glass-card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 4px 40px rgba(37,99,235,0.08), 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* ── step connector line ── */
+        .step-line::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, #bfdbfe, transparent);
+            margin: 0 auto;
+        }
+
+        /* ── timerex placeholder ── */
+        .calendar-placeholder {
+            background: repeating-linear-gradient(
+                -45deg,
+                #f1f5f9,
+                #f1f5f9 6px,
+                #f8fafc 6px,
+                #f8fafc 14px
+            );
+        }
+
+        /* ── reveal animation ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.show { opacity: 1; transform: none; }
+        .reveal-delay-1 { transition-delay: 0.10s; }
+        .reveal-delay-2 { transition-delay: 0.20s; }
+        .reveal-delay-3 { transition-delay: 0.30s; }
+        .reveal-delay-4 { transition-delay: 0.42s; }
+
+        /* ── checkmark bounce ── */
+        @keyframes checkBounce {
+            0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+            60%  { transform: scale(1.15) rotate(4deg); opacity: 1; }
+            80%  { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        .check-anim { animation: checkBounce 0.65s cubic-bezier(0.22,1,0.36,1) 0.3s both; }
+
+        /* ── pulse ring ── */
+        @keyframes pulseRing {
+            0%   { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .pulse-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 9999px;
+            border: 2px solid #93c5fd;
+            animation: pulseRing 2s ease-out infinite;
+        }
+
+        /* ── button ── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--blue);
+            color: white;
+            font-weight: 700;
+            border-radius: 9999px;
+            padding: 0.75rem 2rem;
+            font-size: 0.925rem;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+            box-shadow: 0 4px 18px rgba(37,99,235,0.25);
+        }
+        .btn-primary:hover {
+            background: var(--blue-dark);
+            box-shadow: 0 6px 24px rgba(37,99,235,0.35);
+            transform: translateY(-1px);
+        }
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--blue);
+            font-weight: 700;
+            border-radius: 9999px;
+            padding: 0.75rem 2rem;
+            font-size: 0.925rem;
+            border: 1.5px solid var(--blue);
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-outline:hover {
+            background: var(--blue-light);
+            transform: translateY(-1px);
+        }
+
+        /* ── timerex embed ── */
+        #timerex_calendar iframe {
+            border-radius: 1.5rem !important;
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="dot-bg min-h-screen">
+
+    <!-- Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- ═══════════════════════════════════════
+         HEADER
+    ═══════════════════════════════════════ -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center h-16">
+            <a href="index.html" class="flex items-center">
+                <img src="logo.svg" alt="Attolis" class="h-8 w-auto" onerror="this.replaceWith(Object.assign(document.createElement('span'), {textContent:'Attolis', style:'font-weight:900;font-size:1.25rem;color:#2563eb;letter-spacing:-0.04em;font-family:DM Serif Display,serif;'}))">
+            </a>
+            <a href="index.html" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition flex items-center gap-1.5">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                トップへ戻る
+            </a>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════
+         MAIN
+    ═══════════════════════════════════════ -->
+    <main class="relative z-10 pt-24 pb-24 px-4">
+        <div class="max-w-2xl mx-auto">
+
+            <!-- ── SUCCESS BADGE ── -->
+            <div class="flex justify-center mb-8 reveal show">
+                <div class="relative inline-flex">
+                    <div class="pulse-ring"></div>
+                    <div class="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center shadow-xl shadow-blue-200 check-anim">
+                        <i data-lucide="check" class="w-9 h-9 text-white stroke-[2.5]"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── HEADLINE (type-dependent) ── -->
+
+            <!-- document -->
+            <div id="head-document" class="text-center mb-10 reveal reveal-delay-1">
+                <p class="text-[11px] font-black uppercase tracking-[0.18em] text-blue-600 mb-3">Document Sent</p>
+                <h1 class="serif text-3xl md:text-4xl leading-tight mb-4">
+                    資料をお届けしました <span class="italic text-blue-600">✉</span>
+                </h1>
+                <p class="text-slate-500 text-sm font-bold leading-relaxed">
+                    ご登録のメールアドレスに資料のURLをお送りしました。<br>
+                    届かない場合は <a id="mail-doc" class="text-blue-600 underline underline-offset-2"></a> までご連絡ください。
+                </p>
+            </div>
+
+            <!-- demo -->
+            <div id="head-demo" class="text-center mb-10 reveal reveal-delay-1 hidden">
+                <p class="text-[11px] font-black uppercase tracking-[0.18em] text-blue-600 mb-3">Demo Request</p>
+                <h1 class="serif text-3xl md:text-4xl leading-tight mb-4">
+                    デモのご依頼、<br class="sm:hidden">ありがとうございます。
+                </h1>
+                <p class="text-slate-500 text-sm font-bold leading-relaxed">
+                    以下のカレンダーから、ご都合の良い日時をお選びください。
+                </p>
+            </div>
+
+            <!-- contact -->
+            <div id="head-contact" class="text-center mb-10 reveal reveal-delay-1 hidden">
+                <p class="text-[11px] font-black uppercase tracking-[0.18em] text-blue-600 mb-3">Message Received</p>
+                <h1 class="serif text-3xl md:text-4xl leading-tight mb-4">
+                    お問い合わせ、<br class="sm:hidden">ありがとうございます。
+                </h1>
+                <p class="text-slate-500 text-sm font-bold leading-relaxed">
+                    内容を確認のうえ、担当者より折り返しご連絡いたします。<br>
+                    お急ぎの場合は <a id="mail-contact" class="text-blue-600 underline underline-offset-2"></a> までご連絡ください。
+                </p>
+            </div>
+
+            <!-- ── UPSELL BLOCK (document / contact のみ) ── -->
+            <div id="upsell-block" class="glass-card rounded-3xl p-8 mb-6 reveal reveal-delay-2">
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center shrink-0 mt-0.5">
+                        <i data-lucide="gift" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-1">無料オファー</p>
+                        <h2 class="text-lg font-black leading-snug">
+                            専任コンサルタントによる<span class="text-blue-600">無料デモ</span>を<class="hidden sm:block">提供中
+                        </h2>
+                        <p class="text-slate-500 text-xs font-bold mt-1.5 leading-relaxed">
+                            「アットリスは本当にビジネスを加速させるか？」を、ぜひあなたの目でお確かめください。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-2.5 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white stroke-[3]"></i>
+                        </div>
+                        <span class="text-sm font-bold text-slate-700">サービスの基本機能・画面操作の解説</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white stroke-[3]"></i>
+                        </div>
+                        <span class="text-sm font-bold text-slate-700">同業界の成功事例のご紹介</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white stroke-[3]"></i>
+                        </div>
+                        <span class="text-sm font-bold text-slate-700">貴社の課題に合わせた活用プランのご提案</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="check" class="w-3 h-3 text-white stroke-[3]"></i>
+                        </div>
+                        <span class="text-sm font-bold text-slate-700">導入後のサポート体制のご説明</span>
+                    </div>
+                </div>
+
+                <a href="index.html#demo" class="btn-primary w-full text-center">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    無料デモを申し込む
+                </a>
+            </div>
+
+            <!-- ── CALENDAR CARD ── -->
+            <div class="glass-card rounded-3xl p-8 mb-8 reveal reveal-delay-3">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center shrink-0">
+                        <i data-lucide="calendar-days" class="w-5 h-5 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-0.5">Schedule</p>
+                        <p id="cal-label-default" class="text-sm font-black text-slate-800">
+                            【本ページ限定】担当者より直接ご案内します。
+                        </p>
+                        <p id="cal-label-demo" class="text-sm font-black text-slate-800 hidden">
+                            ご都合の良い日時をお選びください。
+                        </p>
+                        <p id="cal-label-contact" class="text-sm font-black text-slate-800 hidden">
+                            オンラインでのご説明もご利用ください。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ▼ Timerex埋め込み：URLを取得後 data-url に設定してください -->
+                <div
+                    id="timerex_calendar"
+                    data-url="https://timerex.net/s/attolis_os_452c/cb0de9a3"
+                    class="min-h-[280px] rounded-2xl overflow-hidden"
+                >
+                    <!-- ── カレンダーURLが未設定の場合のプレースホルダー ── -->
+                    <div class="calendar-placeholder rounded-2xl flex flex-col items-center justify-center min-h-[280px] border border-dashed border-blue-200">
+                        <div class="w-14 h-14 rounded-2xl bg-white/80 border border-blue-100 flex items-center justify-center mb-4 shadow-sm">
+                            <i data-lucide="calendar-clock" class="w-7 h-7 text-blue-400"></i>
+                        </div>
+                        <p class="text-sm font-black text-slate-400">Timerexカレンダー</p>
+                        <p class="text-[11px] font-bold text-slate-300 mt-1">data-url に日程調整URLを設定してください</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── FOOTER NAV ── -->
+            <div class="text-center reveal reveal-delay-4 space-y-4">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a href="index.html" class="btn-outline">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        トップページへ
+                    </a>
+                    <a href="index.html#features" class="text-sm font-bold text-slate-400 hover:text-blue-600 transition">
+                        サービス詳細を見る →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ── Timerex embed script ── -->
+    <script src="https://asset.timerex.net/js/embed.js" defer></script>
+
+    <script>
+    (function () {
+        // ─── URLパラメータ解析 ───────────────────────────
+        const type = new URLSearchParams(window.location.search).get('type') || 'document';
+
+        // ヘッドライン切り替え
+        ['document', 'demo', 'contact'].forEach(t => {
+            const el = document.getElementById('head-' + t);
+            if (el) el.classList.toggle('hidden', t !== type);
+        });
+
+        // アップセルブロック：demo のみ非表示
+        if (type === 'demo') {
+            const upsell = document.getElementById('upsell-block');
+            if (upsell) upsell.classList.add('hidden');
+        }
+
+        // カレンダーラベル切り替え
+        const labelMap = {
+            demo:    'cal-label-demo',
+            contact: 'cal-label-contact',
+        };
+        const defaultLabel = document.getElementById('cal-label-default');
+        const targetLabel  = labelMap[type] ? document.getElementById(labelMap[type]) : null;
+        if (defaultLabel) defaultLabel.classList.add('hidden');
+        if (targetLabel)  targetLabel.classList.remove('hidden');
+        else if (defaultLabel) defaultLabel.classList.remove('hidden');
+
+        // ─── Timerex 起動 ───────────────────────────
+        const calEl = document.getElementById('timerex_calendar');
+        const calUrl = calEl ? calEl.getAttribute('data-url') : '';
+        if (calUrl) {
+            calEl.innerHTML = '';
+            const txScript = document.querySelector('script[src*="timerex"]');
+            txScript.addEventListener('load', () => {
+                if (typeof TimerexCalendar === 'function') TimerexCalendar();
+            });
+        }
+
+        // ─── Reveal アニメーション ───────────────────────────
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+
+        // ─── メールアドレスをJSで組み立て（スパム対策） ───────────
+        (function() {
+            const u = 'attolis_os', d = 'willinc.co.jp';
+            const addr = u + '@' + d;
+            ['mail-doc', 'mail-contact'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.href = 'mailto:' + addr; el.textContent = addr; }
+            });
+        })();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    })();
+    </script>
+
+</body>
+</html>
