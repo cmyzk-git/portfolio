@@ -482,7 +482,7 @@ var images = [
 ];
 
 var TOTAL = images.length;
-var cur = -1, busy = false;
+var cur = 0, busy = false;
 var lbZoom = 1, lbIdx = 0;
 var dragOn = false, dX=0, dY=0, sX=0, sY=0;
 
@@ -493,7 +493,9 @@ var tb = document.getElementById('thumbs');
 for (var i = 0; i < TOTAL; i++) {
   (function(i){
     var pw = document.createElement('div');
-    pw.className = 'pw'; pw.dataset.i = i; pw.dataset.s = 'hide';
+    pw.className = 'pw'; pw.dataset.i = i;
+    // 初期表示状態を生成時に直接設定（初回描画の取りこぼしを防ぐ）
+    pw.dataset.s = i === 0 ? 'cur' : 'next';
 
     var pg = document.createElement('div'); pg.className = 'page';
     if (images[i]) {
@@ -508,7 +510,7 @@ for (var i = 0; i < TOTAL; i++) {
     pg.onclick = function(){ openLb(i); };
     pw.appendChild(pg); si.appendChild(pw);
 
-    var t = document.createElement('div'); t.className = 'thumb';
+    var t = document.createElement('div'); t.className = 'thumb' + (i === 0 ? ' on' : '');
     if (images[i]) { var ti=document.createElement('img'); ti.src=images[i]; t.appendChild(ti); }
     var sp=document.createElement('span'); sp.textContent=i+1; t.appendChild(sp);
     t.onclick = function(){ go(i); };
@@ -539,7 +541,12 @@ function go(idx) {
   document.getElementById('b-last').disabled  = cur===TOTAL-1;
   setTimeout(function(){ busy=false; }, 700);
 }
-go(0);
+// 初期状態を go(0) に依存せず明示的に反映
+document.getElementById('nc').innerHTML = '<b>1</b> / ' + TOTAL;
+document.getElementById('b-prev').disabled = true;
+document.getElementById('b-first').disabled = true;
+document.getElementById('b-next').disabled = TOTAL <= 1;
+document.getElementById('b-last').disabled = TOTAL <= 1;
 
 document.getElementById('b-prev').onclick  = function(){ go(cur-1); };
 document.getElementById('b-next').onclick  = function(){ go(cur+1); };
